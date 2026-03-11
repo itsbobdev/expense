@@ -1,0 +1,166 @@
+# Quick Start Guide
+
+Get your expense tracker running in 5 minutes!
+
+## Prerequisites
+
+- Python 3.10 or higher
+- Java Runtime Environment (for PDF parsing)
+- Telegram account
+- 5 minutes of your time
+
+## Step 1: Get a Telegram Bot Token (2 minutes)
+
+1. Open Telegram and search for `@BotFather`
+2. Send `/newbot` command
+3. Follow the prompts to create your bot
+4. Copy the token (looks like: `123456789:ABCdefGhIjKlmNoPQRsTUVwxyZ`)
+
+## Step 2: Install & Configure (2 minutes)
+
+```bash
+# Clone or download the repository
+cd expense/backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+cp ../.env.example ../.env
+
+# Edit .env and paste your bot token
+# TELEGRAM_BOT_TOKEN=your_token_here
+```
+
+## Step 3: Set Up Database (1 minute)
+
+```bash
+# Run the interactive setup script
+python setup_database.py
+```
+
+Follow the prompts to add:
+- Parent's name and card number
+- Spouse's name and card number
+- Your name and card number
+
+Example:
+```
+1. Parent/Guardian:
+  Name: Dad
+  Card last 4 digits: 1234
+
+2. Spouse:
+  Name: Mom
+  Card last 4 digits: 5678
+
+3. Self:
+  Name: John
+  Card last 4 digits: 9999
+```
+
+## Step 4: Start the Bot (30 seconds)
+
+```bash
+# Run the bot
+python run.py
+```
+
+You should see:
+```
+Starting Expense Tracker Bot
+================================================
+Host: 0.0.0.0
+Port: 8000
+...
+```
+
+## Step 5: Test It! (30 seconds)
+
+1. Open Telegram
+2. Search for your bot (the name you gave it in Step 1)
+3. Send `/start`
+4. You should see a welcome message!
+5. Try `/help` to see all commands
+
+## Next Steps
+
+### Upload Your First Statement
+
+1. Send `/upload` command to the bot
+2. Attach your DBS/POSB credit card statement PDF
+3. Wait for processing (usually 10-30 seconds)
+4. Review any uncertain transactions using the buttons
+
+### View Statistics
+
+Send `/stats` to see spending breakdown by person
+
+### Generate Bills (Coming in Phase 4)
+
+Send `/bill march parent` to generate a bill for March
+
+## Troubleshooting
+
+### "Command not found: alembic"
+Just run `python setup_database.py` - it handles database creation automatically.
+
+### "No module named 'app'"
+Make sure you're in the `backend` directory and your virtual environment is activated.
+
+### Bot not responding
+1. Check your bot token in `.env`
+2. Make sure `run.py` is running
+3. Check the console for error messages
+
+### PDF parsing error
+1. Make sure Java is installed: `java -version`
+2. Try a different PDF file
+3. Check if it's a DBS/POSB statement (other banks coming soon)
+
+## Advanced: Docker Deployment
+
+```bash
+# Build the image
+cd backend
+docker build -t expense-tracker .
+
+# Run the container
+docker run -d \
+  --name expense-tracker \
+  -e TELEGRAM_BOT_TOKEN=your_token \
+  -p 8000:8000 \
+  expense-tracker
+```
+
+## Tips
+
+1. **Card Numbers**: Use the last 4 digits from your credit card
+2. **Multiple Cards**: You can add multiple card numbers per person (comma-separated during setup)
+3. **Rules**: The setup script automatically creates smart rules based on your card numbers
+4. **Learning**: The bot will learn from your manual assignments over time (Phase 3 feature)
+
+## What's Next?
+
+- Phase 2: Multi-bank support, refund matching
+- Phase 3: Machine learning categorization
+- Phase 4: Bill generation and formatting
+
+## Need Help?
+
+- Check `README.md` for detailed documentation
+- See `plan.md` for the complete implementation plan
+- Review `PHASE1_COMPLETE.md` for what's implemented
+
+---
+
+**You're all set! Start uploading statements and let the bot handle your expense tracking.** 🎉
