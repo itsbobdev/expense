@@ -10,7 +10,7 @@ This file defines all supported categories and their detection rules, used by th
 | `tours` | Merchant name contains: `PELAGO`, `KLOOK`, `VIATOR`, `GETYOURGUIDE`, `TOUR`, `EXCURSION`, `ATTRACTION`; OR Claude's knowledge identifies the merchant as a tours/activities/experiences provider |
 | `travel_accommodation` | Merchant name contains: `AIRBNB`, `HOTEL`, `INN`, `RESORT`, `HOSTEL`, `SUITES`, `LODGE`, `MARRIOTT`, `HILTON`, `HYATT`, `PAN PACIFIC`, `SHERATON`, `WESTIN`, `INTERCONTINENTAL`; OR Claude's knowledge identifies the merchant as accommodation |
 | `subscriptions` | Merchant name contains: `SUBSCRIPTION`, `MEMBER`, `NETFLIX`, `SPOTIFY`, `APPLE`, `GOOGLE`, `CHATGPT`, `OPENAI`, `CLAUDE`, `X CORP`, `YOUTUBE`; OR Claude's knowledge identifies the merchant as a recurring subscription service |
-| `foreign_currency` | `ccy_fee` is not null (a CCY CONVERSION FEE line was present in the statement for this transaction) |
+| `foreign_currency` | `ccy_fee` is not null (a CCY CONVERSION FEE line was present in the statement for this transaction); OR `foreign_currency_amount` is not null (Maybank inline foreign currency — see bank-specific guide) |
 | `amaze` | `merchant_name` starts with `AMAZE*` |
 | `paypal` | `merchant_name` starts with `PAYPAL *` or `PAYPAL*` |
 | `insurance` | Merchant name contains: `INSURANCE`, `INCOME`, `GREAT EASTERN`, `PRUDENTIAL`, `AIA`, `AVIVA`, `MANULIFE`, `NTUC INCOME`, `FWD`, `TOKIO MARINE`; OR Claude's knowledge identifies the merchant as an insurance provider |
