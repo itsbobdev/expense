@@ -4,6 +4,8 @@ from app.models.transaction import Transaction
 from app.models.rule import AssignmentRule
 from app.models.bill import Bill, BillLineItem
 from app.models.ml_training import MLTrainingData
+from app.models.blacklist_category import BlacklistCategory
+from app.models.manual_bill import ManualBill
 
 __all__ = [
     "Person",
@@ -13,4 +15,6 @@ __all__ = [
     "Bill",
     "BillLineItem",
     "MLTrainingData",
+    "BlacklistCategory",
+    "ManualBill",
 ]

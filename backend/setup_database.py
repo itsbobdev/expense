@@ -1,15 +1,17 @@
 """
-Database setup script to initialize family members and rules.
+Database setup script to initialize family members, rules, and blacklist categories.
 
 Run this script after installing dependencies to set up your expense tracker.
+Reads configuration from statements/statement_people_identifier.yaml
 """
 
 from app.database import SessionLocal, init_db
-from app.models import Person, AssignmentRule
+from app.models import Person, AssignmentRule, BlacklistCategory
+from app.utils.yaml_loader import load_person_card_mappings, get_initial_blacklist_categories
 
 
 def setup_database():
-    """Initialize database with family members and basic rules"""
+    """Initialize database with family members, assignment rules, and blacklist categories"""
     print("Initializing database schema...")
     init_db()
 
@@ -25,129 +27,90 @@ def setup_database():
         print("EXPENSE TRACKER - Database Setup")
         print("="*50)
 
-        # Get user input for family members
-        print("\nLet's set up your family members:")
+        # Load from YAML
+        print("\nLoading configuration from YAML...")
+        try:
+            people_data = load_person_card_mappings()
+            print(f"✓ Loaded {len(people_data)} people from YAML")
+        except FileNotFoundError as e:
+            print(f"\n❌ {e}")
+            return
+        except ValueError as e:
+            print(f"\n❌ {e}")
+            return
 
-        # Parent
-        print("\n1. Parent/Guardian:")
-        parent_name = input("  Name: ").strip() or "Parent"
-        parent_cards = input("  Card last 4 digits (comma-separated, or press Enter to skip): ").strip()
-        parent_card_list = [c.strip() for c in parent_cards.split(",") if c.strip()]
+        # Create persons from YAML data
+        print("\nCreating family members...")
+        persons = []
+        for person_data in people_data:
+            person = Person(
+                name=person_data["name"],
+                relationship_type="parent",  # Default to parent, can be updated manually
+                card_last_4_digits=person_data["cards"],
+                is_auto_created=False
+            )
+            persons.append(person)
+            db.add(person)
+            print(f"  ✓ Created person: {person_data['name']} ({len(person_data['cards'])} cards)")
 
-        parent = Person(
-            name=parent_name,
-            relationship_type="parent",
-            card_last_4_digits=parent_card_list
-        )
-
-        # Spouse
-        print("\n2. Spouse:")
-        spouse_name = input("  Name: ").strip() or "Spouse"
-        spouse_cards = input("  Card last 4 digits (comma-separated, or press Enter to skip): ").strip()
-        spouse_card_list = [c.strip() for c in spouse_cards.split(",") if c.strip()]
-
-        spouse = Person(
-            name=spouse_name,
-            relationship_type="spouse",
-            card_last_4_digits=spouse_card_list
-        )
-
-        # Self
-        print("\n3. Self:")
-        self_name = input("  Name: ").strip() or "Self"
-        self_cards = input("  Card last 4 digits (comma-separated, or press Enter to skip): ").strip()
-        self_card_list = [c.strip() for c in self_cards.split(",") if c.strip()]
-
-        self_person = Person(
-            name=self_name,
-            relationship_type="self",
-            card_last_4_digits=self_card_list
-        )
-
-        # Add all persons
-        db.add_all([parent, spouse, self_person])
         db.commit()
-        db.refresh(parent)
-        db.refresh(spouse)
-        db.refresh(self_person)
+        for person in persons:
+            db.refresh(person)
 
-        print("\n✓ Family members created successfully!")
-
-        # Create default rules
-        print("\nCreating default assignment rules...")
-
+        # Create card-direct assignment rules
+        print("\nCreating card-direct assignment rules...")
         rules = []
-
-        # Rule 1: Parent's card direct assignment
-        if parent_card_list:
-            for card in parent_card_list:
+        for person in persons:
+            for card in person.card_last_4_digits:
                 rule = AssignmentRule(
                     priority=100,
                     rule_type="card_direct",
                     conditions={"card_last_4": card},
-                    assign_to_person_id=parent.id,
+                    assign_to_person_id=person.id,
                     is_active=True
                 )
                 rules.append(rule)
-                print(f"  ✓ Created rule: Card {card} → {parent_name}")
+                db.add(rule)
+                print(f"  ✓ Created rule: Card {card} → {person.name}")
 
-        # Rule 2: Spouse's card direct assignment
-        if spouse_card_list:
-            # First, create high-priority rule for bus/MRT
-            for card in spouse_card_list:
-                transport_rule = AssignmentRule(
-                    priority=100,
-                    rule_type="category",
-                    conditions={"card_last_4": card, "category": ["transport_bus", "transport_mrt"]},
-                    assign_to_person_id=spouse.id,
-                    is_active=True
-                )
-                rules.append(transport_rule)
-                print(f"  ✓ Created rule: Card {card} + Bus/MRT → {spouse_name}")
+        db.commit()
+        print(f"\n✓ Created {len(rules)} card-direct assignment rules")
 
-                # Then, create lower-priority rule for everything else
-                other_rule = AssignmentRule(
-                    priority=50,
-                    rule_type="card_direct",
-                    conditions={"card_last_4": card},
-                    assign_to_person_id=parent.id,
-                    is_active=True
-                )
-                rules.append(other_rule)
-                print(f"  ✓ Created rule: Card {card} + Other → {parent_name}")
+        # Seed blacklist categories
+        print("\nSeeding blacklist categories...")
+        blacklist_data = get_initial_blacklist_categories()
+        blacklist_categories = []
 
-        # Rule 3: Self's card direct assignment
-        if self_card_list:
-            for card in self_card_list:
-                rule = AssignmentRule(
-                    priority=100,
-                    rule_type="card_direct",
-                    conditions={"card_last_4": card},
-                    assign_to_person_id=self_person.id,
-                    is_active=True
-                )
-                rules.append(rule)
-                print(f"  ✓ Created rule: Card {card} → {self_name}")
+        for category_data in blacklist_data:
+            category = BlacklistCategory(
+                name=category_data["name"],
+                keywords=category_data["keywords"],
+                is_active=category_data["is_active"]
+            )
+            blacklist_categories.append(category)
+            db.add(category)
+            print(f"  ✓ Created category: {category_data['name']} ({len(category_data['keywords'])} keywords)")
 
-        if rules:
-            db.add_all(rules)
-            db.commit()
-            print(f"\n✓ Created {len(rules)} assignment rules")
-        else:
-            print("\n! No card numbers provided - you'll need to set up rules manually")
+        db.commit()
+        print(f"\n✓ Seeded {len(blacklist_categories)} blacklist categories")
 
         print("\n" + "="*50)
         print("Setup Complete!")
         print("="*50)
-        print("\nYour expense tracker is ready to use.")
+        print(f"\nDatabase initialized with:")
+        print(f"  - {len(persons)} family members")
+        print(f"  - {len(rules)} assignment rules")
+        print(f"  - {len(blacklist_categories)} blacklist categories")
         print("\nNext steps:")
         print("1. Make sure your .env file has TELEGRAM_BOT_TOKEN set")
-        print("2. Run the bot: python app/main.py")
+        print("2. Run the bot: python run.py")
         print("3. Open Telegram and start chatting with your bot")
         print("4. Use /start to see available commands")
 
     except Exception as e:
         print(f"\n❌ Error during setup: {e}")
+        import traceback
+        traceback.print_exc()
         db.rollback()
         raise
     finally:

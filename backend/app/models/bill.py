@@ -26,10 +26,12 @@ class BillLineItem(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     bill_id = Column(Integer, ForeignKey("bills.id"), nullable=False)
-    transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=False)
+    transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)
+    manual_bill_id = Column(Integer, ForeignKey("manual_bills.id"), nullable=True)
     amount = Column(Float, nullable=False)
     description = Column(String, nullable=True)
 
     # Relationships
     bill = relationship("Bill", back_populates="line_items")
     transaction = relationship("Transaction", back_populates="bill_line_items")
+    manual_bill = relationship("ManualBill", back_populates="bill_line_items")

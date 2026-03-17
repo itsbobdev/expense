@@ -21,10 +21,8 @@ Phase 1 of the Expense Tracker & Billing System has been successfully implemente
 - File upload to configured directory
 - PDF processing workflow integrated
 
-### ✅ Basic parsing extracts transactions from DBS PDF
-- Base parser interface defined
-- DBS/POSB parser fully implemented
-- Transaction extraction with date, merchant, and amount parsing
+### ✅ Basic parsing extracts transactions from PDF
+- Transaction extraction via `/extract-statement` Claude Code command
 - Refund detection logic
 
 ### ✅ Direct card assignment works (card X → person Y)
@@ -52,10 +50,6 @@ expense/
 │   │   │   ├── rule.py              ✅ AssignmentRule model
 │   │   │   ├── bill.py              ✅ Bill models
 │   │   │   └── ml_training.py       ✅ ML training data
-│   │   ├── parsers/
-│   │   │   ├── __init__.py
-│   │   │   ├── base.py              ✅ Base parser interface
-│   │   │   └── dbs.py               ✅ DBS/POSB parser
 │   │   ├── services/
 │   │   │   ├── __init__.py
 │   │   │   └── categorizer.py       ✅ Transaction categorizer
@@ -100,13 +94,8 @@ expense/
 15. `backend/app/services/__init__.py` - Services package ✅
 16. `backend/app/services/categorizer.py` - Categorizer ✅
 
-### Parsers (3 files)
-17. `backend/app/parsers/__init__.py` - Parsers package ✅
-18. `backend/app/parsers/base.py` - Base parser ✅
-19. `backend/app/parsers/dbs.py` - DBS parser ✅
-
 ### Bot (4 files)
-20. `backend/app/bot/__init__.py` - Bot package ✅
+17. `backend/app/bot/__init__.py` - Bot package ✅
 21. `backend/app/bot/telegram_bot.py` - Bot application ✅
 22. `backend/app/bot/handlers.py` - Command handlers ✅
 23. `backend/app/bot/keyboards.py` - Keyboards ✅
@@ -146,12 +135,9 @@ Three-tier categorization system:
 - Statistics display
 - Extensible command system
 
-### PDF Parsing
-- Robust DBS/POSB parser
-- Multiple date format support
-- Amount parsing with currency handling
-- Refund detection
-- Extensible parser interface for additional banks
+### PDF Extraction
+- Transaction extraction via `/extract-statement` Claude Code command
+- Supports Citi, Maybank, UOB statements
 
 ## Next Steps - Phase 2
 
@@ -161,8 +147,7 @@ Three-tier categorization system:
 3. ✅ Extension points defined
 
 ### Phase 2 Tasks:
-1. **Multi-bank Support**: Add OCBC, UOB, Citibank parsers
-2. **Refund Matching**: Implement automatic refund-to-original matching
+1. **Refund Matching**: Implement automatic refund-to-original matching
 3. **Enhanced Review**: Improve review workflow with better context
 4. **Error Handling**: Add comprehensive error handling and logging
 
@@ -177,15 +162,14 @@ Before moving to Phase 2, verify:
 - [ ] Test /start command in Telegram
 - [ ] Test /help command
 - [ ] Test /upload command
-- [ ] Upload a DBS PDF statement
-- [ ] Verify transactions are extracted
+- [ ] Extract transactions via /extract-statement command
+- [ ] Verify transactions are imported
 - [ ] Test transaction review buttons
 - [ ] Check /stats command
 
 ## Known Limitations (To Address in Phase 2+)
 
-1. Only DBS/POSB statements supported currently
-2. No refund matching yet (Scenario 4)
+1. No refund matching yet (Scenario 4)
 3. No ML categorization yet (Scenario 3 - keyword heuristics only)
 4. No bill generation yet (Phase 4)
 5. Limited error handling and retry logic
@@ -233,7 +217,7 @@ Use the provided `Dockerfile` and set the `TELEGRAM_BOT_TOKEN` environment varia
 - [x] Bot can receive /start command
 - [x] Database schema created and migrated
 - [x] Can upload PDF file via Telegram (saves to disk)
-- [x] Basic parsing extracts transactions from DBS PDF
+- [x] Basic parsing extracts transactions from PDF
 - [x] Direct card assignment works (card X → person Y)
 - [x] Project structure follows plan
 - [x] All critical files created

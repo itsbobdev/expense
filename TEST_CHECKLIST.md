@@ -5,7 +5,6 @@ Use this checklist to verify everything works correctly.
 ## ✅ Local Setup
 
 - [ ] Python 3.10+ installed (`python --version`)
-- [ ] Java installed (`java -version`) - for PDF parsing
 - [ ] Virtual environment created and activated
 - [ ] Dependencies installed (`pip install -r backend/requirements.txt`)
 - [ ] `.env` file created with bot token
@@ -29,41 +28,23 @@ Use this checklist to verify everything works correctly.
 ### /help Command
 - [ ] `/help` shows help text
 - [ ] Lists all commands
-- [ ] Shows supported banks (DBS, Maybank, UOB)
+- [ ] Lists all commands
 
 ### /upload Command
-- [ ] `/upload` prompts for PDF file
-- [ ] Shows list of supported banks
-- [ ] Bot sets "awaiting upload" state
+- [ ] `/upload` directs user to use /extract-statement Claude Code command
 
 ### /stats Command
 - [ ] `/stats` shows spending by person
 - [ ] Shows correct totals
 - [ ] Handles case when no transactions exist
 
-## ✅ PDF Upload & Parsing
+## ✅ PDF Extraction (via /extract-statement)
 
-### Maybank Statement
-- [ ] Upload `statements/maybank/World Mastercard _25 January 2026.pdf`
-- [ ] Bot detects "Maybank"
-- [ ] Processing message appears
-- [ ] Success message with summary
-- [ ] Correct number of transactions extracted
-- [ ] Card last 4 digits correct (0005)
-- [ ] Statement date correct (2026-01-25)
-
-### UOB Statement
-- [ ] Upload `statements/uob/eStatement.pdf`
-- [ ] Bot detects "UOB"
-- [ ] Processing message appears
-- [ ] Success message with summary
-- [ ] Transactions from all cards extracted
-- [ ] Card numbers recognized
-
-### Error Handling
-- [ ] Upload non-PDF file → Shows error "Please send a PDF file"
-- [ ] Upload without `/upload` command → Shows "Please use /upload command first"
-- [ ] Upload corrupted PDF → Shows appropriate error message
+- [ ] Run `/extract-statement` on a Citi statement
+- [ ] Run `/extract-statement` on a Maybank statement
+- [ ] Run `/extract-statement` on a UOB statement
+- [ ] Verify JSON output contains correct transaction data
+- [ ] Import extracted JSON into the database
 
 ## ✅ Transaction Categorization
 
@@ -125,14 +106,6 @@ SELECT * FROM assignment_rules;
 .quit
 ```
 
-## ✅ Parser Tests
-
-- [ ] Run `python backend/test_parsers.py`
-- [ ] All 3 statements pass
-- [ ] Maybank parser works
-- [ ] UOB parser works
-- [ ] DBS parser works (if you have DBS statement)
-- [ ] No errors in output
 
 ## ✅ Edge Cases
 
@@ -141,25 +114,12 @@ SELECT * FROM assignment_rules;
   - Example: December transactions in January statement
 - [ ] Dates parsed correctly for all formats
 
-### Multi-Cardholder
-- [ ] Maybank supplementary cards extracted (FOO WAH LIANG, CHAN ZELIN)
-- [ ] UOB multiple cards extracted
-- [ ] All cardholders' transactions captured
-
 ### Special Characters
-- [ ] Merchant names with special characters parsed
-- [ ] Reference numbers removed from UOB transactions
+- [ ] Merchant names with special characters handled
 - [ ] Foreign currency symbols handled
-
-### Large Statements
-- [ ] Upload statement with 50+ transactions
-- [ ] All transactions processed
-- [ ] No timeouts or crashes
-- [ ] Memory usage reasonable
 
 ## ✅ Error Recovery
 
-- [ ] Bot recovers from PDF parsing error
 - [ ] Bot recovers from database error
 - [ ] Bot shows helpful error messages
 - [ ] Console logs contain debug information
@@ -167,10 +127,7 @@ SELECT * FROM assignment_rules;
 
 ## ✅ Performance
 
-- [ ] PDF parsing completes in <30 seconds
 - [ ] Bot responds to commands in <3 seconds
-- [ ] Multiple uploads handled correctly
-- [ ] No memory leaks (check after 10+ uploads)
 
 ## ✅ User Experience
 
@@ -215,13 +172,13 @@ SELECT * FROM assignment_rules;
 
 ### Minimum (MVP)
 - ✅ Bot starts and responds to commands
-- ✅ Can upload and parse statements from 3 banks
+- ✅ Can extract and import transactions from bank statements
 - ✅ Transactions are categorized (auto or manual)
 - ✅ Stats command shows spending breakdown
 
 ### Complete (Phase 1 + Multi-Bank)
 - ✅ All of the above
-- ✅ All example statements parse successfully
+- ✅ All example statements extracted successfully
 - ✅ Manual review workflow works smoothly
 - ✅ Data persists correctly in database
 - ✅ Deployed to cloud (optional)
@@ -248,10 +205,7 @@ echo "🧪 Running Quick Tests..."
 # 1. Check Python
 python --version || echo "❌ Python not found"
 
-# 2. Check Java
-java -version || echo "❌ Java not found"
-
-# 3. Check dependencies
+# 2. Check dependencies
 pip freeze | grep -q "fastapi" && echo "✅ Dependencies installed" || echo "❌ Dependencies missing"
 
 # 4. Check database
@@ -259,9 +213,6 @@ test -f backend/expense_tracker.db && echo "✅ Database exists" || echo "❌ Da
 
 # 5. Check .env
 test -f .env && echo "✅ .env file exists" || echo "❌ .env file missing"
-
-# 6. Test parsers
-cd backend && python test_parsers.py || echo "❌ Parser tests failed"
 
 echo ""
 echo "✨ Ready to start bot: python backend/run.py"

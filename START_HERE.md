@@ -8,7 +8,7 @@ Follow these steps **exactly** to get your bot running in 5 minutes.
 2. Search for `@BotFather`
 3. Send: `/newbot`
 4. Enter bot name: `My Expense Tracker`
-5. Enter username: `my_expense_tracker_bot` (must end with "_bot")
+5. Enter username: `cj_expense_tracker_bot` (must end with "_bot")
 6. **Copy the token** that BotFather sends (looks like `123456789:ABCdefGhi...`)
 
 ## Step 2: Install Dependencies (1 minute)
@@ -93,25 +93,9 @@ INFO:     Application startup complete.
 
 You should see the welcome message! 🎉
 
-## Step 7: Upload a Test Statement (1 minute)
+## Step 7: Extract a Statement
 
-1. In Telegram, send: `/upload`
-2. Upload this file:
-   ```
-   D:\D drive\GitHub\expense\statements\maybank\World Mastercard _25 January 2026.pdf
-   ```
-3. Wait 10-20 seconds...
-4. You should see:
-   ```
-   ✅ Statement Processed Successfully!
-
-   📊 Summary:
-   • Total transactions: 3
-   • Auto-assigned: 2
-   • Need review: 1
-   ```
-
-**✅ It works!**
+Use the `/extract-statement` Claude Code command to extract transactions from your PDF statements (supports Citi, Maybank, UOB), then import the JSON data into the database.
 
 ---
 
@@ -121,7 +105,6 @@ Your expense tracker is now running. Try:
 
 - `/stats` - See spending breakdown
 - `/help` - See all commands
-- Upload more PDFs from the `statements/` folder
 
 ## 🚨 Troubleshooting
 
@@ -129,11 +112,8 @@ Your expense tracker is now running. Try:
 - Check the token in `.env` is correct
 - Make sure `python run.py` is still running
 
-**"No module named 'pdfplumber'"?**
+**Missing dependencies?**
 - Run: `pip install -r requirements.txt` again
-
-**Can't upload PDF?**
-- Make sure you sent `/upload` command first
 
 **Need help?**
 - Check `DEPLOYMENT_GUIDE.md` for detailed instructions
@@ -143,7 +123,7 @@ Your expense tracker is now running. Try:
 
 ## 🚀 Next Steps
 
-1. **Upload all your statements** from the `statements/` folder
+1. **Extract statements** using `/extract-statement` Claude Code command
 2. **Review and assign** transactions using the buttons
 3. **Check stats** with `/stats` command
 4. **Deploy to cloud** (see `DEPLOYMENT_GUIDE.md`)

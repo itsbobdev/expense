@@ -4,7 +4,7 @@ A Telegram bot-based expense tracker that automatically categorizes credit card 
 
 ## Features
 
-- **PDF Statement Parsing**: Automatically extract transactions from credit card statements (DBS/POSB supported)
+- **PDF Statement Extraction**: Extract transactions from credit card statements (Citi, Maybank, UOB) via `/extract-statement` Claude Code command
 - **Smart Categorization**: Rule-based and ML-powered transaction assignment
 - **Interactive Review**: Review uncertain transactions directly in Telegram
 - **Refund Matching**: Automatically match refunds to original transactions
@@ -16,7 +16,6 @@ A Telegram bot-based expense tracker that automatically categorizes credit card 
 ### 1. Prerequisites
 
 - Python 3.10+
-- Java Runtime (for tabula-py PDF parsing)
 - Telegram Bot Token (from [@BotFather](https://t.me/botfather))
 
 ### 2. Installation
@@ -169,9 +168,6 @@ expense/
 │   │   │   ├── transaction.py    # Transaction model
 │   │   │   ├── rule.py          # Assignment rule model
 │   │   │   └── bill.py          # Bill models
-│   │   ├── parsers/
-│   │   │   ├── base.py          # Base parser interface
-│   │   │   └── dbs.py           # DBS/POSB parser
 │   │   ├── services/
 │   │   │   └── categorizer.py   # Transaction categorization
 │   │   ├── config.py            # Configuration
@@ -238,21 +234,6 @@ Refunds are automatically matched to original transactions and assigned to the s
 
 ## Development
 
-### Creating a New Bank Parser
-
-1. Create a new parser in `backend/app/parsers/`:
-
-```python
-from app.parsers.base import StatementParser
-
-class NewBankParser(StatementParser):
-    def parse(self, file_path: str):
-        # Implementation
-        pass
-```
-
-2. Register the parser in your upload handler
-
 ### Running Tests
 
 ```bash
@@ -279,11 +260,6 @@ alembic downgrade -1
 - Check if bot token is correct
 - Ensure bot is running (`python app/main.py`)
 - Check logs for errors
-
-### PDF Parsing Errors
-- Ensure Java is installed (for tabula-py)
-- Check PDF format is supported
-- Try a different bank parser
 
 ### Database Errors
 - Run migrations: `alembic upgrade head`
@@ -331,5 +307,5 @@ For issues and questions:
 ## Acknowledgments
 
 - Built with FastAPI and python-telegram-bot
-- PDF parsing powered by pdfplumber and tabula-py
+- PDF extraction via Claude Code custom command
 - ML powered by scikit-learn

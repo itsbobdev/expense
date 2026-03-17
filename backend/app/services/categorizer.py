@@ -1,6 +1,7 @@
-from typing import Optional, Dict, Any
+from typing import Optional
 from sqlalchemy.orm import Session
-from app.models import Transaction, AssignmentRule, Person
+from app.models import Transaction, AssignmentRule, Person, BlacklistCategory
+from app.services.blacklist_matcher import BlacklistMatcher
 from dataclasses import dataclass
 
 
@@ -12,17 +13,28 @@ class AssignmentResult:
     confidence: float
     method: str
     needs_review: bool
+    blacklist_category_id: Optional[int] = None
 
 
 class TransactionCategorizer:
-    """Categorizes transactions based on rules and ML predictions"""
+    """
+    Categorizes transactions based on card-direct rules and blacklist matching.
+
+    Flow:
+    1. Check if card matches any card-direct rule (from YAML) → Direct assignment
+    2. If no match, assign to "self" person
+    3. For "self" assignments, check against blacklist categories
+    4. If blacklist match → needs_review=True
+    5. Otherwise → auto-assign to "self"
+    """
 
     def __init__(self, db: Session):
         self.db = db
+        self.blacklist_matcher = BlacklistMatcher(db)
 
     def categorize(self, transaction: Transaction) -> AssignmentResult:
         """
-        Categorize a transaction using rules in priority order.
+        Categorize a transaction using card-direct rules and blacklist checking.
 
         Args:
             transaction: Transaction to categorize
@@ -30,116 +42,101 @@ class TransactionCategorizer:
         Returns:
             AssignmentResult with person assignment and confidence
         """
-        # Get all active rules ordered by priority (highest first)
-        rules = (
-            self.db.query(AssignmentRule)
-            .filter(AssignmentRule.is_active == True)
-            .order_by(AssignmentRule.priority.desc())
-            .all()
+        # Step 1: Try card-direct assignment (cards listed in YAML)
+        card_result = self._try_card_direct_assignment(transaction)
+        if card_result:
+            return card_result
+
+        # Step 2: Card not in YAML → belongs to "self"
+        self_person = self._get_or_create_self_person()
+
+        # Step 3: Check blacklist for "self" transactions
+        blacklist_category = self.blacklist_matcher.check_blacklist(
+            merchant_name=transaction.merchant_name,
+            description=getattr(transaction, 'description', ''),
+            location=getattr(transaction, 'location', '')
         )
 
-        # Try each rule in order
-        for rule in rules:
-            if self._matches_rule(transaction, rule):
-                person = self.db.query(Person).filter(Person.id == rule.assign_to_person_id).first()
-                return AssignmentResult(
-                    person_id=person.id,
-                    person_name=person.name,
-                    confidence=1.0,
-                    method=rule.rule_type,
-                    needs_review=False,
-                )
+        if blacklist_category:
+            # Trigger manual review
+            return AssignmentResult(
+                person_id=self_person.id,
+                person_name=self_person.name,
+                confidence=0.0,
+                method='blacklist_review',
+                needs_review=True,
+                blacklist_category_id=blacklist_category.id
+            )
+        else:
+            # Auto-assign to self
+            return AssignmentResult(
+                person_id=self_person.id,
+                person_name=self_person.name,
+                confidence=1.0,
+                method='self_auto',
+                needs_review=False
+            )
 
-        # No rule matched - needs review
-        return AssignmentResult(
-            person_id=None,
-            person_name=None,
-            confidence=0.0,
-            method="none",
-            needs_review=True,
-        )
-
-    def _matches_rule(self, transaction: Transaction, rule: AssignmentRule) -> bool:
+    def _try_card_direct_assignment(self, transaction: Transaction) -> Optional[AssignmentResult]:
         """
-        Check if a transaction matches a rule's conditions.
+        Try to assign transaction based on card-direct rules.
 
         Args:
             transaction: Transaction to check
-            rule: Rule to match against
 
         Returns:
-            True if the transaction matches all conditions
+            AssignmentResult if card matches, None otherwise
         """
-        conditions = rule.conditions
+        if not transaction.statement:
+            return None
 
-        # Card direct matching
-        if rule.rule_type == "card_direct":
-            card_last_4 = conditions.get("card_last_4")
-            if card_last_4:
-                # Get card from statement
-                if transaction.statement and transaction.statement.card_last_4 == card_last_4:
-                    return True
+        card_last_4 = transaction.statement.card_last_4
 
-        # Category matching
-        elif rule.rule_type == "category":
-            required_card = conditions.get("card_last_4")
-            required_categories = conditions.get("category", [])
+        # Get card-direct rules for this card
+        rule = (
+            self.db.query(AssignmentRule)
+            .filter(
+                AssignmentRule.is_active == True,
+                AssignmentRule.rule_type == "card_direct"
+            )
+            .filter(AssignmentRule.conditions.contains({"card_last_4": card_last_4}))
+            .first()
+        )
 
-            # Check card match if specified
-            if required_card:
-                if not transaction.statement or transaction.statement.card_last_4 != required_card:
-                    return False
-
-            # Check category match
-            if required_categories:
-                # Detect category from merchant name
-                detected_category = self._detect_category(transaction.merchant_name)
-                if detected_category in required_categories:
-                    return True
-
-        # Merchant matching
-        elif rule.rule_type == "merchant":
-            merchant_keywords = conditions.get("merchant_keywords", [])
-            merchant_lower = transaction.merchant_name.lower()
-
-            for keyword in merchant_keywords:
-                if keyword.lower() in merchant_lower:
-                    return True
-
-        return False
-
-    def _detect_category(self, merchant_name: str) -> Optional[str]:
-        """
-        Detect transaction category from merchant name.
-
-        Args:
-            merchant_name: Name of the merchant
-
-        Returns:
-            Category string or None
-        """
-        merchant_lower = merchant_name.lower()
-
-        # Transport categories (for Scenario 2)
-        bus_keywords = ['sbs', 'smrt bus', 'tower transit', 'go-ahead']
-        if any(kw in merchant_lower for kw in bus_keywords):
-            return 'transport_bus'
-
-        mrt_keywords = ['mrt', 'simplygo', 'ez-link', 'ez link']
-        if any(kw in merchant_lower for kw in mrt_keywords):
-            return 'transport_mrt'
-
-        # Parent categories (for Scenario 3 - keyword heuristics)
-        flight_keywords = ['jetstar', 'scoot', 'changi', 'airline', 'airways', 'singapore air']
-        if any(kw in merchant_lower for kw in flight_keywords):
-            return 'parent_flight'
-
-        tour_keywords = ['tour', 'klook', 'pelago', 'chan brothers', 'travel agency']
-        if any(kw in merchant_lower for kw in tour_keywords):
-            return 'parent_tour'
-
-        cleaning_keywords = ['helper', 'maid', 'cleaning service']
-        if any(kw in merchant_lower for kw in cleaning_keywords):
-            return 'parent_cleaning'
+        if rule:
+            person = self.db.query(Person).filter(Person.id == rule.assign_to_person_id).first()
+            return AssignmentResult(
+                person_id=person.id,
+                person_name=person.name,
+                confidence=1.0,
+                method='card_direct',
+                needs_review=False
+            )
 
         return None
+
+    def _get_or_create_self_person(self) -> Person:
+        """
+        Get or create the "self" person for transactions not matching YAML cards.
+
+        Returns:
+            Person object for "self"
+        """
+        self_person = (
+            self.db.query(Person)
+            .filter(Person.relationship_type == "self")
+            .first()
+        )
+
+        if not self_person:
+            self_person = Person(
+                name="Self",
+                relationship_type="self",
+                card_last_4_digits=[],
+                is_auto_created=True
+            )
+            self.db.add(self_person)
+            self.db.commit()
+            self.db.refresh(self_person)
+
+        return self_person

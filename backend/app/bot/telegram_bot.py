@@ -6,6 +6,9 @@ from app.bot.handlers import (
     handle_document,
     handle_callback,
     stats_command,
+    blacklist_command,
+    add_blacklist_command,
+    handle_text_message,
 )
 from app.config import settings
 import logging
@@ -33,9 +36,12 @@ def create_bot_application() -> Application:
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(CommandHandler("stats", stats_command))
+    application.add_handler(CommandHandler("blacklist", blacklist_command))
+    application.add_handler(CommandHandler("add_blacklist", add_blacklist_command))
 
     # Register message handlers
     application.add_handler(MessageHandler(filters.Document.PDF, handle_document))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text_message))
 
     # Register callback query handler for inline keyboards
     application.add_handler(CallbackQueryHandler(handle_callback))

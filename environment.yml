@@ -1,0 +1,33 @@
+name: expense
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - openjdk=11  # For tabula-py PDF parsing
+  - pip:
+    # Core
+    - fastapi==0.109.0
+    - uvicorn[standard]==0.27.0
+    - python-telegram-bot==20.7
+    - sqlalchemy==2.0.25
+    - alembic==1.13.1
+
+    # Database
+    - psycopg2-binary==2.9.9
+
+    # PDF Parsing
+    - pdfplumber==0.10.3
+    - tabula-py==2.9.0
+    - pandas==2.1.4
+
+    # Utilities
+    - python-dotenv==1.0.0
+    - pydantic==2.5.3
+    - pydantic-settings==2.1.0
+    - pyyaml==6.0.1
+
+    # Testing
+    - pytest==7.4.4
+    - pytest-asyncio==0.23.3

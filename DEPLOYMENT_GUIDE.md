@@ -104,74 +104,17 @@ INFO:     Application startup complete.
 
 ---
 
-## Testing with Example Statements
-
-### Test the Parsers (Optional)
-
-```bash
-cd backend
-python test_parsers.py
-```
-
-**Expected output:**
-```
-Found 3 PDF file(s) to test
-
-================================================================================
-Testing: World Mastercard _25 January 2026.pdf
-================================================================================
-Detected Bank: MAYBANK
-
-✅ Successfully parsed!
-
-Card Last 4: 0005
-Statement Date: 2026-01-25
-Transactions Found: 3
-
-First 5 Transactions:
-Date         Merchant                                    Amount
------------------------------------------------------------------
-2026-01-09   BPDS 25I12I1676231                       $   12.16
-2026-01-09   SERAYA ENERGY PTE LTD  SINGAPORE         $   40.74
-2026-01-21   CAMDEN FOOD CO DIPLOMATIC AR             $   24.35
-
-================================================================================
-TEST SUMMARY
-================================================================================
-✅ PASS: World Mastercard _25 January 2026.pdf
-✅ PASS: Family & Friends Card_25 February 2026.pdf
-✅ PASS: eStatement.pdf
-
-Total: 3 | Passed: 3 | Failed: 0
-
-🎉 All tests passed!
-```
+## Testing the Bot
 
 ### Test Full Workflow
 
 1. **Send `/start` to bot** - Verify welcome message appears
 
-2. **Send `/upload` command** - Bot should prompt for PDF
+2. **Extract transactions** - Use `/extract-statement` Claude Code command on your PDF statements
 
-3. **Upload a statement** - Send one of the example PDFs:
-   ```
-   statements/maybank/World Mastercard _25 January 2026.pdf
-   ```
+3. **Import transactions** - Import the extracted JSON into the database
 
-4. **Check processing** - Bot should show:
-   ```
-   ✅ Statement Processed Successfully!
-
-   📊 Summary:
-   • Total transactions: 3
-   • Auto-assigned: 2
-   • Need review: 1
-
-   Card: •••• 0005
-   Period: 2026-01-25
-   ```
-
-5. **Review transactions** - If any need review, you'll see buttons:
+4. **Review transactions** - If any need review, you'll see buttons:
    ```
    🤔 Transaction Review
 
@@ -180,21 +123,10 @@ Total: 3 | Passed: 3 | Failed: 0
    💰 Amount: $40.74
 
    Who should pay for this?
-   [👨 Parent] [👫 Spouse] [👤 Self] [❌ Skip]
+   [Parent] [Spouse] [Self] [Skip]
    ```
 
-6. **Test `/stats` command** - View spending by person:
-   ```
-   📊 Spending Statistics
-
-   Dad (parent)
-   • Total: $40.74
-   • Transactions: 1
-
-   Mom (spouse)
-   • Total: $24.35
-   • Transactions: 1
-   ```
+5. **Test `/stats` command** - View spending by person
 
 ---
 
@@ -209,16 +141,6 @@ Total: 3 | Passed: 3 | Failed: 0
 2. Verify `run.py` is running (should see "Application startup complete")
 3. Check console for errors
 4. Make sure you're messaging the correct bot
-
-### PDF Upload Not Working
-
-**Issue:** "No transactions found" or parsing error
-
-**Solutions:**
-1. Check the PDF is from a supported bank (DBS, Maybank, UOB)
-2. Make sure PDF is not password-protected
-3. Check console for detailed error messages
-4. Try running `test_parsers.py` to verify parser works
 
 ### Database Errors
 
@@ -247,17 +169,6 @@ pip install -r requirements.txt
 # Check virtual environment is activated
 # You should see (venv) in your prompt
 ```
-
-### Java Not Found (PDF Parsing)
-
-**Issue:** "Java not found" when parsing PDFs
-
-**Solutions:**
-- **Windows:** Download Java from https://www.java.com/download/
-- **Mac:** `brew install java`
-- **Linux:** `sudo apt-get install default-jre`
-
-Verify installation: `java -version`
 
 ---
 
@@ -376,9 +287,6 @@ Before going to production:
 # Start bot locally
 cd backend && python run.py
 
-# Test parsers
-cd backend && python test_parsers.py
-
 # Reset database
 rm backend/expense_tracker.db
 cd backend && python setup_database.py
@@ -409,7 +317,6 @@ backend/
   ml_models/               # ML models (Phase 3)
   run.py                   # Start script
   setup_database.py        # Database setup
-  test_parsers.py          # Parser tests
 ```
 
 ---

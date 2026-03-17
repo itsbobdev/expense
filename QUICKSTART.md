@@ -5,7 +5,6 @@ Get your expense tracker running in 5 minutes!
 ## Prerequisites
 
 - Python 3.10 or higher
-- Java Runtime Environment (for PDF parsing)
 - Telegram account
 - 5 minutes of your time
 
@@ -94,12 +93,11 @@ Port: 8000
 
 ## Next Steps
 
-### Upload Your First Statement
+### Extract Your First Statement
 
-1. Send `/upload` command to the bot
-2. Attach your DBS/POSB credit card statement PDF
-3. Wait for processing (usually 10-30 seconds)
-4. Review any uncertain transactions using the buttons
+1. Use the `/extract-statement` Claude Code command on your PDF statement
+2. Import the extracted JSON data into the database
+3. Review any uncertain transactions using the Telegram bot buttons
 
 ### View Statistics
 
@@ -122,10 +120,8 @@ Make sure you're in the `backend` directory and your virtual environment is acti
 2. Make sure `run.py` is running
 3. Check the console for error messages
 
-### PDF parsing error
-1. Make sure Java is installed: `java -version`
-2. Try a different PDF file
-3. Check if it's a DBS/POSB statement (other banks coming soon)
+### PDF extraction
+Use the `/extract-statement` Claude Code command to extract transactions from PDF statements (supports Citi, Maybank, UOB).
 
 ## Advanced: Docker Deployment
 

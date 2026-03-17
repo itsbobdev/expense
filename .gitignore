@@ -34,6 +34,10 @@ ENV/
 *.sqlite
 *.sqlite3
 
+# Statements - ignore all except the example config
+statements/
+!statements/statement_people_identifier.yaml.example
+
 # Uploads and ML models
 uploads/
 ml_models/
@@ -51,6 +55,14 @@ ml_models/
 # OS
 .DS_Store
 Thumbs.db
+
+# Bank statement PDFs
+*.pdf
+
+# Claude Code local config
+.claude/settings.local.json
+.claude/backups/
+.claude/logs/
 
 # Alembic
 alembic/versions/*.pyc
