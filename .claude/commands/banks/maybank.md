@@ -94,9 +94,37 @@ Always prefix with `"MAYBANK "` for `card_name` field (e.g. `"MAYBANK WORLD MAST
 - `PAYMENT RECEIVED`
 - `PAYMENT - AXS` (AXS payment channel line)
 - Any `PAYMENT` line with `CR` suffix (these are payment credits, not transactions)
-- Cashback lines (e.g. `8% CASHBACK`, `OTHER CASHBACK`) — Maybank cashback credits are NOT included in `TOTAL TRANSACTIONS AMOUNT`, so including them would cause sum mismatches
-- Points/rewards summary rows
 - Foreign currency informational lines (indented lines like `CNY129.00`) — these are part of the transaction above, not separate transactions
+
+## Cashback Lines (Extract as Reward Transactions)
+
+Maybank cashback credit lines (e.g. `8% CASHBACK`, `OTHER CASHBACK`) are **rewards**, not merchant refunds. Extract them as transactions with:
+- `is_reward: true`
+- `reward_type: "cashback"`
+- `is_refund: false`
+- `amount`: positive value (cashback amount without CR sign)
+- `merchant_name`: `"8% CASHBACK"` or `"OTHER CASHBACK"` as shown
+
+These are **not included in `TOTAL TRANSACTIONS AMOUNT`** — do not add them when verifying the sum.
+
+## Rewards Summary (append to rewards_history.json)
+
+Do NOT add rewards data to the statement JSON. Instead, if the statement contains a rewards/cashback summary section, append an entry to `statements/rewards_history.json`:
+
+```json
+{
+  "billing_month": "<from folder path, e.g. 2026-01>",
+  "bank_name": "Maybank",
+  "card_last_4": "<last 4>",
+  "reward_type": "cashback",
+  "earned_this_period": 69.17,
+  "balance": null,
+  "expiry_date": null,
+  "description": "<label from statement>"
+}
+```
+
+If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found in the statement, do not append anything.
 
 ## Foreign Currency Handling
 

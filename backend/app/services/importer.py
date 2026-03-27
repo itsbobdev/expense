@@ -4,6 +4,7 @@ Statement Importer Service
 Imports JSON statement files from statements/YYYY/MM/bank/ into the database,
 then runs categorization and refund matching on each transaction.
 """
+import re
 import json
 import hashlib
 import logging
@@ -19,6 +20,19 @@ from app.services.categorizer import TransactionCategorizer
 from app.services.refund_handler import RefundHandler
 from app.services.alert_resolver import AlertResolver
 from app.config import settings
+
+# Patterns that identify cashback reward transactions (not merchant refunds)
+_REWARD_PATTERNS = [
+    re.compile(r'^\d+%\s*CASHBACK$', re.IGNORECASE),   # "8% CASHBACK"
+    re.compile(r'^OTHER\s+CASHBACK$', re.IGNORECASE),
+    re.compile(r'^UOB\s+EVOL\s+Card\s+Cashback', re.IGNORECASE),
+    re.compile(r'^UOB\s+Absolute\s+Cashback', re.IGNORECASE),
+]
+
+
+def _is_reward_transaction(merchant_name: str) -> bool:
+    """Return True if merchant_name matches a known cashback reward pattern."""
+    return any(p.match(merchant_name or '') for p in _REWARD_PATTERNS)
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +98,7 @@ class StatementImporter:
                 billing_month=billing_month,
                 files_imported=0, files_skipped=0, files_errored=0,
                 total_transactions=0, total_flagged=0, total_refunds_matched=0,
+                total_alerts_created=0, total_alerts_resolved=0,
                 file_results=[],
             )
 
@@ -201,15 +216,21 @@ class StatementImporter:
         transactions_data = data.get("transactions", [])
         transactions = []
         for txn_data in transactions_data:
+            merchant_name = txn_data.get("merchant_name") or txn_data.get("description", "UNKNOWN")
+            is_reward = txn_data.get("is_reward", False) or _is_reward_transaction(merchant_name)
+            is_refund = False if is_reward else txn_data.get("is_refund", False)
+
             txn = Transaction(
                 statement_id=statement.id,
                 billing_month=billing_month,
                 transaction_date=self._parse_date(txn_data.get("transaction_date")) or statement_date or date.today(),
-                merchant_name=txn_data.get("merchant_name") or txn_data.get("description", "UNKNOWN"),
+                merchant_name=merchant_name,
                 raw_description=txn_data.get("raw_description"),
                 amount=txn_data.get("amount", 0.0),
                 ccy_fee=txn_data.get("ccy_fee"),
-                is_refund=txn_data.get("is_refund", False),
+                is_refund=is_refund,
+                is_reward=is_reward,
+                reward_type=txn_data.get("reward_type", "cashback") if is_reward else None,
                 categories=txn_data.get("categories", []),
                 country_code=txn_data.get("country_code"),
                 location=txn_data.get("location"),
@@ -220,6 +241,8 @@ class StatementImporter:
         self.db.flush()  # Get transaction IDs
 
         # Run categorization on non-refund transactions
+        # Reward transactions still go through categorizer (for person assignment)
+        # but always have needs_review=False overridden.
         flagged_count = 0
         alerts_created = 0
         for txn in transactions:
@@ -228,13 +251,18 @@ class StatementImporter:
                 txn.assigned_to_person_id = result.person_id
                 txn.assignment_confidence = result.confidence
                 txn.assignment_method = result.method
-                txn.needs_review = result.needs_review
-                txn.blacklist_category_id = result.blacklist_category_id
-                txn.alert_status = result.alert_status
-                if result.needs_review:
-                    flagged_count += 1
-                if result.alert_status == 'pending':
-                    alerts_created += 1
+                if txn.is_reward:
+                    txn.needs_review = False
+                    txn.blacklist_category_id = None
+                    txn.alert_status = None
+                else:
+                    txn.needs_review = result.needs_review
+                    txn.blacklist_category_id = result.blacklist_category_id
+                    txn.alert_status = result.alert_status
+                    if result.needs_review:
+                        flagged_count += 1
+                    if result.alert_status == 'pending':
+                        alerts_created += 1
 
         self.db.flush()  # Ensure IDs available for alert_resolver
 
@@ -246,10 +274,10 @@ class StatementImporter:
                 if self.alert_resolver.process_card_fee(txn):
                     alerts_resolved += 1
 
-        # Run refund matching on refund transactions (non-card_fees refunds)
+        # Run refund matching on refund transactions (non-card_fees refunds, non-rewards)
         refunds_matched = 0
         for txn in transactions:
-            if txn.is_refund:
+            if txn.is_refund and not txn.is_reward:
                 categories = txn.categories or []
                 if 'card_fees' in categories:
                     continue  # already handled by alert_resolver

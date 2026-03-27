@@ -24,8 +24,29 @@ Each such header starts a new cardholder block. Collect transactions beneath it 
 - `PAYMENT - AXS`
 - Any `PAYMENT` line with `CR` suffix
 - `SUB-TOTAL` (this is the section total, not a transaction)
-- Points/rewards summary rows (e.g. `REWARDS POINTS EARNED`)
+- Points/rewards summary rows within the transaction table (e.g. `REWARDS POINTS EARNED` inline rows)
 - `CCY CONVERSION FEE` lines (merge into preceding transaction's `ccy_fee` instead)
+
+## Rewards Summary (append to rewards_history.json)
+
+Do NOT add rewards data to the statement JSON. Instead, if the statement contains a Rewards Points summary section, append an entry to `statements/rewards_history.json`:
+
+```json
+{
+  "billing_month": "<from folder path, e.g. 2026-01>",
+  "bank_name": "Citibank",
+  "card_last_4": "<last 4>",
+  "reward_type": "points",
+  "earned_this_period": 1500,
+  "balance": 12450,
+  "expiry_date": "2028-12-31",
+  "description": "<label from statement>"
+}
+```
+
+- `reward_type`: `"points"` for Citi Rewards points; `"miles"` if the card earns miles (e.g. Citi PremierMiles)
+
+If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found in the statement, do not append anything.
 
 ## CCY Conversion Fee
 

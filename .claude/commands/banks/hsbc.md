@@ -63,9 +63,29 @@ Also treat `LATE FEE CREDIT ADJUSTMENT` and reversed `FINANCE CHARGE` (with CR) 
 - `PYMT @ AXS -THANK YOU` (with `CR` suffix) — AXS payment line
 - `Previous Statement Balance` — balance brought forward
 - `Total Due` — total line
-- Rewards Summary section (points earned, redeemed, etc.)
 - Account Summary section (right-hand column)
 - Credit Limit and Interest Rates section
+
+## Rewards Summary (append to rewards_history.json)
+
+Do NOT add rewards data to the statement JSON. Instead, if the statement contains a Rewards Points summary section, append an entry to `statements/rewards_history.json`:
+
+```json
+{
+  "billing_month": "<from folder path, e.g. 2026-01>",
+  "bank_name": "HSBC",
+  "card_last_4": "<last 4>",
+  "reward_type": "points",
+  "earned_this_period": 300,
+  "balance": 3200,
+  "expiry_date": null,
+  "description": "<label from statement>"
+}
+```
+
+- `reward_type`: `"points"` for HSBC Rewards points
+
+If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found in the statement, do not append anything.
 
 ## Bank Charges (Include as Transactions)
 

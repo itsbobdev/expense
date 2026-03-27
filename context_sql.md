@@ -147,6 +147,8 @@ CREATE TABLE transactions (
 	amount FLOAT NOT NULL,
 	ccy_fee FLOAT,
 	is_refund BOOLEAN,
+	is_reward BOOLEAN,
+	reward_type VARCHAR,
 	category VARCHAR,
 	categories JSON,
 	country_code VARCHAR(2),
@@ -170,7 +172,31 @@ CREATE TABLE transactions (
 	FOREIGN KEY(original_transaction_id) REFERENCES transactions (id)
 )
 ```
-Rows: 1297
+Rows: 1297+
+
+### card_rewards
+```sql
+CREATE TABLE card_rewards (
+	id INTEGER NOT NULL,
+	statement_id INTEGER,
+	billing_month VARCHAR NOT NULL,
+	card_last_4 VARCHAR(4),
+	bank_name VARCHAR,
+	person_id INTEGER,
+	reward_type VARCHAR NOT NULL,
+	earned_this_period FLOAT NOT NULL,
+	balance FLOAT,
+	expiry_date DATE,
+	description VARCHAR,
+	created_at DATETIME,
+	PRIMARY KEY (id),
+	FOREIGN KEY(statement_id) REFERENCES statements (id),
+	FOREIGN KEY(person_id) REFERENCES persons (id)
+)
+```
+Rows: 0
+
+Note: `card_rewards` is populated from `statements/rewards_history.json` via `backend/import_rewards_history.py`, NOT from statement JSONs. `statement_id` is always NULL for these records. Dedup key: `(billing_month, card_last_4, reward_type)`.
 
 ## Key Relationships
 
@@ -178,7 +204,9 @@ Rows: 1297
 - persons.id -> assignment_rules.assign_to_person_id (card-direct rules)
 - persons.id -> bills.person_id
 - persons.id -> manual_bills.person_id (recurring charges)
+- persons.id -> card_rewards.person_id (rewards earned by person)
 - statements.id -> transactions.statement_id (which statement a txn came from)
+- statements.id -> card_rewards.statement_id (rewards from which statement)
 - transactions.id -> transactions.original_transaction_id (refund -> original)
 - transactions.id -> transactions.parent_transaction_id (GST child -> fee parent)
 - transactions.id -> transactions.resolved_by_transaction_id (fee -> its reversal)
@@ -217,6 +245,11 @@ Rows: 1297
 - Set during PDF extraction, e.g. `["flights"]`, `["subscriptions", "foreign_currency"]`
 - Trigger categories that flag review on self cards: `flights`, `tours`, `travel_accommodation`, `subscriptions`, `foreign_currency`, `amaze`, `paypal`, `insurance`, `town_council`
 - `card_fees`: annual fees, GST on fees, late charges — triggers alert workflow instead of review
+
+### transaction.is_reward / reward_type
+- `is_reward = 1`: cashback reward credits (e.g. `8% CASHBACK`, `UOB EVOL Card Cashback`) — not merchant refunds
+- `reward_type`: `cashback` | `points` | `miles` | `uni_dollars`
+- Reward transactions always have `is_refund=0`, `needs_review=0` — they are tracked via `card_rewards` table
 
 ### transaction.alert_status
 - `null`: not a card fee, no alert

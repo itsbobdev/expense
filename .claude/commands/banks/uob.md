@@ -44,11 +44,40 @@ Only `PAYMT`/`PAYMENT` lines are skipped. All other `CR` lines are real transact
 | `PAYMT THRU E-BANK/HOMEB/CYBERB ... CR` | **Skip** | Bill payment |
 | `CR CARD MEMBERSHIP FEE - INC OF GST ... CR` | **Keep** | Fee waiver (`card_fees`, `is_refund: true`) |
 | `CR CB DISPUTES- SKYH TRAVEL ... CR` | **Keep** | Chargeback credit (`is_refund: true`) |
-| `UOB EVOL Card Cashback ... CR` | **Keep** | Cashback reward (`is_refund: true`) |
-| `UOB Absolute Cashback ... CR` | **Keep** | Cashback reward (`is_refund: true`) |
+| `UOB EVOL Card Cashback ... CR` | **Keep** | Cashback reward (`is_reward: true, is_refund: false`) |
+| `UOB Absolute Cashback ... CR` | **Keep** | Cashback reward (`is_reward: true, is_refund: false`) |
 | `SHOPEE SINGAPORE MP ... CR` | **Keep** | Merchant refund (`is_refund: true`) |
 
 **Rule of thumb:** if it says `PAYMT` or `PAYMENT`, skip it. Everything else with `CR` is a real transaction.
+
+### UOB Cashback as Rewards
+
+UOB cashback lines (`UOB EVOL Card Cashback`, `UOB Absolute Cashback`) are **rewards**, not merchant refunds. Extract them with:
+- `is_reward: true`
+- `reward_type: "cashback"`
+- `is_refund: false`
+- `amount`: positive value (remove the `CR` sign and negate — cashback is an inflow but stored as positive reward)
+
+## Rewards Summary (append to rewards_history.json)
+
+Do NOT add rewards data to the statement JSON. Instead, if the statement contains a UNI$/Points summary section, append an entry to `statements/rewards_history.json`:
+
+```json
+{
+  "billing_month": "<from folder path, e.g. 2026-01>",
+  "bank_name": "UOB",
+  "card_last_4": "<last 4>",
+  "reward_type": "uni_dollars",
+  "earned_this_period": 150.0,
+  "balance": 3200.0,
+  "expiry_date": "2027-12-31",
+  "description": "<label from statement>"
+}
+```
+
+- `reward_type`: `"uni_dollars"` for UOB UNI$; `"points"` for UOB points if applicable
+
+If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found in the statement, do not append anything.
 
 ## CCY Conversion Fee
 

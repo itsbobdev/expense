@@ -56,12 +56,39 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
      "ccy_fee": 0.30,
      "foreign_currency_amount": null,
      "is_refund": false,
+     "is_reward": false,
+     "reward_type": null,
      "country_code": "US",
      "location": "SAN FRANCISCO",
      "categories": ["subscriptions", "foreign_currency"]
    }
    ```
    - `foreign_currency_amount`: default `null`. Some banks show original foreign currency inline (see bank-specific guide). When present, set to the string value (e.g. `"GBP1880.00"`).
+   - `is_reward`: set `true` for cashback reward credits (e.g. `8% CASHBACK`, `UOB EVOL Card Cashback`). Default `false`.
+   - `reward_type`: `"cashback"` when `is_reward` is true; `null` otherwise.
+
+6b. **Rewards summary → append to `statements/rewards_history.json`:**
+   Do NOT add rewards data to the statement JSON. Instead, if the statement contains a rewards/points/cashback summary section, append an entry to `statements/rewards_history.json`:
+   ```json
+   {
+     "billing_month": "2026-01",
+     "bank_name": "Maybank",
+     "card_last_4": "9004",
+     "reward_type": "cashback",
+     "earned_this_period": 69.17,
+     "balance": null,
+     "expiry_date": null,
+     "description": "8% CASHBACK + OTHER CASHBACK"
+   }
+   ```
+   - `billing_month`: from the folder path (e.g. `statements/2026/01/maybank/` → `"2026-01"`)
+   - `reward_type`: `cashback` | `points` | `miles` | `uni_dollars`
+   - `earned_this_period`: SGD amount for cashback; count for points/miles/uni_dollars
+   - `balance`: running balance if shown, else `null`
+   - `expiry_date`: `"YYYY-MM-DD"` if shown, else `null`
+   - `description`: label from statement
+   - If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found, do not append anything.
+   - Read the existing file first, append the new entry, then write the full updated array back.
 
 7. **CCY Conversion Fee merging:** Some banks show CCY conversion fees as separate lines — refer to the bank-specific guide for details. When applicable:
    - Merge the fee amount into the preceding transaction's `ccy_fee` field
@@ -124,6 +151,8 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
       "ccy_fee": 0.30,
       "foreign_currency_amount": null,
       "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
       "country_code": "US",
       "location": "SAN FRANCISCO",
       "categories": ["subscriptions", "foreign_currency"]
@@ -136,6 +165,8 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
       "ccy_fee": null,
       "foreign_currency_amount": null,
       "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
       "country_code": "SG",
       "location": "SINGAPORE",
       "categories": ["amaze"]
