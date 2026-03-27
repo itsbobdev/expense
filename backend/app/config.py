@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     # File Storage
     upload_dir: Path = Path("./uploads")
     ml_model_dir: Path = Path("./ml_models")
+    statements_dir: Path = Path("../statements")
 
     # ML Settings
     ml_confidence_threshold_auto: float = 0.95

@@ -14,10 +14,10 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
 
 1. **Find PDFs:** Use Glob to find all PDF files in the provided folder path
 2. **Read Each PDF:** Use the Read tool to read each PDF file (Claude Code can read PDFs natively)
-3. **Identify bank and load bank guide:** Determine the bank from the folder path (e.g. `statements/2025/07/maybank/` → Maybank) or from PDF content. Then read the corresponding bank-specific guide from `.claude/commands/banks/{bank}.md` for bank-specific parsing rules (cardholder header formats, skip lines, CCY handling, etc.).
+3. **Identify bank and load bank guide:** Determine the bank from the folder path (e.g. `statements/2025/07/maybank/` → Maybank, `statements/2025/07/hsbc/` → HSBC) or from PDF content. Identifiable banks: Citibank, DBS, HSBC, Maybank, UOB. Then read the corresponding bank-specific guide from `.claude/commands/banks/{bank}.md` for bank-specific parsing rules (cardholder header formats, skip lines, CCY handling, etc.).
 4. **Extract Data:** For each PDF (or card section within a multi-card PDF), extract:
    - `filename`: PDF filename
-   - `bank_name`: Bank name — "Citibank", "Maybank", "UOB", "DBS"
+   - `bank_name`: Bank name — "Citibank", "DBS", "HSBC", "Maybank", "UOB"
    - `card_last_4`: Last 4 digits of the card number
    - `card_name`: Full card product name (e.g. "CITI REWARDS WORLD MASTERCARD")
    - `cardholder_name`: Normalized key from `statements/statement_people_identifier.yaml` matched by `card_last_4` (see step 4b). If no match, use the raw name from the statement. If no sub-section header exists, still look up by last-4.
@@ -68,7 +68,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
    - Do **NOT** emit a CCY CONVERSION FEE line as its own transaction
 
 8. **Parsing country code and location:**
-   - **Citibank / UOB:** The raw description ends with a 2-letter uppercase country code (SG, US, JP, GB, AU, etc.)
+   - **Citibank / HSBC / UOB:** The raw description ends with a 2-letter uppercase country code (SG, US, JP, GB, AU, etc.)
      - `country_code` = last 2 characters of description if they are uppercase alpha (e.g. `US` from `SAN FRANCISCOUS`)
      - `location` = text between merchant name and country code (trimmed), e.g. `SAN FRANCISCO`
      - For Singapore local transactions the code may appear as `SG` or `SINGAPORE SG`
@@ -86,7 +86,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
     - Keywords: "REFUND", "REVERSAL", "CREDIT" in merchant name
     - Amounts in parentheses
 
-11. **Skip lines:** Each bank has specific lines to skip (payment lines, balance lines, totals, etc.). Refer to the bank-specific guide loaded in step 3. Common across all banks:
+11. **Skip lines:** Each bank has specific lines to skip (payment lines, balance lines, totals, etc.). Refer to the bank-specific guide loaded in step 3 for bank-specific skip lines (e.g. HSBC has its own set of skip patterns). Common across all banks:
     - Points/rewards summary rows (e.g. "REWARDS POINTS EARNED")
     - CCY CONVERSION FEE lines (merge into preceding transaction instead)
 
@@ -100,7 +100,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
 
 ## Output Format
 
-**Single-card PDFs (Citibank, Maybank, DBS):** one JSON object (or one per cardholder sub-section if supplementary cardholders are present).
+**Single-card PDFs (Citibank, DBS, HSBC, Maybank):** one JSON object (or one per cardholder sub-section if supplementary cardholders are present).
 **UOB multi-card PDFs:** one JSON object per card section (output them sequentially).
 **Savings/deposit PDFs:** one JSON object per account (see bank-specific guide for schema).
 
@@ -148,6 +148,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
 
 - Extract EVERY transaction from the statement (except skipped lines per bank guide)
 - Be thorough and accurate
+- `card_last_4` is ALWAYS exactly the **rightmost 4 digits** of the card number, regardless of card type. Amex cards have a 5-digit last segment (e.g. `3763-174011-55993`) — use `5993`, NOT `55993`.
 - If you cannot find card last 4 digits, use "XXXX"
 - If `ccy_fee` is not applicable, set it to `null`
 - If `foreign_currency_amount` is not applicable, set it to `null`
@@ -156,5 +157,6 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
   - Example: `2026_feb_citi_citi_rewards_world_mastercard_foo_chi_jao_6265.json`
   - Example: `2026_feb_uob_preferred_platinum_visa_foo_wah_liang_4474.json`
   - Example: `2026_jan_maybank_maybank_family_friends_card_foo_wah_liang_9103.json`
+  - Example: `2026_feb_hsbc_hsbc_visa_revolution_foo_chi_jao_6207.json`
 - **Supplementary cardholders:** Cards with sub-section headers produce one JSON per sub-section (not one per card). Cards with no sub-section header produce one JSON; resolve `cardholder_name` from `statement_people_identifier.yaml` by last-4 lookup.
 - **`statement_people_identifier.yaml` lookup:** Scan all people → all banks → all cards for a matching last-4 value. Use the person's `name` as `cardholder_name`. If not found, use the raw name from the statement or `null`; emit a warning comment above the JSON block.

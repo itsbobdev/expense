@@ -7,7 +7,7 @@ This file defines all supported categories and their detection rules, used by th
 | Category | Detection Rule |
 |---|---|
 | `flights` | Merchant name contains: `AIRLINE`, `AIRWAYS`, `AIR ASIA`, `SCOOT`, `JETSTAR`, `SQ`, `CATHAY`, `EMIRATES`, `LUFTHANSA`, `FLIGHT`, `KLM`, `UNITED AIR`; OR Claude's knowledge identifies the merchant as an airline/flight booking service |
-| `tours` | Merchant name contains: `PELAGO`, `KLOOK`, `VIATOR`, `GETYOURGUIDE`, `TOUR`, `EXCURSION`, `ATTRACTION`; OR Claude's knowledge identifies the merchant as a tours/activities/experiences provider |
+| `tours` | Merchant name contains: `PELAGO`, `KLOOK`, `VIATOR`, `GETYOURGUIDE`, `TOUR`, `EXCURSION`, `ATTRACTION`, `NEW STAR`, `CHAN BROTHER`, `CHAN WORLD`, `WTS TRAVEL`; OR Claude's knowledge identifies the merchant as a tours/activities/experiences provider |
 | `travel_accommodation` | Merchant name contains: `AIRBNB`, `HOTEL`, `INN`, `RESORT`, `HOSTEL`, `SUITES`, `LODGE`, `MARRIOTT`, `HILTON`, `HYATT`, `PAN PACIFIC`, `SHERATON`, `WESTIN`, `INTERCONTINENTAL`; OR Claude's knowledge identifies the merchant as accommodation |
 | `subscriptions` | Merchant name contains: `SUBSCRIPTION`, `MEMBER`, `NETFLIX`, `SPOTIFY`, `APPLE`, `GOOGLE`, `CHATGPT`, `OPENAI`, `CLAUDE`, `X CORP`, `YOUTUBE`; OR Claude's knowledge identifies the merchant as a recurring subscription service |
 | `foreign_currency` | `ccy_fee` is not null (a CCY CONVERSION FEE line was present in the statement for this transaction); OR `foreign_currency_amount` is not null (Maybank inline foreign currency — see bank-specific guide) |
@@ -15,6 +15,7 @@ This file defines all supported categories and their detection rules, used by th
 | `paypal` | `merchant_name` starts with `PAYPAL *` or `PAYPAL*` |
 | `insurance` | Merchant name contains: `INSURANCE`, `INCOME`, `GREAT EASTERN`, `PRUDENTIAL`, `AIA`, `AVIVA`, `MANULIFE`, `NTUC INCOME`, `FWD`, `TOKIO MARINE`; OR Claude's knowledge identifies the merchant as an insurance provider |
 | `town_council` | Merchant name contains: `TOWN COUNCIL`; OR Claude's knowledge identifies the merchant as a Singapore HDB town council (e.g. `NEE SOON TOWN COUNCIL`, `PUNGGOL TOWN COUNCIL`) |
+| `card_fees` | Merchant name contains: `LATE CHARGE`, `FINANCE CHARGE`, `ANNUAL FEE`, `OVERLIMIT FEE`, `LATE FEE`, `SERVICE CHARGE`, `CARD FEE`, `MEMBERSHIP FEE`, `GST @`; OR Claude's knowledge identifies the charge as a bank/card fee (not a merchant purchase). Reversals of these fees (e.g. `LATE FEE CREDIT ADJUSTMENT` with CR) also get `card_fees`. GST lines for card fees (e.g. `GST ON ANNUAL FEE`) also get `card_fees`. |
 
 ## Rules
 

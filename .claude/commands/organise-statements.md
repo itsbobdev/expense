@@ -11,6 +11,7 @@ Organise uncategorised PDF bank statements in the `statements/` folder into the 
 
 2. For each PDF found, use Python + pdfplumber to extract the first page of text and identify:
    - **Bank**: look for keywords like `Citibank` → `citi`, `Maybank` → `maybank`, `UOB` → `uob`, `DBS` / `POSB` → `dbs`
+   - **Image-based fallback**: If pdfplumber extracts **no text** AND the filename matches `^\d{4}-\d{2}-\d{2}_Statement\.pdf$` → bank = `hsbc`, parse year/month from the filename date (e.g. `2026-02-28_Statement.pdf` → year=`2026`, month=`02`)
    - **Statement month**: extract the statement date (e.g. "Statement Date January 08, 2026" → month=`01`, year=`2026`)
    - **Card name and last 4 digits** (for supported banks):
      - **UOB combined CC**: look for keyword `"COMBINED CREDIT CARD"` or multiple card listings → set `card_name="CreditCard_Combined"`, `last4=None`, `uob_type="combined_cc"`
@@ -28,6 +29,8 @@ Organise uncategorised PDF bank statements in the `statements/` folder into the 
    - **Maybank**: `{snake_card_name}_{last4}_{snake_statement_date_str}.pdf`
      - Example: `"World Mastercard"` + `0005` + `"25 February 2026"` → `world_mastercard_0005_25_february_2026.pdf`
      - Example: `"Family & Friends Card"` + `9004` + `"25 February 2026"` → `family_and_friends_card_9004_25_february_2026.pdf`
+   - **HSBC**: `hsbc_visa_revolution_6207_{YYYY}_{MM:02d}.pdf`
+     - Example: `2026-02-28_Statement.pdf` → `hsbc_visa_revolution_6207_2026_02.pdf`
    - **Citi / other banks**: use original filename
 
 4. For each PDF, determine the destination path: `statements/YYYY/MM/bank/{filename}` (using constructed filename if renamed, original otherwise)

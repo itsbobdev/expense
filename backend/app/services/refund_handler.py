@@ -7,6 +7,7 @@ from typing import Optional, List
 from datetime import timedelta
 from sqlalchemy.orm import Session
 from app.models import Transaction
+from app.models.statement import Statement
 
 
 class RefundHandler:
@@ -34,14 +35,14 @@ class RefundHandler:
         original_amount = -refund_transaction.amount  # Convert to positive
 
         # Search for original transaction within 90 days before the refund
-        earliest_date = refund_transaction.transaction_date - timedelta(days=90)
+        earliest_date = refund_transaction.transaction_date - timedelta(days=180)
 
         candidates = (
             self.db.query(Transaction)
             .filter(
                 Transaction.merchant_name == refund_transaction.merchant_name,
                 Transaction.amount == original_amount,  # Exact amount match
-                Transaction.transaction_date < refund_transaction.transaction_date,
+                Transaction.transaction_date <= refund_transaction.transaction_date,
                 Transaction.transaction_date >= earliest_date,
                 Transaction.is_refund == False,
                 Transaction.id != refund_transaction.id  # Not the same transaction
@@ -102,14 +103,14 @@ class RefundHandler:
             return []
 
         original_amount = -refund_transaction.amount
-        earliest_date = refund_transaction.transaction_date - timedelta(days=90)
+        earliest_date = refund_transaction.transaction_date - timedelta(days=180)
 
         candidates = (
             self.db.query(Transaction)
             .filter(
                 Transaction.merchant_name == refund_transaction.merchant_name,
                 Transaction.amount == original_amount,
-                Transaction.transaction_date < refund_transaction.transaction_date,
+                Transaction.transaction_date <= refund_transaction.transaction_date,
                 Transaction.transaction_date >= earliest_date,
                 Transaction.is_refund == False,
                 Transaction.id != refund_transaction.id
@@ -119,6 +120,107 @@ class RefundHandler:
         )
 
         return candidates
+
+    def get_broad_candidates(self, refund_transaction: Transaction) -> List[Transaction]:
+        """
+        Broader tiered search for refund matching when exact match fails.
+
+        Tier 1: Exact merchant + exact amount (existing behavior)
+        Tier 2: Same card + exact amount + 180-day window
+        Tier 3: Same card + similar amount (within 10%) + 180-day window
+        Tier 4: Same card + merchant name substring match + 180-day window
+        """
+        abs_amount = abs(refund_transaction.amount)
+        earliest = refund_transaction.transaction_date - timedelta(days=180)
+        card_last_4 = refund_transaction.statement.card_last_4 if refund_transaction.statement else None
+
+        # Tier 1: exact merchant + exact amount (existing)
+        tier1 = self.get_refund_candidates(refund_transaction)
+        if tier1:
+            return tier1
+
+        if not card_last_4:
+            return []
+
+        # Tier 2: same card + exact amount
+        tier2 = (
+            self.db.query(Transaction)
+            .join(Statement)
+            .filter(
+                Statement.card_last_4 == card_last_4,
+                Transaction.amount == abs_amount,
+                Transaction.transaction_date <= refund_transaction.transaction_date,
+                Transaction.transaction_date >= earliest,
+                Transaction.is_refund == False,
+                Transaction.id != refund_transaction.id,
+            )
+            .order_by(Transaction.transaction_date.desc())
+            .all()
+        )
+        if tier2:
+            return tier2
+
+        # Tier 3: same card + similar amount (within 10%)
+        lower = abs_amount * 0.9
+        upper = abs_amount * 1.1
+        tier3 = (
+            self.db.query(Transaction)
+            .join(Statement)
+            .filter(
+                Statement.card_last_4 == card_last_4,
+                Transaction.amount.between(lower, upper),
+                Transaction.transaction_date <= refund_transaction.transaction_date,
+                Transaction.transaction_date >= earliest,
+                Transaction.is_refund == False,
+                Transaction.id != refund_transaction.id,
+            )
+            .order_by(Transaction.transaction_date.desc())
+            .all()
+        )
+        if tier3:
+            return tier3
+
+        # Tier 4: same card + merchant name substring match
+        refund_merchant = refund_transaction.merchant_name.upper()
+        same_card_txns = (
+            self.db.query(Transaction)
+            .join(Statement)
+            .filter(
+                Statement.card_last_4 == card_last_4,
+                Transaction.transaction_date <= refund_transaction.transaction_date,
+                Transaction.transaction_date >= earliest,
+                Transaction.is_refund == False,
+                Transaction.id != refund_transaction.id,
+            )
+            .order_by(Transaction.transaction_date.desc())
+            .all()
+        )
+        tier4 = [
+            t for t in same_card_txns
+            if t.merchant_name and (
+                t.merchant_name.upper() in refund_merchant
+                or refund_merchant in t.merchant_name.upper()
+            )
+        ]
+        if tier4:
+            return tier4
+
+        return []
+
+    def search_by_amount(self, refund_transaction: Transaction, limit: int = 10) -> List[Transaction]:
+        """Search all non-refund transactions matching the absolute refund amount."""
+        abs_amount = abs(refund_transaction.amount)
+        return (
+            self.db.query(Transaction)
+            .filter(
+                Transaction.amount == abs_amount,
+                Transaction.is_refund == False,
+                Transaction.id != refund_transaction.id,
+            )
+            .order_by(Transaction.transaction_date.desc())
+            .limit(limit)
+            .all()
+        )
 
     def match_refund_manually(
         self,

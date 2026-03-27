@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Date, DateTime, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Date, DateTime, Boolean, JSON, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.database import Base
@@ -9,6 +9,7 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     statement_id = Column(Integer, ForeignKey("statements.id"), nullable=False)
+    billing_month = Column(String, nullable=True, index=True)  # "2026-03" from folder path
     transaction_date = Column(Date, nullable=False)
     merchant_name = Column(String, nullable=False)
     raw_description = Column(String, nullable=True)   # original full description before cleaning
@@ -16,6 +17,7 @@ class Transaction(Base):
     ccy_fee = Column(Float, nullable=True)             # CCY conversion fee merged from fee line
     is_refund = Column(Boolean, default=False)
     category = Column(String, nullable=True)
+    categories = Column(JSON, nullable=True)           # categories array from JSON extraction
     country_code = Column(String(2), nullable=True)   # ISO 2-letter code e.g. "SG", "US"
     location = Column(String, nullable=True)           # city/region e.g. "SAN FRANCISCO"
 
@@ -30,12 +32,21 @@ class Transaction(Base):
     # Refund tracking
     original_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)
 
+    # Alert tracking (for card_fees)
+    alert_status = Column(String, nullable=True, index=True)  # null, 'pending', 'unresolved', 'resolved'
+    parent_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)  # GST → parent fee
+    resolved_by_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)  # fee → reversal
+    resolved_method = Column(String, nullable=True)  # 'manual' or 'auto'
+
     created_at = Column(DateTime, default=datetime.utcnow)
 
     # Relationships
     statement = relationship("Statement", back_populates="transactions")
     assigned_person = relationship("Person", back_populates="transactions", foreign_keys=[assigned_to_person_id])
     original_transaction = relationship("Transaction", remote_side=[id], foreign_keys=[original_transaction_id])
+    parent_transaction = relationship("Transaction", remote_side=[id], foreign_keys=[parent_transaction_id])
+    resolved_by_transaction = relationship("Transaction", remote_side=[id], foreign_keys=[resolved_by_transaction_id])
+    child_transactions = relationship("Transaction", foreign_keys="Transaction.parent_transaction_id")
     blacklist_category = relationship("BlacklistCategory", back_populates="transactions")
     ml_training_record = relationship("MLTrainingData", back_populates="transaction", uselist=False)
     bill_line_items = relationship("BillLineItem", back_populates="transaction")

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Telegram bot-based expense tracker that parses credit card PDF statements from Singapore banks (Citi, Maybank, UOB), auto-categorizes transactions via card-direct rules and blacklist keyword matching, and generates monthly bills per family member. Built with FastAPI + python-telegram-bot + SQLAlchemy on SQLite.
+Telegram bot-based expense tracker that parses credit card PDF statements from Singapore banks (Citi, HSBC, Maybank, UOB), auto-categorizes transactions via card-direct rules and blacklist keyword matching, and generates monthly bills per family member. Built with FastAPI + python-telegram-bot + SQLAlchemy on SQLite.
 
 ## Development Commands
 
@@ -52,7 +52,7 @@ Person/card mappings and blacklist seed data are loaded from `statements/stateme
 
 ### PDF Statement Extraction
 
-PDF parsing is handled manually via the `/extract-statement` Claude Code custom command rather than automated parsers. This approach avoids fragile PDF parsing and Java dependencies. Supported banks: Citi, Maybank, UOB.
+PDF parsing is handled manually via the `/extract-statement` Claude Code custom command rather than automated parsers. This approach avoids fragile PDF parsing and Java dependencies. Supported banks: Citi, HSBC, Maybank, UOB. Note: HSBC statements are image-based PDFs (no extractable text); Claude reads them visually.
 
 ## Project Status
 

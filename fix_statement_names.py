@@ -40,8 +40,7 @@ PERSON_MAP = {
     '3326': 'foo_wah_liang',
     '7857': 'foo_chi_jao',
     '7067': 'foo_chi_jao',
-    '55993': 'foo_chi_jao',
-    '5993': 'foo_chi_jao',  # AMEX last-4 variant
+    '5993': 'foo_chi_jao',
     '9651': 'foo_chi_jao',
     '5750': 'foo_chi_jao',
     '5776': 'foo_chi_jao',

@@ -41,36 +41,36 @@ def load_person_card_mappings(
         )
 
     with open(yaml_file, 'r', encoding='utf-8') as f:
-        content = f.read()
+        data = yaml.safe_load(f)
 
-    # Parse YAML (handles multiple documents with same 'name' key)
     people = []
-    current_person = None
+    for entry in data.get("people", []):
+        name = entry.get("name")
+        if not name:
+            continue
 
-    for line in content.split('\n'):
-        line = line.strip()
+        cards = []
+        # Extract card last-4 from nested bank -> card_product -> last4
+        for bank_name, bank_cards in entry.get("cards", {}).items():
+            if not isinstance(bank_cards, dict):
+                continue
+            for card_product, last4 in bank_cards.items():
+                last4_str = str(last4).strip().strip('"')
+                # Always take rightmost 4 digits (handles Amex 5-digit segments)
+                if len(last4_str) >= 4:
+                    cards.append(last4_str[-4:])
 
-        if line.startswith('name:'):
-            # Save previous person if exists
-            if current_person:
-                people.append(current_person)
+        # Also extract former cards
+        for bank_name, bank_cards in entry.get("former_cards", {}).items():
+            if not isinstance(bank_cards, dict):
+                continue
+            for card_product, card_info in bank_cards.items():
+                if isinstance(card_info, dict):
+                    last4_str = str(card_info.get("last4", "")).strip().strip('"')
+                    if len(last4_str) >= 4:
+                        cards.append(last4_str[-4:])
 
-            # Start new person
-            name = line.split('name:')[1].strip()
-            current_person = {"name": name, "cards": []}
-
-        elif ':' in line and current_person:
-            # Extract card last 4 digits (format: "- card_name: 1234")
-            parts = line.split(':')
-            if len(parts) == 2:
-                card_digits = parts[1].strip()
-                # Validate it's a 4-digit card number
-                if card_digits.isdigit() and len(card_digits) == 4:
-                    current_person["cards"].append(card_digits)
-
-    # Don't forget the last person
-    if current_person:
-        people.append(current_person)
+        people.append({"name": name, "cards": cards})
 
     if not people:
         raise ValueError(

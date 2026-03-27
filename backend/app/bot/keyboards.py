@@ -1,6 +1,6 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from typing import List
-from app.models import Person
+from app.models import Person, Transaction
 
 
 def get_review_keyboard(transaction_id: int, persons: List[Person]) -> InlineKeyboardMarkup:
@@ -30,12 +30,85 @@ def get_review_keyboard(transaction_id: int, persons: List[Person]) -> InlineKey
         row = person_buttons[i:i+2]
         keyboard.append(row)
 
-    # Add "Add to blacklist" and "Skip" buttons in the last row
+    # Add "Skip" button in the last row
     keyboard.append([
-        InlineKeyboardButton("📋 Add to blacklist", callback_data=f"add_blacklist_{transaction_id}"),
-        InlineKeyboardButton("❌ Skip", callback_data=f"skip_{transaction_id}"),
+        InlineKeyboardButton("Skip", callback_data=f"skip_{transaction_id}"),
     ])
 
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_refund_review_keyboard(
+    refund_id: int,
+    candidates: List[Transaction],
+    persons: List[Person],
+) -> InlineKeyboardMarkup:
+    """
+    Create inline keyboard for refund review.
+
+    Shows candidate matches (from broad search), plus Search/Assign/Skip actions.
+    """
+    keyboard = []
+
+    if candidates:
+        # Show candidate originals (limit to 5 to avoid cluttering)
+        for c in candidates[:5]:
+            person_name = c.assigned_person.name if c.assigned_person else "unassigned"
+            label = f"{c.transaction_date} {c.merchant_name} ${c.amount:.2f} ({person_name})"
+            # Truncate label for Telegram button limit (64 bytes)
+            if len(label) > 60:
+                label = label[:57] + "..."
+            keyboard.append([
+                InlineKeyboardButton(label, callback_data=f"refmatch_{refund_id}_{c.id}")
+            ])
+
+    # Action row: Search by amount + Assign to person + Skip
+    action_row = [
+        InlineKeyboardButton("Search by amount", callback_data=f"refsearch_{refund_id}"),
+        InlineKeyboardButton("Assign to person", callback_data=f"refassign_{refund_id}"),
+    ]
+    keyboard.append(action_row)
+
+    keyboard.append([
+        InlineKeyboardButton("Skip", callback_data=f"skip_{refund_id}"),
+    ])
+
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_refund_person_keyboard(refund_id: int, persons: List[Person]) -> InlineKeyboardMarkup:
+    """Person assignment keyboard for orphan refunds (cashback credits etc)."""
+    keyboard = []
+    person_buttons = [
+        InlineKeyboardButton(
+            p.name,
+            callback_data=f"assign_{refund_id}_{p.id}"
+        )
+        for p in persons
+    ]
+    for i in range(0, len(person_buttons), 2):
+        keyboard.append(person_buttons[i:i+2])
+
+    keyboard.append([
+        InlineKeyboardButton("Skip", callback_data=f"skip_{refund_id}"),
+    ])
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_alert_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
+    """Keyboard for alert items: Resolve + Mark Unresolved."""
+    keyboard = [[
+        InlineKeyboardButton("Resolve", callback_data=f"resolve_{transaction_id}"),
+        InlineKeyboardButton("Mark Unresolved", callback_data=f"unresolved_{transaction_id}"),
+    ]]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_resolved_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
+    """Keyboard for resolved items: Unresolve."""
+    keyboard = [[
+        InlineKeyboardButton("Unresolve", callback_data=f"unresolve_{transaction_id}"),
+    ]]
     return InlineKeyboardMarkup(keyboard)
 
 
@@ -52,8 +125,8 @@ def get_confirmation_keyboard(action: str, item_id: int) -> InlineKeyboardMarkup
     """
     keyboard = [
         [
-            InlineKeyboardButton("✅ Yes", callback_data=f"confirm_{action}_{item_id}"),
-            InlineKeyboardButton("❌ No", callback_data=f"cancel_{action}_{item_id}"),
+            InlineKeyboardButton("Yes", callback_data=f"confirm_{action}_{item_id}"),
+            InlineKeyboardButton("No", callback_data=f"cancel_{action}_{item_id}"),
         ],
     ]
     return InlineKeyboardMarkup(keyboard)

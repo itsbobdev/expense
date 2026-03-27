@@ -8,6 +8,13 @@ from app.bot.handlers import (
     stats_command,
     blacklist_command,
     add_blacklist_command,
+    import_command,
+    status_command,
+    review_command,
+    refunds_command,
+    alerts_command,
+    resolved_command,
+    bill_command,
     handle_text_message,
 )
 from app.config import settings
@@ -38,6 +45,13 @@ def create_bot_application() -> Application:
     application.add_handler(CommandHandler("stats", stats_command))
     application.add_handler(CommandHandler("blacklist", blacklist_command))
     application.add_handler(CommandHandler("add_blacklist", add_blacklist_command))
+    application.add_handler(CommandHandler("import", import_command))
+    application.add_handler(CommandHandler("status", status_command))
+    application.add_handler(CommandHandler("review", review_command))
+    application.add_handler(CommandHandler("refunds", refunds_command))
+    application.add_handler(CommandHandler("alerts", alerts_command))
+    application.add_handler(CommandHandler("resolved", resolved_command))
+    application.add_handler(CommandHandler("bill", bill_command))
 
     # Register message handlers
     application.add_handler(MessageHandler(filters.Document.PDF, handle_document))

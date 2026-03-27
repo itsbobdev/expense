@@ -13,6 +13,7 @@ class Statement(Base):
     card_last_4 = Column(String(4), nullable=False)
     card_name = Column(String, nullable=True)  # e.g. "CITI REWARDS WORLD MASTERCARD"
     statement_date = Column(Date, nullable=False)
+    billing_month = Column(String, nullable=True, index=True)  # "2026-03" from folder path
     period_start = Column(Date, nullable=True)  # inferred from earliest transaction date
     period_end = Column(Date, nullable=True)    # inferred from latest transaction date
     pdf_hash = Column(String(64), nullable=True, unique=True)  # SHA256 of source PDF for dedup
