@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expense Organise"
+  short_description: "Organise statement PDFs for this repo."
+  default_prompt: "Use $expense-organise-statements to organise statement PDFs for this repo."

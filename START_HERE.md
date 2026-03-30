@@ -95,7 +95,10 @@ You should see the welcome message! 🎉
 
 ## Step 7: Extract a Statement
 
-Use the `/extract-statement` Claude Code command to extract transactions from your PDF statements (supports Citi, Maybank, UOB), then import the JSON data into the database.
+Extract transactions from your PDF statements (supports Citi, Maybank, UOB), then import the JSON data into the database.
+
+- Claude Code: use `/extract-statement`
+- Codex/manual workflow: follow `REPOSITORY_GUIDE.md` and use `.claude/commands/` as parsing and output-reference docs
 
 ---
 
@@ -123,7 +126,9 @@ Your expense tracker is now running. Try:
 
 ## 🚀 Next Steps
 
-1. **Extract statements** using `/extract-statement` Claude Code command
+1. **Extract statements** using the shared extraction workflow
+   - Claude Code shortcut: `/extract-statement`
+   - Codex/manual path: follow `REPOSITORY_GUIDE.md`
 2. **Review and assign** transactions using the buttons
 3. **Check stats** with `/stats` command
 4. **Deploy to cloud** (see `DEPLOYMENT_GUIDE.md`)

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Telegram Bot"
+  short_description: "Start the repo Telegram bot quickly."
+  default_prompt: "Use $expense-run-telegram-bot to start the Telegram bot for this repo."

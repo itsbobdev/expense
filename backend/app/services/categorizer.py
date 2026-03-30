@@ -14,6 +14,7 @@ REVIEW_TRIGGER_CATEGORIES: Set[str] = {
     "subscriptions",
     "foreign_currency",
     "amaze",
+    "atome",
     "paypal",
     "insurance",
     "town_council",

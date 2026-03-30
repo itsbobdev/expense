@@ -4,7 +4,7 @@ A Telegram bot-based expense tracker that automatically categorizes credit card 
 
 ## Features
 
-- **PDF Statement Extraction**: Extract transactions from credit card statements (Citi, Maybank, UOB) via `/extract-statement` Claude Code command
+- **PDF Statement Extraction**: Extract transactions from credit card statements (Citi, Maybank, UOB) using the shared statement-extraction workflow; Claude users can use `/extract-statement`, while Codex and manual workflows should follow the same output contract
 - **Smart Categorization**: Rule-based and ML-powered transaction assignment
 - **Interactive Review**: Review uncertain transactions directly in Telegram
 - **Refund Matching**: Automatically match refunds to original transactions
@@ -12,6 +12,12 @@ A Telegram bot-based expense tracker that automatically categorizes credit card 
 - **Learning System**: ML model improves over time based on your assignments
 
 ## Quick Start
+
+Agent-specific repo entrypoints:
+
+- `CLAUDE.md` for Claude Code
+- `AGENTS.md` for Codex/OpenAI agents
+- `REPOSITORY_GUIDE.md` for shared repo knowledge and workflow rules
 
 ### 1. Prerequisites
 
@@ -307,5 +313,5 @@ For issues and questions:
 ## Acknowledgments
 
 - Built with FastAPI and python-telegram-bot
-- PDF extraction via Claude Code custom command
+- PDF extraction via the shared manual extraction workflow, with a Claude Code shortcut documented in `.claude/commands/extract-statement.md`
 - ML powered by scikit-learn

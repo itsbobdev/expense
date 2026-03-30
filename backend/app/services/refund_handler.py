@@ -3,9 +3,11 @@ Refund Handler Service
 
 Handles automatic matching of refund transactions to their original transactions.
 """
-from typing import Optional, List
 from datetime import timedelta
+from typing import List
+
 from sqlalchemy.orm import Session
+
 from app.models import Transaction
 from app.models.statement import Statement
 
@@ -26,70 +28,73 @@ class RefundHandler:
         Returns:
             True if auto-matched successfully, False if needs manual review
         """
+        # Rewards are not refunds - skip matching entirely.
+        if getattr(refund_transaction, "is_reward", False):
+            return False
+
         # Step 1: Identify refund (negative amount)
         if refund_transaction.amount >= 0:
-            # Not a refund
             return False
 
         # Step 2: Find potential original transactions
-        original_amount = -refund_transaction.amount  # Convert to positive
+        candidates = self._find_exact_candidates(refund_transaction)
 
-        # Search for original transaction within 90 days before the refund
-        earliest_date = refund_transaction.transaction_date - timedelta(days=180)
+        if len(candidates) == 1:
+            self._apply_auto_match(refund_transaction, candidates[0])
+            self.db.commit()
+            return True
 
-        candidates = (
+        if len(candidates) > 1:
+            refund_transaction.is_refund = True
+            refund_transaction.needs_review = True
+            refund_transaction.assignment_method = "refund_ambiguous"
+            refund_transaction.review_origin_method = "refund_ambiguous"
+            self.db.commit()
+            return False
+
+        refund_transaction.is_refund = True
+        refund_transaction.needs_review = True
+        refund_transaction.assignment_method = "refund_orphan"
+        refund_transaction.review_origin_method = "refund_orphan"
+        self.db.commit()
+        return False
+
+    def reconcile_refunds_for_original(self, original_transaction: Transaction) -> int:
+        """
+        Retry older orphaned or ambiguous refunds after importing an original charge.
+        """
+        if original_transaction.is_refund or getattr(original_transaction, "is_reward", False):
+            return 0
+
+        candidate_refunds = (
             self.db.query(Transaction)
             .filter(
-                Transaction.merchant_name == refund_transaction.merchant_name,
-                Transaction.amount == original_amount,  # Exact amount match
-                Transaction.transaction_date <= refund_transaction.transaction_date,
-                Transaction.transaction_date >= earliest_date,
-                Transaction.is_refund == False,
-                Transaction.id != refund_transaction.id  # Not the same transaction
+                Transaction.merchant_name == original_transaction.merchant_name,
+                Transaction.amount == -original_transaction.amount,
+                Transaction.transaction_date >= original_transaction.transaction_date,
+                Transaction.transaction_date <= original_transaction.transaction_date + timedelta(days=180),
+                Transaction.is_refund == True,
+                Transaction.needs_review == True,
+                Transaction.original_transaction_id.is_(None),
+                Transaction.assignment_method.in_(["refund_orphan", "refund_ambiguous"]),
+                Transaction.id != original_transaction.id,
             )
             .all()
         )
 
-        if len(candidates) == 1:
-            # Exact match found → auto-assign
-            original = candidates[0]
+        resolved = 0
+        for refund_transaction in candidate_refunds:
+            exact_matches = self._find_exact_candidates(refund_transaction)
+            if len(exact_matches) == 1 and exact_matches[0].id == original_transaction.id:
+                self._apply_auto_match(refund_transaction, original_transaction)
+                resolved += 1
 
-            # Assign refund to same person as original
-            refund_transaction.assigned_to_person_id = original.assigned_to_person_id
-            refund_transaction.original_transaction_id = original.id
-            refund_transaction.is_refund = True
-            refund_transaction.assignment_confidence = 0.95
-            refund_transaction.assignment_method = 'refund_auto_match'
-            refund_transaction.needs_review = False
-
+        if resolved:
             self.db.commit()
 
-            return True
+        return resolved
 
-        elif len(candidates) > 1:
-            # Multiple matches → needs review
-            refund_transaction.is_refund = True
-            refund_transaction.needs_review = True
-            refund_transaction.assignment_method = 'refund_ambiguous'
-
-            self.db.commit()
-
-            return False
-
-        else:
-            # No match found → needs review
-            refund_transaction.is_refund = True
-            refund_transaction.needs_review = True
-            refund_transaction.assignment_method = 'refund_orphan'
-
-            self.db.commit()
-
-            return False
-
-    def get_refund_candidates(
-        self,
-        refund_transaction: Transaction
-    ) -> List[Transaction]:
+    def get_refund_candidates(self, refund_transaction: Transaction) -> List[Transaction]:
         """
         Get potential original transactions for a refund.
 
@@ -102,24 +107,7 @@ class RefundHandler:
         if refund_transaction.amount >= 0:
             return []
 
-        original_amount = -refund_transaction.amount
-        earliest_date = refund_transaction.transaction_date - timedelta(days=180)
-
-        candidates = (
-            self.db.query(Transaction)
-            .filter(
-                Transaction.merchant_name == refund_transaction.merchant_name,
-                Transaction.amount == original_amount,
-                Transaction.transaction_date <= refund_transaction.transaction_date,
-                Transaction.transaction_date >= earliest_date,
-                Transaction.is_refund == False,
-                Transaction.id != refund_transaction.id
-            )
-            .order_by(Transaction.transaction_date.desc())
-            .all()
-        )
-
-        return candidates
+        return self._find_exact_candidates(refund_transaction, newest_first=True)
 
     def get_broad_candidates(self, refund_transaction: Transaction) -> List[Transaction]:
         """
@@ -134,7 +122,6 @@ class RefundHandler:
         earliest = refund_transaction.transaction_date - timedelta(days=180)
         card_last_4 = refund_transaction.statement.card_last_4 if refund_transaction.statement else None
 
-        # Tier 1: exact merchant + exact amount (existing)
         tier1 = self.get_refund_candidates(refund_transaction)
         if tier1:
             return tier1
@@ -142,7 +129,6 @@ class RefundHandler:
         if not card_last_4:
             return []
 
-        # Tier 2: same card + exact amount
         tier2 = (
             self.db.query(Transaction)
             .join(Statement)
@@ -160,7 +146,6 @@ class RefundHandler:
         if tier2:
             return tier2
 
-        # Tier 3: same card + similar amount (within 10%)
         lower = abs_amount * 0.9
         upper = abs_amount * 1.1
         tier3 = (
@@ -180,7 +165,6 @@ class RefundHandler:
         if tier3:
             return tier3
 
-        # Tier 4: same card + merchant name substring match
         refund_merchant = refund_transaction.merchant_name.upper()
         same_card_txns = (
             self.db.query(Transaction)
@@ -196,11 +180,10 @@ class RefundHandler:
             .all()
         )
         tier4 = [
-            t for t in same_card_txns
-            if t.merchant_name and (
-                t.merchant_name.upper() in refund_merchant
-                or refund_merchant in t.merchant_name.upper()
-            )
+            t
+            for t in same_card_txns
+            if t.merchant_name
+            and (t.merchant_name.upper() in refund_merchant or refund_merchant in t.merchant_name.upper())
         ]
         if tier4:
             return tier4
@@ -225,7 +208,7 @@ class RefundHandler:
     def match_refund_manually(
         self,
         refund_transaction_id: int,
-        original_transaction_id: int
+        original_transaction_id: int,
     ) -> Transaction:
         """
         Manually match a refund to an original transaction.
@@ -249,15 +232,50 @@ class RefundHandler:
         if refund.amount >= 0:
             raise ValueError("Not a refund transaction (amount must be negative)")
 
-        # Match the refund
         refund.assigned_to_person_id = original.assigned_to_person_id
         refund.original_transaction_id = original.id
         refund.is_refund = True
         refund.assignment_confidence = 1.0
-        refund.assignment_method = 'refund_manual_match'
+        refund.assignment_method = "refund_manual_match"
         refund.needs_review = False
 
         self.db.commit()
         self.db.refresh(refund)
 
         return refund
+
+    def _find_exact_candidates(
+        self,
+        refund_transaction: Transaction,
+        newest_first: bool = False,
+    ) -> List[Transaction]:
+        """Find exact merchant+amount matches within the refund lookback window."""
+        original_amount = -refund_transaction.amount
+        earliest_date = refund_transaction.transaction_date - timedelta(days=180)
+
+        query = (
+            self.db.query(Transaction)
+            .filter(
+                Transaction.merchant_name == refund_transaction.merchant_name,
+                Transaction.amount == original_amount,
+                Transaction.transaction_date <= refund_transaction.transaction_date,
+                Transaction.transaction_date >= earliest_date,
+                Transaction.is_refund == False,
+                Transaction.id != refund_transaction.id,
+            )
+        )
+
+        if newest_first:
+            query = query.order_by(Transaction.transaction_date.desc())
+
+        return query.all()
+
+    @staticmethod
+    def _apply_auto_match(refund_transaction: Transaction, original_transaction: Transaction) -> None:
+        """Apply the canonical auto-match fields to a refund transaction."""
+        refund_transaction.assigned_to_person_id = original_transaction.assigned_to_person_id
+        refund_transaction.original_transaction_id = original_transaction.id
+        refund_transaction.is_refund = True
+        refund_transaction.assignment_confidence = 0.95
+        refund_transaction.assignment_method = "refund_auto_match"
+        refund_transaction.needs_review = False

@@ -25,9 +25,14 @@ class Transaction(Base):
     assigned_to_person_id = Column(Integer, ForeignKey("persons.id"), nullable=True)
     assignment_confidence = Column(Float, nullable=True)
     assignment_method = Column(String, nullable=True)  # card_direct, blacklist_review, self_auto, manual
+    review_origin_method = Column(String, nullable=True)
     needs_review = Column(Boolean, default=False)
     reviewed_at = Column(DateTime, nullable=True)
     blacklist_category_id = Column(Integer, ForeignKey("blacklist_categories.id"), nullable=True)
+
+    # Reward tracking
+    is_reward = Column(Boolean, default=False)
+    reward_type = Column(String, nullable=True)  # cashback | points | miles | uni_dollars
 
     # Refund tracking
     original_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)
@@ -50,3 +55,9 @@ class Transaction(Base):
     blacklist_category = relationship("BlacklistCategory", back_populates="transactions")
     ml_training_record = relationship("MLTrainingData", back_populates="transaction", uselist=False)
     bill_line_items = relationship("BillLineItem", back_populates="transaction")
+    transaction_splits = relationship(
+        "TransactionSplit",
+        back_populates="transaction",
+        cascade="all, delete-orphan",
+        order_by="TransactionSplit.sort_order",
+    )

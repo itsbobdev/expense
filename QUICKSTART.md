@@ -95,9 +95,12 @@ Port: 8000
 
 ### Extract Your First Statement
 
-1. Use the `/extract-statement` Claude Code command on your PDF statement
-2. Import the extracted JSON data into the database
-3. Review any uncertain transactions using the Telegram bot buttons
+1. Put your PDF statement in the correct `statements/YYYY/MM/bank/` folder
+2. Extract transactions into JSON using your preferred workflow:
+   - Claude Code: run `/extract-statement`
+   - Codex/manual: follow the shared extraction rules in `REPOSITORY_GUIDE.md` and the parsing references under `.claude/commands/`
+3. Import the extracted JSON data into the database
+4. Review any uncertain transactions using the Telegram bot buttons
 
 ### View Statistics
 
@@ -121,7 +124,7 @@ Make sure you're in the `backend` directory and your virtual environment is acti
 3. Check the console for error messages
 
 ### PDF extraction
-Use the `/extract-statement` Claude Code command to extract transactions from PDF statements (supports Citi, Maybank, UOB).
+Use the shared statement-extraction workflow to extract transactions from PDF statements. Claude Code can use `/extract-statement`; Codex and manual workflows should follow `REPOSITORY_GUIDE.md` and the parsing references under `.claude/commands/`.
 
 ## Advanced: Docker Deployment
 

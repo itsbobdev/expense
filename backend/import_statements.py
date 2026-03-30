@@ -5,12 +5,14 @@ Usage:
     # Import all JSON files for a billing month (scans statements/YYYY/MM/)
     python import_statements.py 2026-01
     python import_statements.py 2026-01 2026-02 2026-03
+    python import_statements.py --refresh 2026-01
 
     # Import all months found in statements/
     python import_statements.py all
 
     # Import specific JSON files
     python import_statements.py statements/2026/02/citi/file.json
+    python import_statements.py --refresh statements/2026/02/citi/file.json
 
 The JSON files are produced by the /extract-statement command.
 The script is idempotent: re-importing the same file is a no-op.
@@ -42,14 +44,14 @@ def get_all_months() -> list[str]:
     return months
 
 
-def import_month(billing_month: str):
+def import_month(billing_month: str, refresh_existing: bool = False):
     """Import a single billing month and generate recurring charges."""
     year, month = int(billing_month[:4]), int(billing_month[5:7])
 
     db = SessionLocal()
     try:
         importer = StatementImporter(db)
-        result = importer.import_month(year, month)
+        result = importer.import_month(year, month, refresh_existing=refresh_existing)
 
         print(f"\n{'='*50}")
         print(f"  {result.billing_month}")
@@ -80,7 +82,7 @@ def import_month(billing_month: str):
         db.close()
 
 
-def import_files(file_paths: list[str]):
+def import_files(file_paths: list[str], refresh_existing: bool = False):
     """Import specific JSON files (legacy mode)."""
     db = SessionLocal()
     try:
@@ -110,7 +112,7 @@ def import_files(file_paths: list[str]):
                 continue
 
             print(f"\nImporting: {json_path}")
-            result = importer.import_file(json_path, billing_month)
+            result = importer.import_file(json_path, billing_month, refresh_existing=refresh_existing)
 
             if result.skipped:
                 total_skipped += 1
@@ -132,15 +134,27 @@ def import_files(file_paths: list[str]):
 def main():
     if len(sys.argv) < 2:
         print("Usage:")
-        print("  python import_statements.py YYYY-MM [YYYY-MM ...]")
-        print("  python import_statements.py all")
-        print("  python import_statements.py path/to/file.json [...]")
+        print("  python import_statements.py [--refresh] YYYY-MM [YYYY-MM ...]")
+        print("  python import_statements.py [--refresh] all")
+        print("  python import_statements.py [--refresh] path/to/file.json [...]")
         sys.exit(1)
 
     init_db()
 
+    args = sys.argv[1:]
+    refresh_existing = False
+    if args and args[0] == "--refresh":
+        refresh_existing = True
+        args = args[1:]
+    if not args:
+        print("Usage:")
+        print("  python import_statements.py [--refresh] YYYY-MM [YYYY-MM ...]")
+        print("  python import_statements.py [--refresh] all")
+        print("  python import_statements.py [--refresh] path/to/file.json [...]")
+        sys.exit(1)
+
     # Determine mode: month-based or file-based
-    if sys.argv[1] == "all":
+    if args[0] == "all":
         months = get_all_months()
         if not months:
             print("No statement folders found.")
@@ -149,7 +163,7 @@ def main():
         total_txns = 0
         total_flagged = 0
         for m in months:
-            result = import_month(m)
+            result = import_month(m, refresh_existing=refresh_existing)
             total_txns += result.total_transactions
             total_flagged += result.total_flagged
         print(f"\n{'='*50}")
@@ -158,13 +172,13 @@ def main():
             print(f"  Use /review in Telegram bot to assign them.")
         print(f"{'='*50}")
 
-    elif re.match(r'^\d{4}-\d{2}$', sys.argv[1]):
+    elif re.match(r'^\d{4}-\d{2}$', args[0]):
         # Month-based import
-        months = sys.argv[1:]
+        months = args
         total_txns = 0
         total_flagged = 0
         for m in months:
-            result = import_month(m)
+            result = import_month(m, refresh_existing=refresh_existing)
             total_txns += result.total_transactions
             total_flagged += result.total_flagged
         print(f"\n{'='*50}")
@@ -175,7 +189,7 @@ def main():
 
     else:
         # File-based import
-        import_files(sys.argv[1:])
+        import_files(args, refresh_existing=refresh_existing)
 
 
 if __name__ == "__main__":

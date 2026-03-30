@@ -112,6 +112,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
     - Negative amounts
     - Keywords: "REFUND", "REVERSAL", "CREDIT" in merchant name
     - Amounts in parentheses
+    - If the bank-specific guide identifies the line as a card-fee reversal or waiver, still set `categories: ["card_fees"]` and treat it as part of the card-fee alert flow rather than a generic merchant refund
 
 11. **Skip lines:** Each bank has specific lines to skip (payment lines, balance lines, totals, etc.). Refer to the bank-specific guide loaded in step 3 for bank-specific skip lines (e.g. HSBC has its own set of skip patterns). Common across all banks:
     - Points/rewards summary rows (e.g. "REWARDS POINTS EARNED")
@@ -124,11 +125,12 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
     - `subscriptions` — recurring subscription services (keyword or knowledge-based)
     - `foreign_currency` — when `ccy_fee` is not null; OR `foreign_currency_amount` is not null
     - `amaze` — when `merchant_name` starts with `AMAZE*`
+    - `atome` — when `merchant_name` starts with `ATOME*`
 
 ## Output Format
 
 **Single-card PDFs (Citibank, DBS, HSBC, Maybank):** one JSON object (or one per cardholder sub-section if supplementary cardholders are present).
-**UOB multi-card PDFs:** one JSON object per card section (output them sequentially).
+**UOB multi-card PDFs:** one JSON object per cardholder sub-section (output them sequentially).
 **Savings/deposit PDFs:** one JSON object per account (see bank-specific guide for schema).
 
 ```json
@@ -189,5 +191,6 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
   - Example: `2026_feb_uob_preferred_platinum_visa_foo_wah_liang_4474.json`
   - Example: `2026_jan_maybank_maybank_family_friends_card_foo_wah_liang_9103.json`
   - Example: `2026_feb_hsbc_hsbc_visa_revolution_foo_chi_jao_6207.json`
+  - If that exact filename already exists because the same billing month contains a second statement for the same `(cardholder_name, last4, card_name)`, append `_2`, `_3`, etc. before `.json` instead of overwriting the earlier statement.
 - **Supplementary cardholders:** Cards with sub-section headers produce one JSON per sub-section (not one per card). Cards with no sub-section header produce one JSON; resolve `cardholder_name` from `statement_people_identifier.yaml` by last-4 lookup.
 - **`statement_people_identifier.yaml` lookup:** Scan all people → all banks → all cards for a matching last-4 value. Use the person's `name` as `cardholder_name`. If not found, use the raw name from the statement or `null`; emit a warning comment above the JSON block.

@@ -110,7 +110,9 @@ INFO:     Application startup complete.
 
 1. **Send `/start` to bot** - Verify welcome message appears
 
-2. **Extract transactions** - Use `/extract-statement` Claude Code command on your PDF statements
+2. **Extract transactions** - Use the shared statement-extraction workflow on your PDF statements
+   - Claude Code: `/extract-statement`
+   - Codex/manual: follow `REPOSITORY_GUIDE.md` and the parsing references under `.claude/commands/`
 
 3. **Import transactions** - Import the extracted JSON into the database
 

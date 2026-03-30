@@ -6,6 +6,8 @@ This guide is loaded by `/extract-statement` when processing HSBC PDFs.
 
 HSBC statements are **image-based PDFs** (no extractable text via pdfplumber). Claude reads them visually. Ensure you read each PDF page as an image.
 
+For Codex/manual workflows, first render the PDF pages to local PNG files with `backend/render_statement_pages.py`, then inspect those page images visually.
+
 ## Single Card Per PDF
 
 Each HSBC PDF contains transactions for a **single card only** — no multi-card sections. No supplementary cardholders.
@@ -30,6 +32,7 @@ POST DATE  TRAN DATE  DESCRIPTION                    AMOUNT(SGD)
 
 - First date = post date, second date = transaction date (use transaction date for `transaction_date`)
 - Description and location/country code may span two lines
+- Some HSBC rows include a continuation line without a trailing 2-letter country code (for example a free-form descriptor under the merchant name). Preserve the visible text in `raw_description`, but if that continuation line does not yield an unambiguous location/country split, leave `location`/`country_code` as `null` rather than inferring from another statement month.
 - Amounts with `CR` suffix = credit/refund (e.g. `2.85CR` → amount `-2.85`, `is_refund: true`)
 
 ## Country Code & Location Parsing
@@ -84,6 +87,8 @@ Do NOT add rewards data to the statement JSON. Instead, if the statement contain
 ```
 
 - `reward_type`: `"points"` for HSBC Rewards points
+- When the PDF is image-based, read the rewards section from the rendered page image rather than waiting for OCR or extractable text.
+- If the statement shows a single current points balance and per-expiry buckets without one unambiguous expiry date for the earned points, keep `expiry_date` as `null`.
 
 If `rewards_history.json` doesn't exist yet, create it as `[]`. If no rewards section is found in the statement, do not append anything.
 
@@ -96,6 +101,10 @@ These are **real charges** — do NOT skip them. All bank charge lines (and thei
 - `LATE FEE CREDIT ADJUSTMENT` — reversal of late fee (CR, is_refund: true) → `categories: ["card_fees"]`
 - Reversed `FINANCE CHARGE` (CR, is_refund: true) → `categories: ["card_fees"]`
 - `GST ON LATE CHARGE` / `GST ON FINANCE CHARGE` (if present) → `categories: ["card_fees"]`
+
+## HSBC Alert Matching Note
+
+For auto-resolving `card_fees` alerts, treat HSBC `LATE CHARGE ...` and `LATE FEE ...` descriptions as the same fee family. This allows `LATE FEE CREDIT ADJUSTMENT` to auto-resolve an earlier `LATE CHARGE ASSESSMENT` on the same card when the amount and time window also match.
 
 ## Card Name Detection
 

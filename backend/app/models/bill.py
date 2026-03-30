@@ -12,9 +12,10 @@ class Bill(Base):
     period_start = Column(Date, nullable=False)
     period_end = Column(Date, nullable=False)
     total_amount = Column(Float, nullable=False)
-    status = Column(String, default="draft")  # draft, finalized, sent
+    status = Column(String, default="draft")  # draft, finalized, sent, paid
     created_at = Column(DateTime, default=datetime.utcnow)
     finalized_at = Column(DateTime, nullable=True)
+    paid_at = Column(DateTime, nullable=True)
 
     # Relationships
     person = relationship("Person", back_populates="bills")

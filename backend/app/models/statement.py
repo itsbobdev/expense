@@ -25,3 +25,4 @@ class Statement(Base):
 
     # Relationships
     transactions = relationship("Transaction", back_populates="statement", cascade="all, delete-orphan")
+    card_rewards = relationship("CardReward", back_populates="statement", cascade="all, delete-orphan")

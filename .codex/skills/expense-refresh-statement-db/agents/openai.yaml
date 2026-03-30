@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expense DB Refresh"
+  short_description: "Refresh the statement DB after corrected JSON extraction."
+  default_prompt: "Use $expense-refresh-statement-db to update the backend statement database after corrected or re-extracted statement JSON files."

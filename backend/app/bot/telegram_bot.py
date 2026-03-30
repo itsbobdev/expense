@@ -14,6 +14,7 @@ from app.bot.handlers import (
     refunds_command,
     alerts_command,
     resolved_command,
+    rewards_command,
     bill_command,
     handle_text_message,
 )
@@ -48,9 +49,11 @@ def create_bot_application() -> Application:
     application.add_handler(CommandHandler("import", import_command))
     application.add_handler(CommandHandler("status", status_command))
     application.add_handler(CommandHandler("review", review_command))
+    application.add_handler(CommandHandler("refund", refunds_command))
     application.add_handler(CommandHandler("refunds", refunds_command))
     application.add_handler(CommandHandler("alerts", alerts_command))
     application.add_handler(CommandHandler("resolved", resolved_command))
+    application.add_handler(CommandHandler("rewards", rewards_command))
     application.add_handler(CommandHandler("bill", bill_command))
 
     # Register message handlers

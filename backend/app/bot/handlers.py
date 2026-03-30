@@ -1,22 +1,225 @@
 import re
 import logging
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
-from telegram import Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import Person, Statement, Transaction, BlacklistCategory
+from app.models import Person, Statement, Transaction, BlacklistCategory, Bill
+from app.models.card_reward import CardReward
+from app.services.bill_generator import BillGenerator
 from app.services.categorizer import TransactionCategorizer
 from app.services.refund_handler import RefundHandler
 from app.services.importer import StatementImporter
 from app.bot.keyboards import (
     get_review_keyboard, get_refund_review_keyboard, get_refund_person_keyboard,
-    get_alert_keyboard, get_resolved_keyboard,
+    get_alert_keyboard, get_resolved_keyboard, get_bill_keyboard,
+    get_review_result_keyboard, get_shared_expense_keyboard,
 )
 from app.config import settings
+from app.services.review_assignment import (
+    assign_transaction_equal_split,
+    assign_transaction_to_person,
+    get_review_persons,
+    split_summary,
+    undo_review_assignment,
+)
+from app.services.card_owner import get_card_owner_name
 
 logger = logging.getLogger(__name__)
+SHARED_REVIEW_STATES_KEY = "shared_review_states"
+
+
+def _count_bill_pending_reviews(db: Session, bill: Bill) -> int:
+    billing_month = f"{bill.period_start.year:04d}-{bill.period_start.month:02d}"
+    return db.query(Transaction).filter(
+        Transaction.billing_month == billing_month,
+        Transaction.assigned_to_person_id == bill.person_id,
+        Transaction.needs_review == True,
+    ).count()
+
+
+def _count_orphan_refunds(db: Session, billing_month: str) -> int:
+    return db.query(Transaction).filter(
+        Transaction.billing_month == billing_month,
+        Transaction.needs_review == True,
+        Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
+    ).count()
+
+
+def _build_bill_response(db: Session, generator: BillGenerator, bill: Bill) -> tuple[str, object]:
+    text = generator.format_bill_message(bill.id)
+    pending = _count_bill_pending_reviews(db, bill)
+
+    if pending > 0:
+        text += f"\n\nWarning: {pending} transaction(s) still pending review."
+
+    billing_month = f"{bill.period_start.year:04d}-{bill.period_start.month:02d}"
+    orphan_refunds = _count_orphan_refunds(db, billing_month)
+    if orphan_refunds > 0:
+        text += (
+            f"\n\nWarning: {orphan_refunds} orphan refund(s) in {billing_month} "
+            f"not yet matched. Run /refund {billing_month} to resolve."
+        )
+
+    keyboard = get_bill_keyboard(bill.id, bill.status, can_finalize=(pending == 0))
+    logger.info(
+        "Bill response built: bill_id=%s status=%s pending=%s orphan_refunds=%s keyboard=%s",
+        bill.id,
+        bill.status,
+        pending,
+        orphan_refunds,
+        keyboard.to_dict() if keyboard else None,
+    )
+    return text, keyboard
+
+
+def _find_persons_for_bill_filter(db: Session, person_filter: str) -> list[Person]:
+    """Match person names while treating spaces, hyphens, and underscores equivalently."""
+    normalized_filter = re.sub(r"[-_\s]+", "", person_filter).lower()
+    persons = (
+        db.query(Person)
+        .filter(Person.is_auto_created == False)
+        .order_by(Person.name)
+        .all()
+    )
+    return [
+        person for person in persons
+        if normalized_filter in re.sub(r"[-_\s]+", "", person.name).lower()
+    ]
+
+
+def _build_review_transaction_text(
+    txn: Transaction,
+    index: int | None = None,
+    total: int | None = None,
+    show_billing_month: bool = False,
+) -> str:
+    card_info = ""
+    if txn.statement:
+        card_info = f"Card: {txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
+
+    category_info = ""
+    if txn.categories:
+        category_info = f"Category: {', '.join(txn.categories)}"
+
+    method_info = ""
+    if txn.assignment_method:
+        method_info = f"Reason: {txn.assignment_method}"
+
+    amount_str = f"-${abs(txn.amount):.2f}" if txn.amount < 0 else f"${txn.amount:.2f}"
+    prefix = ""
+    if index is not None and total is not None:
+        prefix = f"{index}/{total}: "
+
+    lines = [f"{prefix}{txn.merchant_name} {amount_str}"]
+    if card_info:
+        lines.append(card_info)
+    if category_info:
+        lines.append(category_info)
+    if method_info:
+        lines.append(method_info)
+    if show_billing_month and txn.billing_month:
+        lines.append(f"Billing month: {txn.billing_month}")
+    lines.append(f"Date: {txn.transaction_date}")
+    return "\n".join(lines)
+
+
+def _build_shared_expense_text(
+    txn: Transaction,
+    persons: list[Person],
+    selected_person_ids: list[int],
+    index: int | None = None,
+    total: int | None = None,
+    show_billing_month: bool = False,
+) -> str:
+    selected_names = [person.name for person in persons if person.id in set(selected_person_ids)]
+    lines = [
+        _build_review_transaction_text(
+            txn,
+            index=index,
+            total=total,
+            show_billing_month=show_billing_month,
+        ),
+        "",
+        "Shared expense mode",
+        "Select all people involved, then press Equal split.",
+    ]
+    if selected_names:
+        lines.append(f"Selected: {', '.join(selected_names)}")
+    else:
+        lines.append("Selected: none")
+    return "\n".join(lines)
+
+
+def _build_assignment_result_text(
+    transaction: Transaction,
+    label: str,
+    draft_bill_ids: list[int] | None = None,
+) -> str:
+    lines = [
+        label,
+        "",
+        f"Date: {transaction.transaction_date}",
+        f"Merchant: {transaction.merchant_name}",
+        f"Amount: ${abs(transaction.amount):.2f}",
+    ]
+    if draft_bill_ids:
+        lines.append("")
+        lines.append(
+            f"Deleted {len(draft_bill_ids)} draft bill(s) so they can be regenerated cleanly."
+        )
+    return "\n".join(lines)
+
+
+def _build_shared_assignment_result_text(
+    transaction: Transaction,
+    draft_bill_ids: list[int] | None = None,
+) -> str:
+    lines = ["Shared expense saved", ""]
+    for person_name, amount in split_summary(transaction):
+        lines.append(f"{person_name}: ${amount:.2f}")
+    lines.extend(
+        [
+            "",
+            f"Date: {transaction.transaction_date}",
+            f"Merchant: {transaction.merchant_name}",
+            f"Total: ${abs(transaction.amount):.2f}",
+        ]
+    )
+    if draft_bill_ids:
+        lines.append("")
+        lines.append(
+            f"Deleted {len(draft_bill_ids)} draft bill(s) so they can be regenerated cleanly."
+        )
+    return "\n".join(lines)
+
+
+def _get_shared_review_states(context: ContextTypes.DEFAULT_TYPE) -> dict:
+    return context.user_data.setdefault(SHARED_REVIEW_STATES_KEY, {})
+
+
+def _get_shared_review_selection(
+    context: ContextTypes.DEFAULT_TYPE,
+    transaction_id: int,
+) -> list[int]:
+    return list(_get_shared_review_states(context).get(transaction_id, []))
+
+
+def _set_shared_review_selection(
+    context: ContextTypes.DEFAULT_TYPE,
+    transaction_id: int,
+    person_ids: list[int],
+) -> None:
+    _get_shared_review_states(context)[transaction_id] = person_ids
+
+
+def _clear_shared_review_selection(
+    context: ContextTypes.DEFAULT_TYPE,
+    transaction_id: int,
+) -> None:
+    _get_shared_review_states(context).pop(transaction_id, None)
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -24,10 +227,11 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_message = (
         "Expense Tracker Bot\n\n"
         "Commands:\n"
-        "/review [YYYY-MM] - Review flagged transactions\n"
-        "/refunds [YYYY-MM] - Review orphan refunds\n"
+        "/review [YYYY-MM] - Review flagged transactions (all months if omitted)\n"
+        "/refund [YYYY-MM] - Review orphan refunds\n"
         "/alerts - View card fee alerts\n"
         "/resolved - View resolved alerts\n"
+        "/rewards [YYYY-MM] - View rewards summary\n"
         "/bill YYYY-MM [person] - Generate bills\n"
         "/status - Pipeline status\n"
         "/stats - Spending statistics\n"
@@ -49,8 +253,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "3. /review to assign flagged transactions to dad/wife/self\n"
         "4. /bill YYYY-MM to generate monthly bills\n\n"
         "Commands:\n"
-        "/review [YYYY-MM] - Review flagged transactions (defaults to latest)\n"
-        "/refunds [YYYY-MM] - Review orphan/ambiguous refunds\n"
+        "/review [YYYY-MM] - Review flagged transactions (all months if omitted)\n"
+        "/refund [YYYY-MM] - Review orphan/ambiguous refunds\n"
+        "/rewards [YYYY-MM] - View cashback and points rewards summary\n"
         "/bill YYYY-MM [name] - Generate bills (optionally filter by person)\n"
         "/status - Show import/review counts per month\n"
         "/stats - Spending totals by person\n"
@@ -108,22 +313,168 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.edit_message_text("❌ Person not found.")
                 return
 
-            # Assign transaction
-            transaction.assigned_to_person_id = person.id
-            transaction.assignment_confidence = 1.0
-            transaction.assignment_method = 'manual'
-            transaction.needs_review = False
-            transaction.reviewed_at = datetime.utcnow()
-            db.commit()
+            outcome = assign_transaction_to_person(db, transaction, person.id)
+            _clear_shared_review_selection(context, transaction_id)
 
             # Update message
             await query.edit_message_text(
-                f"✅ Assigned to **{person.name}**\n\n"
-                f"📅 {transaction.transaction_date}\n"
-                f"🏪 {transaction.merchant_name}\n"
-                f"💰 ${abs(transaction.amount):.2f}"
+                _build_assignment_result_text(
+                    outcome.transaction,
+                    f"Assigned to {person.name}",
+                    outcome.affected_draft_bill_ids,
+                ),
+                reply_markup=get_review_result_keyboard(transaction_id),
             )
 
+        finally:
+            db.close()
+
+    elif parts[0] == 'undo':
+        transaction_id = int(parts[1])
+
+        db = SessionLocal()
+        try:
+            transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+            if not transaction:
+                await query.edit_message_text("Transaction not found.")
+                return
+
+            try:
+                outcome = undo_review_assignment(db, transaction)
+            except ValueError as e:
+                await query.edit_message_text(str(e))
+                return
+
+            _clear_shared_review_selection(context, transaction_id)
+            await query.edit_message_text(
+                _build_assignment_result_text(
+                    outcome.transaction,
+                    "Moved back to /review",
+                    outcome.affected_draft_bill_ids,
+                )
+            )
+        finally:
+            db.close()
+
+    elif parts[0] == 'share':
+        transaction_id = int(parts[1])
+
+        db = SessionLocal()
+        try:
+            transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+            if not transaction:
+                await query.edit_message_text("Transaction not found.")
+                return
+
+            persons = get_review_persons(db)
+            _set_shared_review_selection(context, transaction_id, [])
+            await query.edit_message_text(
+                _build_shared_expense_text(
+                    transaction,
+                    persons,
+                    [],
+                    show_billing_month=bool(transaction.billing_month),
+                ),
+                reply_markup=get_shared_expense_keyboard(transaction_id, persons, []),
+            )
+        finally:
+            db.close()
+
+    elif parts[0] == 'sharetoggle':
+        transaction_id = int(parts[1])
+        person_id = int(parts[2])
+
+        db = SessionLocal()
+        try:
+            transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+            if not transaction:
+                await query.edit_message_text("Transaction not found.")
+                return
+
+            persons = get_review_persons(db)
+            selected_person_ids = _get_shared_review_selection(context, transaction_id)
+            if person_id in selected_person_ids:
+                selected_person_ids = [selected for selected in selected_person_ids if selected != person_id]
+            else:
+                selected_person_ids.append(person_id)
+            _set_shared_review_selection(context, transaction_id, selected_person_ids)
+
+            await query.edit_message_text(
+                _build_shared_expense_text(
+                    transaction,
+                    persons,
+                    selected_person_ids,
+                    show_billing_month=bool(transaction.billing_month),
+                ),
+                reply_markup=get_shared_expense_keyboard(
+                    transaction_id,
+                    persons,
+                    selected_person_ids,
+                ),
+            )
+        finally:
+            db.close()
+
+    elif parts[0] == 'sharesave':
+        transaction_id = int(parts[1])
+
+        db = SessionLocal()
+        try:
+            transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+            if not transaction:
+                await query.edit_message_text("Transaction not found.")
+                return
+
+            selected_person_ids = _get_shared_review_selection(context, transaction_id)
+            try:
+                outcome = assign_transaction_equal_split(db, transaction, selected_person_ids)
+            except ValueError as e:
+                persons = get_review_persons(db)
+                await query.edit_message_text(
+                    _build_shared_expense_text(
+                        transaction,
+                        persons,
+                        selected_person_ids,
+                        show_billing_month=bool(transaction.billing_month),
+                    )
+                    + f"\n\n{e}",
+                    reply_markup=get_shared_expense_keyboard(
+                        transaction_id,
+                        persons,
+                        selected_person_ids,
+                    ),
+                )
+                return
+
+            _clear_shared_review_selection(context, transaction_id)
+            await query.edit_message_text(
+                _build_shared_assignment_result_text(
+                    outcome.transaction,
+                    outcome.affected_draft_bill_ids,
+                ),
+                reply_markup=get_review_result_keyboard(transaction_id),
+            )
+        finally:
+            db.close()
+
+    elif parts[0] == 'sharecancel':
+        transaction_id = int(parts[1])
+        db = SessionLocal()
+        try:
+            transaction = db.query(Transaction).filter(Transaction.id == transaction_id).first()
+            if not transaction:
+                await query.edit_message_text("Transaction not found.")
+                return
+
+            persons = get_review_persons(db)
+            _clear_shared_review_selection(context, transaction_id)
+            await query.edit_message_text(
+                _build_review_transaction_text(
+                    transaction,
+                    show_billing_month=bool(transaction.billing_month),
+                ),
+                reply_markup=get_review_keyboard(transaction_id, persons),
+            )
         finally:
             db.close()
 
@@ -181,7 +532,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if not matches:
                 await query.edit_message_text(
                     f"No transactions found matching ${abs(refund.amount):.2f}.\n"
-                    "Use /refunds to try again later."
+                    "Use /refund to try again later."
                 )
                 return
 
@@ -211,16 +562,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         db = SessionLocal()
         try:
-            persons = (
-                db.query(Person)
-                .filter(Person.is_auto_created == False)
-                .order_by(Person.name)
-                .all()
-            )
-            self_person = db.query(Person).filter(Person.relationship_type == "self").first()
-            if self_person:
-                persons.append(self_person)
-
+            persons = get_review_persons(db)
             keyboard = get_refund_person_keyboard(refund_id, persons)
             await query.edit_message_reply_markup(reply_markup=keyboard)
         finally:
@@ -301,6 +643,32 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.edit_message_text(
             "Skipped. You can review this transaction later."
         )
+
+    elif parts[0] == 'bill':
+        # Format: bill_{action}_{bill_id}
+        action = parts[1]
+        bill_id = int(parts[2])
+
+        db = SessionLocal()
+        try:
+            generator = BillGenerator(db)
+
+            if action == 'finalize':
+                bill = generator.finalize_bill(bill_id)
+            elif action == 'pay':
+                bill = generator.mark_bill_paid(bill_id)
+            elif action == 'unpay':
+                bill = generator.mark_bill_unpaid(bill_id)
+            else:
+                await query.edit_message_text("Unknown bill action.")
+                return
+
+            text, keyboard = _build_bill_response(db, generator, bill)
+            await query.edit_message_text(text, reply_markup=keyboard)
+        except ValueError as e:
+            await query.edit_message_text(f"Bill action failed: {e}")
+        finally:
+            db.close()
 
 
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -478,83 +846,54 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def review_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /review command - show pending review queue.
 
-    Usage: /review [YYYY-MM]  (defaults to latest month with pending reviews)
+    Usage: /review [YYYY-MM]
+    Without a month, shows all pending reviews across all months.
     """
     db = SessionLocal()
     try:
-        # Determine billing month
+        filters = [Transaction.needs_review == True]
+
         if context.args:
             billing_month = context.args[0]
+            filters.append(Transaction.billing_month == billing_month)
         else:
-            # Find latest month with pending reviews
-            row = (
-                db.query(Transaction.billing_month)
-                .filter(Transaction.needs_review == True)
-                .order_by(Transaction.billing_month.desc())
-                .first()
-            )
-            if not row:
-                await update.message.reply_text("No transactions pending review.")
-                return
-            billing_month = row[0]
+            billing_month = None
 
-        # Get pending transactions for this month
         pending = (
             db.query(Transaction)
-            .filter(
-                Transaction.billing_month == billing_month,
-                Transaction.needs_review == True,
-            )
-            .order_by(Transaction.transaction_date)
+            .filter(*filters)
+            .order_by(Transaction.billing_month.desc(), Transaction.transaction_date, Transaction.id)
             .all()
         )
 
         if not pending:
-            await update.message.reply_text(f"No pending reviews for {billing_month}.")
+            if billing_month:
+                await update.message.reply_text(f"No pending reviews for {billing_month}.")
+            else:
+                await update.message.reply_text("No transactions pending review.")
             return
 
-        # Get all non-self persons for assignment buttons
-        persons = (
-            db.query(Person)
-            .filter(Person.is_auto_created == False)
-            .order_by(Person.name)
-            .all()
-        )
-        # Also include self person
-        self_person = db.query(Person).filter(Person.relationship_type == "self").first()
-        if self_person:
-            persons.append(self_person)
+        persons = get_review_persons(db)
 
-        await update.message.reply_text(
-            f"Review queue for {billing_month}: {len(pending)} transactions\n"
-        )
+        if billing_month:
+            header = f"Review queue for {billing_month}: {len(pending)} transactions"
+        else:
+            months = sorted({txn.billing_month for txn in pending}, reverse=True)
+            header = (
+                f"All pending reviews: {len(pending)} transactions across "
+                f"{len(months)} month(s)\nMonths: {', '.join(months)}"
+            )
+
+        await update.message.reply_text(header)
 
         # Send each transaction as a separate message with inline keyboard
         for i, txn in enumerate(pending, 1):
-            card_info = ""
-            if txn.statement:
-                card_info = f"Card: {txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
-
-            category_info = ""
-            if txn.categories:
-                category_info = f"Category: {', '.join(txn.categories)}"
-
-            method_info = ""
-            if txn.assignment_method:
-                method_info = f"Reason: {txn.assignment_method}"
-
-            amount_str = f"-${abs(txn.amount):.2f}" if txn.amount < 0 else f"${txn.amount:.2f}"
-
-            lines = [f"{i}/{len(pending)}: {txn.merchant_name} {amount_str}"]
-            if card_info:
-                lines.append(card_info)
-            if category_info:
-                lines.append(category_info)
-            if method_info:
-                lines.append(method_info)
-            lines.append(f"Date: {txn.transaction_date}")
-
-            text = "\n".join(lines)
+            text = _build_review_transaction_text(
+                txn,
+                index=i,
+                total=len(pending),
+                show_billing_month=not billing_month,
+            )
 
             # Use refund keyboard for refund transactions, regular for others
             if txn.is_refund and txn.assignment_method in ('refund_ambiguous', 'refund_orphan'):
@@ -571,54 +910,55 @@ async def review_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handle /refunds command - show orphan/ambiguous refunds.
+    """Handle /refund(s) command - show orphan/ambiguous refunds.
 
-    Usage: /refunds [YYYY-MM]  (defaults to latest month with orphan refunds)
+    Usage: /refund [YYYY-MM]
+    Without a month, shows all pending orphan/ambiguous refunds.
     """
     db = SessionLocal()
     try:
-        # Determine billing month
+        filters = [
+            Transaction.needs_review == True,
+            Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
+        ]
+
         if context.args:
             billing_month = context.args[0]
+            filters.append(Transaction.billing_month == billing_month)
         else:
-            row = (
-                db.query(Transaction.billing_month)
-                .filter(
-                    Transaction.needs_review == True,
-                    Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
-                )
-                .order_by(Transaction.billing_month.desc())
-                .first()
-            )
-            if not row:
-                await update.message.reply_text("No orphan refunds pending review.")
-                return
-            billing_month = row[0]
+            billing_month = None
 
-        # Get orphan/ambiguous refunds for this month
         pending = (
             db.query(Transaction)
-            .filter(
-                Transaction.billing_month == billing_month,
-                Transaction.needs_review == True,
-                Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
-            )
-            .order_by(Transaction.transaction_date)
+            .filter(*filters)
+            .order_by(Transaction.billing_month.desc(), Transaction.transaction_date, Transaction.id)
             .all()
         )
 
         if not pending:
-            await update.message.reply_text(f"No orphan refunds for {billing_month}.")
+            if billing_month:
+                await update.message.reply_text(f"No orphan refunds for {billing_month}.")
+            else:
+                await update.message.reply_text("No orphan refunds pending review.")
             return
 
-        await update.message.reply_text(
-            f"Orphan refunds for {billing_month}: {len(pending)} transactions\n"
-        )
+        if billing_month:
+            header = f"Orphan refunds for {billing_month}: {len(pending)} transactions"
+        else:
+            months = sorted({txn.billing_month for txn in pending}, reverse=True)
+            header = (
+                f"All pending orphan refunds: {len(pending)} transactions across "
+                f"{len(months)} month(s)\nMonths: {', '.join(months)}"
+            )
+
+        await update.message.reply_text(header)
 
         for i, txn in enumerate(pending, 1):
             card_info = ""
+            card_owner = None
             if txn.statement:
                 card_info = f"Card: {txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
+                card_owner = get_card_owner_name(db, txn.statement)
 
             amount_str = f"-${abs(txn.amount):.2f}"
 
@@ -626,8 +966,11 @@ async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"Orphan refund {i}/{len(pending)}:",
                 f"{txn.merchant_name} {amount_str}",
             ]
+            lines.append(f"Billing month: {txn.billing_month}")
             if card_info:
                 lines.append(card_info)
+            if card_owner:
+                lines.append(f"Card owner: {card_owner}")
             lines.append(f"Date: {txn.transaction_date}")
             if txn.assignment_method:
                 lines.append(f"Status: {txn.assignment_method}")
@@ -661,14 +1004,16 @@ async def bill_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     db = SessionLocal()
     try:
-        from app.services.bill_generator import BillGenerator
         generator = BillGenerator(db)
 
         # Get persons to bill (non-self)
         if person_filter:
-            persons = db.query(Person).filter(
-                Person.name.ilike(f"%{person_filter}%")
-            ).all()
+            persons = _find_persons_for_bill_filter(db, person_filter)
+            logger.info(
+                "Bill command filter '%s' matched persons=%s",
+                person_filter,
+                [p.name for p in persons],
+            )
             if not persons:
                 await update.message.reply_text(f"No person found matching '{person_filter}'.")
                 return
@@ -687,31 +1032,14 @@ async def bill_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await update.message.reply_text(f"No billable items for {person.name} in {billing_month}.")
                 continue
 
-            text = generator.format_bill_message(bill.id)
-            # Check for unreviewed transactions
-            pending = db.query(Transaction).filter(
-                Transaction.billing_month == billing_month,
-                Transaction.assigned_to_person_id == person.id,
-                Transaction.needs_review == True,
-            ).count()
-
-            if pending > 0:
-                text += f"\n\nWarning: {pending} transaction(s) still pending review."
-
-            # Check for unmatched orphan refunds in this billing month
-            orphan_refunds = db.query(Transaction).filter(
-                Transaction.billing_month == billing_month,
-                Transaction.needs_review == True,
-                Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
-            ).count()
-
-            if orphan_refunds > 0:
-                text += (
-                    f"\n\nWarning: {orphan_refunds} orphan refund(s) in {billing_month} "
-                    f"not yet matched. Run /refunds {billing_month} to resolve."
-                )
-
-            await update.message.reply_text(text)
+            text, keyboard = _build_bill_response(db, generator, bill)
+            logger.info(
+                "Sending bill message: bill_id=%s person=%s keyboard=%s",
+                bill.id,
+                person.name,
+                keyboard.to_dict() if keyboard else None,
+            )
+            await update.message.reply_text(text, reply_markup=keyboard)
 
     except Exception as e:
         logger.exception("Bill generation failed")
@@ -963,3 +1291,90 @@ async def handle_text_message(update: Update, context: ContextTypes.DEFAULT_TYPE
 
         finally:
             db.close()
+
+
+async def rewards_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle /rewards command - show cashback and points summary.
+
+    Usage: /rewards [YYYY-MM]
+    If no month given: show cumulative totals per card across all months.
+    """
+    db = SessionLocal()
+    try:
+        billing_month = context.args[0] if context.args else None
+
+        if billing_month:
+            rewards = (
+                db.query(CardReward)
+                .filter(CardReward.billing_month == billing_month)
+                .order_by(CardReward.reward_type, CardReward.bank_name, CardReward.card_last_4)
+                .all()
+            )
+            if not rewards:
+                await update.message.reply_text(f"No rewards recorded for {billing_month}.")
+                return
+            title = f"Rewards Summary — {billing_month}"
+        else:
+            # Latest 12 months
+            rewards = (
+                db.query(CardReward)
+                .order_by(CardReward.billing_month.desc(), CardReward.reward_type, CardReward.bank_name)
+                .all()
+            )
+            if not rewards:
+                await update.message.reply_text("No rewards recorded yet.")
+                return
+            title = "Rewards Summary — All Time"
+
+        lines = [title, ""]
+
+        # Group by reward_type
+        cashback = [r for r in rewards if r.reward_type == "cashback"]
+        non_cashback = [r for r in rewards if r.reward_type != "cashback"]
+
+        # --- Cashback section ---
+        if cashback:
+            lines.append("Cashback:")
+            total_cashback = 0.0
+            for r in cashback:
+                card_label = f"{r.bank_name or 'Unknown'} ****{r.card_last_4 or '????'}"
+                person_name = r.person.name if r.person else "unknown"
+                month_label = f" ({r.billing_month})" if not billing_month else ""
+                lines.append(f"  {card_label}{month_label}   ${r.earned_this_period:.2f}")
+                total_cashback += r.earned_this_period
+            if len(cashback) > 1:
+                lines.append(f"  Total SGD cashback:   ${total_cashback:.2f}")
+            lines.append("")
+
+        # --- Points / miles / uni_dollars sections ---
+        seen_types = {}
+        for r in non_cashback:
+            key = r.reward_type
+            seen_types.setdefault(key, []).append(r)
+
+        three_months_from_now = date.today() + timedelta(days=90)
+
+        for reward_type, items in seen_types.items():
+            type_label = reward_type.replace("_", " ").title()
+            for r in items:
+                card_label = f"{r.bank_name or 'Unknown'} ****{r.card_last_4 or '????'}"
+                lines.append(f"{type_label} — {card_label}:")
+
+                unit = "pts" if reward_type in ("points", "uni_dollars") else reward_type
+                lines.append(f"  Earned this period:   {r.earned_this_period:,.0f} {unit}")
+
+                if r.balance is not None:
+                    lines.append(f"  Balance:              {r.balance:,.0f} {unit}")
+
+                if r.expiry_date:
+                    expiry_str = r.expiry_date.strftime("%d %b %Y")
+                    expiry_warn = " ⚠️ expires soon" if r.expiry_date <= three_months_from_now else ""
+                    lines.append(f"  Expires: {expiry_str}{expiry_warn}")
+                else:
+                    lines.append("  No expiry shown")
+                lines.append("")
+
+        await update.message.reply_text("\n".join(lines))
+
+    finally:
+        db.close()

@@ -1,0 +1,92 @@
+[
+  {
+    "timestamp": "2026-03-18T00:40:18.717963",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:07:22.379090",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:55:34.214075",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:37:18.710379",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:42:43.937741",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T10:56:05.243209",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T10:57:32.156302",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T10:58:22.873697",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:52:42.662953",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Subagent Complete"
+    }
+  }
+]

@@ -25,6 +25,11 @@ class Settings(BaseSettings):
     ml_min_training_samples: int = 50
     ml_retrain_interval: int = 10
 
+    # Google Sheets bill export
+    google_sheets_bill_export_enabled: bool = False
+    google_sheets_bill_export_spreadsheet: str = ""
+    google_sheets_service_account_json: str = ""
+
     class Config:
         env_file = ".env"
         case_sensitive = False

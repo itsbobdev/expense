@@ -9,7 +9,9 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from app.models import Person, Transaction, Bill, BillLineItem, ManualBill
+from app.models import Person, Transaction, Bill, BillLineItem, ManualBill, TransactionSplit
+from app.services.card_owner import format_statement_card_label
+from app.services.bill_sheets_exporter import BillSheetsExporter
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +27,7 @@ class BillGenerator:
         Generate (or regenerate) a bill for a person and billing month.
 
         If a draft bill already exists, it is deleted and recreated.
-        Finalized bills are not regenerated (returns existing).
+        Finalized and paid bills are not regenerated (returns existing).
 
         Args:
             person_id: ID of the person to bill
@@ -52,7 +54,7 @@ class BillGenerator:
             Bill.period_start == period_start,
         ).first()
 
-        if existing and existing.status == "finalized":
+        if existing and existing.status in {"finalized", "paid"}:
             return existing
 
         # Delete existing draft to regenerate
@@ -71,6 +73,17 @@ class BillGenerator:
             .all()
         )
 
+        shared_splits = (
+            self.db.query(TransactionSplit)
+            .join(Transaction, Transaction.id == TransactionSplit.transaction_id)
+            .filter(
+                TransactionSplit.person_id == person_id,
+                Transaction.billing_month == billing_month,
+            )
+            .order_by(Transaction.transaction_date, TransactionSplit.sort_order)
+            .all()
+        )
+
         # Gather manual bills (recurring charges) for this person and month
         manual_bills = (
             self.db.query(ManualBill)
@@ -81,13 +94,14 @@ class BillGenerator:
             .all()
         )
 
-        if not transactions and not manual_bills:
+        if not transactions and not shared_splits and not manual_bills:
             return None
 
         # Calculate total
         txn_total = sum(t.amount for t in transactions)
+        shared_total = sum(split.split_amount for split in shared_splits)
         manual_total = sum(m.amount for m in manual_bills)
-        total = txn_total + manual_total
+        total = txn_total + shared_total + manual_total
 
         # Create bill
         bill = Bill(
@@ -113,6 +127,16 @@ class BillGenerator:
             )
             self.db.add(line)
 
+        for split in shared_splits:
+            desc = split.transaction.merchant_name if split.transaction else "Shared expense"
+            line = BillLineItem(
+                bill_id=bill.id,
+                transaction_id=split.transaction_id,
+                amount=split.split_amount,
+                description=desc,
+            )
+            self.db.add(line)
+
         # Create line items for manual bills
         for mb in manual_bills:
             line = BillLineItem(
@@ -127,8 +151,8 @@ class BillGenerator:
         self.db.refresh(bill)
 
         logger.info(
-            "Generated bill for %s %s: $%.2f (%d txns, %d recurring)",
-            person.name, billing_month, total, len(transactions), len(manual_bills),
+            "Generated bill for %s %s: $%.2f (%d txns, %d shared, %d recurring)",
+            person.name, billing_month, total, len(transactions), len(shared_splits), len(manual_bills),
         )
 
         return bill
@@ -145,6 +169,8 @@ class BillGenerator:
         bill = self.db.query(Bill).filter(Bill.id == bill_id).first()
         if not bill:
             raise ValueError("Bill not found")
+        if bill.status == "paid":
+            raise ValueError("Paid bills cannot be finalized again")
         if bill.status == "finalized":
             raise ValueError("Bill is already finalized")
 
@@ -164,6 +190,39 @@ class BillGenerator:
 
         bill.status = "finalized"
         bill.finalized_at = datetime.utcnow()
+        self.db.commit()
+        self.db.refresh(bill)
+        self._export_finalized_bill(bill)
+
+        return bill
+
+    def mark_bill_paid(self, bill_id: int) -> Bill:
+        """Mark a finalized bill as paid."""
+        bill = self.db.query(Bill).filter(Bill.id == bill_id).first()
+        if not bill:
+            raise ValueError("Bill not found")
+        if bill.status == "paid":
+            raise ValueError("Bill is already paid")
+        if bill.status != "finalized":
+            raise ValueError("Only finalized bills can be marked paid")
+
+        bill.status = "paid"
+        bill.paid_at = datetime.utcnow()
+        self.db.commit()
+        self.db.refresh(bill)
+
+        return bill
+
+    def mark_bill_unpaid(self, bill_id: int) -> Bill:
+        """Revert a paid bill back to finalized."""
+        bill = self.db.query(Bill).filter(Bill.id == bill_id).first()
+        if not bill:
+            raise ValueError("Bill not found")
+        if bill.status != "paid":
+            raise ValueError("Only paid bills can be marked unpaid")
+
+        bill.status = "finalized"
+        bill.paid_at = None
         self.db.commit()
         self.db.refresh(bill)
 
@@ -191,11 +250,14 @@ class BillGenerator:
         # Separate line items into categories
         txn_items = []
         refund_items = []
+        shared_items = []
         recurring_items = []
 
         for item in bill.line_items:
             if item.manual_bill_id:
                 recurring_items.append(item)
+            elif item.transaction and item.transaction.transaction_splits:
+                shared_items.append(item)
             elif item.transaction and item.transaction.is_refund:
                 refund_items.append(item)
             else:
@@ -207,9 +269,11 @@ class BillGenerator:
             for item in txn_items:
                 txn = item.transaction
                 date_str = txn.transaction_date.strftime("%m/%d") if txn else ""
-                card_str = ""
-                if txn and txn.statement:
-                    card_str = f"  ({txn.statement.bank_name or ''} ****{txn.statement.card_last_4})"
+                card_str = format_statement_card_label(
+                    self.db,
+                    txn.statement if txn else None,
+                    bill.person,
+                )
                 lines.append(f"  {date_str} {item.description:<30s} ${item.amount:>8.2f}{card_str}")
             lines.append("")
 
@@ -233,9 +297,33 @@ class BillGenerator:
                 lines.append(f"  {item.description:<36s} ${item.amount:>8.2f}")
             lines.append("")
 
+        if shared_items:
+            lines.append("Shared Expenses:")
+            for item in shared_items:
+                txn = item.transaction
+                date_str = txn.transaction_date.strftime("%m/%d") if txn else ""
+                card_str = format_statement_card_label(
+                    self.db,
+                    txn.statement if txn else None,
+                    bill.person,
+                )
+                lines.append(f"  {date_str} {item.description:<30s} ${item.amount:>8.2f}{card_str}")
+            lines.append("")
+
         # Total
         lines.append("-" * 48)
         lines.append(f"{'Total:':<36s} ${bill.total_amount:>8.2f}")
         lines.append(f"\nStatus: {bill.status}")
+        if bill.finalized_at:
+            lines.append(f"Finalized at: {bill.finalized_at.strftime('%Y-%m-%d %H:%M UTC')}")
+        if bill.paid_at:
+            lines.append(f"Paid at: {bill.paid_at.strftime('%Y-%m-%d %H:%M UTC')}")
 
         return "\n".join(lines)
+
+    def _export_finalized_bill(self, bill: Bill) -> None:
+        """Best-effort export of finalized bill summaries to Google Sheets."""
+        try:
+            BillSheetsExporter().export_finalized_bill(bill)
+        except Exception:
+            logger.exception("Failed to export finalized bill %s to Google Sheets", bill.id)

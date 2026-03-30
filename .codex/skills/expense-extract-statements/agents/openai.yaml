@@ -1,0 +1,4 @@
+interface:
+  display_name: "Expense Extract"
+  short_description: "Extract statement JSON for this repo."
+  default_prompt: "Use $expense-extract-statements to extract statement JSON for this repo."

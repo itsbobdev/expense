@@ -168,4 +168,12 @@ def get_initial_blacklist_categories() -> List[Dict]:
             ],
             "is_active": True,
         },
+        {
+            "name": "atome",
+            "keywords": [
+                "atome*",
+                "atome ",
+            ],
+            "is_active": True,
+        },
     ]

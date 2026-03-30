@@ -6,6 +6,8 @@ from app.models.bill import Bill, BillLineItem
 from app.models.ml_training import MLTrainingData
 from app.models.blacklist_category import BlacklistCategory
 from app.models.manual_bill import ManualBill
+from app.models.card_reward import CardReward
+from app.models.transaction_split import TransactionSplit
 
 __all__ = [
     "Person",
@@ -17,4 +19,6 @@ __all__ = [
     "MLTrainingData",
     "BlacklistCategory",
     "ManualBill",
+    "CardReward",
+    "TransactionSplit",
 ]

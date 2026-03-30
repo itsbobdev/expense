@@ -1,0 +1,585 @@
+[
+  {
+    "timestamp": "2026-03-17T20:26:31.127703",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:32:14.303088",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:33:30.957769",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:37:12.346554",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:41:30.094487",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:44:08.233437",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:46:16.013955",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:46:29.010591",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:49:55.670960",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:54:12.001792",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:54:20.654714",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:56:32.976381",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:59:10.493473",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:59:36.248030",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T21:05:01.630547",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T23:38:58.177402",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T23:40:06.607076",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:06:19.721074",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:08:56.279837",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:32:30.397446",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:36:00.919944",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:50:21.743618",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:09:06.538349",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:11:56.953686",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:14:57.956462",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:18:37.586951",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:20:56.483475",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:45:31.895635",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:46:43.990256",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:31:45.675585",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:42:49.374394",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T10:53:33.407782",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:04:09.829043",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:11:04.274128",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:11:59.575601",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:13:43.472327",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:16:18.795784",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:18:54.274680",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:22:20.084889",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T16:32:21.549609",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T16:34:47.561843",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:42:57.305796",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:45:34.323124",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:46:43.907252",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:51:26.420006",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:53:31.395127",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:56:00.339015",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:56:19.007609",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:43:51.642921",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:45:03.858394",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:46:36.207805",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:49:07.588426",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:50:40.662056",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "stop_hook_active": false,
+    "completion_message": "Task completed!",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Task completed!"
+    }
+  }
+]

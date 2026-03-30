@@ -32,7 +32,41 @@ def get_review_keyboard(transaction_id: int, persons: List[Person]) -> InlineKey
 
     # Add "Skip" button in the last row
     keyboard.append([
+        InlineKeyboardButton("Shared expense", callback_data=f"share_{transaction_id}"),
         InlineKeyboardButton("Skip", callback_data=f"skip_{transaction_id}"),
+    ])
+
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_review_result_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("Undo", callback_data=f"undo_{transaction_id}")],
+    ])
+
+
+def get_shared_expense_keyboard(
+    transaction_id: int,
+    persons: List[Person],
+    selected_person_ids: List[int],
+) -> InlineKeyboardMarkup:
+    keyboard = []
+    selected_set = set(selected_person_ids)
+
+    person_buttons = [
+        InlineKeyboardButton(
+            f"{'✓ ' if person.id in selected_set else ''}{person.name}",
+            callback_data=f"sharetoggle_{transaction_id}_{person.id}",
+        )
+        for person in persons
+    ]
+
+    for i in range(0, len(person_buttons), 2):
+        keyboard.append(person_buttons[i:i+2])
+
+    keyboard.append([
+        InlineKeyboardButton("Equal split", callback_data=f"sharesave_{transaction_id}"),
+        InlineKeyboardButton("Cancel", callback_data=f"sharecancel_{transaction_id}"),
     ])
 
     return InlineKeyboardMarkup(keyboard)
@@ -129,4 +163,27 @@ def get_confirmation_keyboard(action: str, item_id: int) -> InlineKeyboardMarkup
             InlineKeyboardButton("No", callback_data=f"cancel_{action}_{item_id}"),
         ],
     ]
+    return InlineKeyboardMarkup(keyboard)
+
+
+def get_bill_keyboard(bill_id: int, status: str, can_finalize: bool) -> InlineKeyboardMarkup | None:
+    """Keyboard for bill state transitions."""
+    keyboard = []
+
+    if status == "draft" and can_finalize:
+        keyboard.append([
+            InlineKeyboardButton("Finalize", callback_data=f"bill_finalize_{bill_id}"),
+        ])
+    elif status == "finalized":
+        keyboard.append([
+            InlineKeyboardButton("Mark paid", callback_data=f"bill_pay_{bill_id}"),
+        ])
+    elif status == "paid":
+        keyboard.append([
+            InlineKeyboardButton("Mark unpaid", callback_data=f"bill_unpay_{bill_id}"),
+        ])
+
+    if not keyboard:
+        return None
+
     return InlineKeyboardMarkup(keyboard)

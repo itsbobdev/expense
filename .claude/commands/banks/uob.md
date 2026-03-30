@@ -4,7 +4,13 @@ This guide is loaded by `/extract-statement` when processing UOB PDFs.
 
 ## Multi-Card PDFs
 
-One UOB PDF contains **multiple card sections**. Output **one JSON object per card section** in the PDF. Each object carries the full schema for that card.
+One UOB PDF contains **multiple card families**, and some families contain **multiple cardholder sub-sections**.
+
+- Output **one JSON object per cardholder sub-section**, not one combined JSON per card family.
+- Use the sub-section header to determine that JSON's `card_name`, `card_last_4`, and `cardholder_name`.
+- When a card family has multiple cardholders, the statement's `TOTAL BALANCE FOR ...` line may be the family total across all cardholders. For each JSON object, set `total_charges` from that cardholder sub-section's own `SUB TOTAL`, not from the family `TOTAL BALANCE`.
+- If a sub-section shows no transaction rows but still appears in the statement, still emit its JSON. When its `SUB TOTAL` is `0.00`, keep `transactions: []`, `total_charges: 0.0`, and `period_start` / `period_end` as `null`.
+- If a standalone UOB cardholder sub-section has **no transaction rows** and only carries forward balance/payment lines, emit `transactions: []` and preserve the displayed `SUB TOTAL` as `total_charges`. Do **not** copy forward transactions from the previous statement.
 
 ## Cardholder Header Format
 

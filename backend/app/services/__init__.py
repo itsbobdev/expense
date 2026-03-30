@@ -5,6 +5,7 @@ from app.services.blacklist_matcher import BlacklistMatcher
 from app.services.importer import StatementImporter, ImportResult, MonthImportResult
 from app.services.recurring_charges import RecurringChargesService
 from app.services.bill_generator import BillGenerator
+from app.services.bill_sheets_exporter import BillSheetsExporter
 
 __all__ = [
     "TransactionCategorizer",
@@ -17,4 +18,5 @@ __all__ = [
     "MonthImportResult",
     "RecurringChargesService",
     "BillGenerator",
+    "BillSheetsExporter",
 ]

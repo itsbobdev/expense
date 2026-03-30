@@ -14,6 +14,8 @@ class Person(Base):
 
     # Relationships
     transactions = relationship("Transaction", back_populates="assigned_person")
+    transaction_splits = relationship("TransactionSplit", back_populates="person")
     bills = relationship("Bill", back_populates="person")
     assignment_rules = relationship("AssignmentRule", back_populates="person")
     manual_bills = relationship("ManualBill", back_populates="person")
+    card_rewards = relationship("CardReward", back_populates="person")

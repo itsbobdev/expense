@@ -15,10 +15,14 @@ from dataclasses import dataclass
 
 from sqlalchemy.orm import Session
 
-from app.models import Statement, Transaction
+from app.models import Statement, Transaction, BillLineItem, MLTrainingData
+from app.services.account_statement_service import (
+    is_account_statement_data,
+    normalize_statement_amount,
+)
 from app.services.categorizer import TransactionCategorizer
 from app.services.refund_handler import RefundHandler
-from app.services.alert_resolver import AlertResolver
+from app.services.alert_resolver import AlertResolver, looks_like_card_fee
 from app.config import settings
 
 # Patterns that identify cashback reward transactions (not merchant refunds)
@@ -34,7 +38,33 @@ def _is_reward_transaction(merchant_name: str) -> bool:
     """Return True if merchant_name matches a known cashback reward pattern."""
     return any(p.match(merchant_name or '') for p in _REWARD_PATTERNS)
 
+
+def _normalize_categories(txn_data: dict, merchant_name: str) -> list[str]:
+    """Apply importer-side fallback categories when extraction misses them."""
+    categories = list(txn_data.get("categories", []) or [])
+    if 'card_fees' not in categories and looks_like_card_fee(merchant_name):
+        categories.append('card_fees')
+    return categories
+
 logger = logging.getLogger(__name__)
+
+
+def _normalize_path_value(path_value: str | Path | None) -> str:
+    """Normalize a filesystem path string for case-insensitive comparisons."""
+    if not path_value:
+        return ""
+    return str(path_value).replace("\\", "/").strip().casefold()
+
+
+def _statement_path_suffix(path_value: str | Path | None) -> str:
+    """Return a normalized statements/.. suffix when present, else the basename."""
+    normalized = _normalize_path_value(path_value)
+    if not normalized:
+        return ""
+    marker = "/statements/"
+    if marker in normalized:
+        return "statements/" + normalized.split(marker, 1)[1]
+    return Path(str(path_value)).name.casefold()
 
 
 @dataclass
@@ -77,7 +107,7 @@ class StatementImporter:
         self.refund_handler = RefundHandler(db)
         self.alert_resolver = AlertResolver(db)
 
-    def import_month(self, year: int, month: int) -> MonthImportResult:
+    def import_month(self, year: int, month: int, refresh_existing: bool = False) -> MonthImportResult:
         """
         Import all JSON statement files for a given billing month.
 
@@ -109,7 +139,7 @@ class StatementImporter:
 
         file_results = []
         for json_path in json_files:
-            result = self.import_file(json_path, billing_month)
+            result = self.import_file(json_path, billing_month, refresh_existing=refresh_existing)
             file_results.append(result)
 
         imported = [r for r in file_results if not r.skipped and not r.error]
@@ -129,7 +159,7 @@ class StatementImporter:
             file_results=file_results,
         )
 
-    def import_file(self, json_path: Path, billing_month: str) -> ImportResult:
+    def import_file(self, json_path: Path, billing_month: str, refresh_existing: bool = False) -> ImportResult:
         """
         Import a single JSON statement file.
 
@@ -161,38 +191,36 @@ class StatementImporter:
         json_content = json.dumps(data, sort_keys=True)
         content_hash = hashlib.sha256(json_content.encode("utf-8")).hexdigest()
 
-        # Check for duplicate import
-        existing = self.db.query(Statement).filter(
-            Statement.pdf_hash == content_hash
-        ).first()
-        if existing:
+        existing, skip_reason, refresh_error = self._find_existing_statement(
+            data=data,
+            json_path=json_path,
+            billing_month=billing_month,
+            content_hash=content_hash,
+            refresh_existing=refresh_existing,
+        )
+        if refresh_error:
             return ImportResult(
                 filename=filename, billing_month=billing_month,
-                statement_id=existing.id, transactions_imported=0,
+                statement_id=None, transactions_imported=0,
                 transactions_flagged=0, refunds_auto_matched=0,
                 alerts_created=0, alerts_auto_resolved=0,
-                skipped=True, skip_reason="duplicate (content hash match)",
+                skipped=False, error=refresh_error,
             )
-
-        # Also check by (bank_name, card_last_4, statement_date) as fallback dedup
-        statement_date = self._parse_date(data.get("statement_date", ""))
-        card_last_4 = data.get("card_last_4") or data.get("account_number_last_4")
-        if statement_date:
-            existing_by_key = self.db.query(Statement).filter(
-                Statement.bank_name == data.get("bank_name"),
-                Statement.card_last_4 == card_last_4,
-                Statement.statement_date == statement_date,
-                Statement.billing_month == billing_month,
-            ).first()
-            if existing_by_key:
+        if existing:
+            if refresh_existing:
+                self._replace_statement(existing)
+            else:
                 return ImportResult(
                     filename=filename, billing_month=billing_month,
-                    statement_id=existing_by_key.id, transactions_imported=0,
+                    statement_id=existing.id, transactions_imported=0,
                     transactions_flagged=0, refunds_auto_matched=0,
                     alerts_created=0, alerts_auto_resolved=0,
-                    skipped=True,
-                    skip_reason="duplicate (bank/card/date/month match)",
+                    skipped=True, skip_reason=skip_reason,
                 )
+
+        # Recompute after any replacement work and proceed with fresh import.
+        statement_date = self._parse_date(data.get("statement_date", ""))
+        is_account_statement = is_account_statement_data(data)
 
         # Create Statement record
         statement = Statement(
@@ -207,7 +235,7 @@ class StatementImporter:
             pdf_hash=content_hash,
             total_charges=data.get("total_charges"),
             status="pending",
-            raw_file_path=str(json_path),
+            raw_file_path=str(json_path.resolve()),
         )
         self.db.add(statement)
         self.db.flush()  # Get statement.id without committing
@@ -218,7 +246,9 @@ class StatementImporter:
         for txn_data in transactions_data:
             merchant_name = txn_data.get("merchant_name") or txn_data.get("description", "UNKNOWN")
             is_reward = txn_data.get("is_reward", False) or _is_reward_transaction(merchant_name)
-            is_refund = False if is_reward else txn_data.get("is_refund", False)
+            is_refund = False if (is_reward or is_account_statement) else txn_data.get("is_refund", False)
+            categories = _normalize_categories(txn_data, merchant_name)
+            amount = normalize_statement_amount(txn_data.get("amount", 0.0), is_account_statement)
 
             txn = Transaction(
                 statement_id=statement.id,
@@ -226,12 +256,12 @@ class StatementImporter:
                 transaction_date=self._parse_date(txn_data.get("transaction_date")) or statement_date or date.today(),
                 merchant_name=merchant_name,
                 raw_description=txn_data.get("raw_description"),
-                amount=txn_data.get("amount", 0.0),
+                amount=amount,
                 ccy_fee=txn_data.get("ccy_fee"),
                 is_refund=is_refund,
                 is_reward=is_reward,
                 reward_type=txn_data.get("reward_type", "cashback") if is_reward else None,
-                categories=txn_data.get("categories", []),
+                categories=categories,
                 country_code=txn_data.get("country_code"),
                 location=txn_data.get("location"),
             )
@@ -251,6 +281,7 @@ class StatementImporter:
                 txn.assigned_to_person_id = result.person_id
                 txn.assignment_confidence = result.confidence
                 txn.assignment_method = result.method
+                txn.review_origin_method = result.method if result.needs_review else None
                 if txn.is_reward:
                     txn.needs_review = False
                     txn.blacklist_category_id = None
@@ -286,6 +317,12 @@ class StatementImporter:
                 elif txn.needs_review:
                     flagged_count += 1
 
+        # Retry older orphan refunds after newly imported original charges land.
+        for txn in transactions:
+            if txn.is_refund or txn.is_reward:
+                continue
+            refunds_matched += self.refund_handler.reconcile_refunds_for_original(txn)
+
         statement.status = "processed"
         statement.processed_at = datetime.utcnow()
         self.db.commit()
@@ -306,6 +343,133 @@ class StatementImporter:
             alerts_auto_resolved=alerts_resolved,
             skipped=False,
         )
+
+    def _replace_statement(self, statement: Statement) -> None:
+        """Replace an existing imported statement and its transactions."""
+        transaction_ids = [txn.id for txn in statement.transactions]
+        if transaction_ids:
+            self.db.query(BillLineItem).filter(
+                BillLineItem.transaction_id.in_(transaction_ids)
+            ).update(
+                {BillLineItem.transaction_id: None},
+                synchronize_session=False,
+            )
+            self.db.query(MLTrainingData).filter(
+                MLTrainingData.transaction_id.in_(transaction_ids)
+            ).delete(synchronize_session=False)
+            self.db.query(Transaction).filter(
+                Transaction.original_transaction_id.in_(transaction_ids)
+            ).update(
+                {Transaction.original_transaction_id: None},
+                synchronize_session=False,
+            )
+            self.db.query(Transaction).filter(
+                Transaction.parent_transaction_id.in_(transaction_ids)
+            ).update(
+                {Transaction.parent_transaction_id: None},
+                synchronize_session=False,
+            )
+            self.db.query(Transaction).filter(
+                Transaction.resolved_by_transaction_id.in_(transaction_ids)
+            ).update(
+                {
+                    Transaction.resolved_by_transaction_id: None,
+                    Transaction.resolved_method: None,
+                },
+                synchronize_session=False,
+            )
+        self.db.delete(statement)
+        self.db.flush()
+
+    def _find_existing_statement(
+        self,
+        data: dict,
+        json_path: Path,
+        billing_month: str,
+        content_hash: str,
+        refresh_existing: bool,
+    ) -> tuple[Optional[Statement], Optional[str], Optional[str]]:
+        existing = self.db.query(Statement).filter(
+            Statement.pdf_hash == content_hash
+        ).first()
+        if existing:
+            return existing, "duplicate (content hash match)", None
+
+        statement_date = self._parse_date(data.get("statement_date", ""))
+        card_last_4 = data.get("card_last_4") or data.get("account_number_last_4")
+        if statement_date:
+            existing_by_key = self.db.query(Statement).filter(
+                Statement.bank_name == data.get("bank_name"),
+                Statement.card_last_4 == card_last_4,
+                Statement.statement_date == statement_date,
+                Statement.billing_month == billing_month,
+            ).first()
+            if existing_by_key:
+                return existing_by_key, "duplicate (bank/card/date/month match)", None
+
+        if not refresh_existing:
+            return None, None, None
+
+        existing_by_path, error = self._find_refresh_fallback_match(
+            json_path=json_path,
+            billing_month=billing_month,
+            filename=data.get("filename") or json_path.name,
+        )
+        if error:
+            return None, None, error
+        if existing_by_path:
+            return existing_by_path, "refresh match (path/filename fallback)", None
+        return None, None, None
+
+    def _find_refresh_fallback_match(
+        self,
+        json_path: Path,
+        billing_month: str,
+        filename: str,
+    ) -> tuple[Optional[Statement], Optional[str]]:
+        candidates = self.db.query(Statement).filter(
+            Statement.billing_month == billing_month
+        ).all()
+        input_abs = _normalize_path_value(json_path.resolve())
+        input_suffix = _statement_path_suffix(json_path.resolve())
+        normalized_filename = str(filename).casefold()
+
+        exact_path_matches: list[Statement] = []
+        suffix_matches: list[Statement] = []
+        filename_matches: list[Statement] = []
+
+        for candidate in candidates:
+            stored_raw_path = _normalize_path_value(candidate.raw_file_path)
+            if stored_raw_path and stored_raw_path == input_abs:
+                exact_path_matches.append(candidate)
+                continue
+            if stored_raw_path and input_suffix and stored_raw_path.endswith(input_suffix):
+                suffix_matches.append(candidate)
+                continue
+            if (candidate.filename or "").casefold() == normalized_filename:
+                filename_matches.append(candidate)
+
+        if len(exact_path_matches) == 1:
+            return exact_path_matches[0], None
+        if len(exact_path_matches) > 1:
+            return None, (
+                f"Ambiguous refresh match for {json_path}: multiple existing statements match the same raw file path"
+            )
+
+        if len(suffix_matches) == 1:
+            return suffix_matches[0], None
+        if len(suffix_matches) > 1:
+            return None, (
+                f"Ambiguous refresh match for {json_path}: multiple existing statements match the same statement path suffix"
+            )
+
+        if len(filename_matches) == 1:
+            return filename_matches[0], None
+        if len(filename_matches) > 1:
+            return None, (
+                f"Ambiguous refresh match for {json_path}: multiple existing statements share filename {filename!r} in billing month {billing_month}"
+            )
+        return None, None
 
     @staticmethod
     def _parse_date(date_str: Optional[str]) -> Optional[date]:

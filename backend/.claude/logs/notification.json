@@ -1,0 +1,202 @@
+[
+  {
+    "timestamp": "2026-03-17T20:08:28.191706",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude needs your permission to use Bash",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:25:25.152644",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude needs your permission to use Bash",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T20:47:33.066441",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-17T21:06:05.088490",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:37:05.213825",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:41:26.767221",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T00:47:40.111466",
+    "session_id": "aa27ad24-2e38-4336-92da-8cd5a1c8263e",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:13:01.072284",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:47:48.317951",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T01:56:43.572995",
+    "session_id": "849edf25-9442-41dc-adba-1b74b5df14a4",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:39:07.564589",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "message": "Claude Code needs your attention",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T02:39:53.471571",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "message": "Claude Code needs your attention",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-18T23:32:48.943164",
+    "session_id": "cc79123f-5272-4d50-827a-1f5c0072f697",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:00:10.475193",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "message": "Claude Code needs your attention",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:01:25.777717",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T11:06:36.772615",
+    "session_id": "9c299871-b745-423f-8da1-6c80bb864085",
+    "message": "Claude Code needs your approval for the plan",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Agent notification"
+    }
+  },
+  {
+    "timestamp": "2026-03-19T16:35:51.235052",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:47:47.653659",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-25T11:57:22.445091",
+    "session_id": "b4cc9022-b163-4df9-afb7-d9447daf6f1b",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  },
+  {
+    "timestamp": "2026-03-27T17:47:40.283052",
+    "session_id": "1a9e72a7-a382-4ac4-b170-bbaacdf472f3",
+    "message": "Claude is waiting for your input",
+    "tts": {
+      "enabled": true,
+      "success": true,
+      "message": "Your agent needs your input"
+    }
+  }
+]

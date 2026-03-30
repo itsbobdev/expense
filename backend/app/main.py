@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from app.database import init_db
 from app.bot.telegram_bot import create_bot_application, start_bot, stop_bot
 from app.config import settings
@@ -21,6 +21,21 @@ app = FastAPI(
 
 # Store bot application globally
 bot_application = None
+
+
+def serialize_bill(bill):
+    return {
+        "id": bill.id,
+        "person": bill.person.name if bill.person else None,
+        "person_id": bill.person_id,
+        "period_start": str(bill.period_start),
+        "period_end": str(bill.period_end),
+        "total": bill.total_amount,
+        "status": bill.status,
+        "line_items": len(bill.line_items),
+        "finalized_at": bill.finalized_at.isoformat() if bill.finalized_at else None,
+        "paid_at": bill.paid_at.isoformat() if bill.paid_at else None,
+    }
 
 
 @app.on_event("startup")
@@ -179,14 +194,63 @@ async def generate_bills(billing_month: str):
         for person in persons:
             bill = generator.generate_bill(person.id, billing_month)
             if bill:
-                results.append({
-                    "person": person.name,
-                    "total": bill.total_amount,
-                    "status": bill.status,
-                    "line_items": len(bill.line_items),
-                })
+                results.append(serialize_bill(bill))
 
         return {"billing_month": billing_month, "bills": results}
+    finally:
+        db.close()
+
+
+@app.post("/api/bills/{bill_id}/finalize")
+async def finalize_bill(bill_id: int):
+    """Finalize a bill if all assigned transactions are reviewed."""
+    from app.database import SessionLocal
+    from app.services.bill_generator import BillGenerator
+
+    db = SessionLocal()
+    try:
+        generator = BillGenerator(db)
+        try:
+            bill = generator.finalize_bill(bill_id)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e)) from e
+        return {"bill": serialize_bill(bill)}
+    finally:
+        db.close()
+
+
+@app.post("/api/bills/{bill_id}/pay")
+async def pay_bill(bill_id: int):
+    """Mark a finalized bill as paid."""
+    from app.database import SessionLocal
+    from app.services.bill_generator import BillGenerator
+
+    db = SessionLocal()
+    try:
+        generator = BillGenerator(db)
+        try:
+            bill = generator.mark_bill_paid(bill_id)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e)) from e
+        return {"bill": serialize_bill(bill)}
+    finally:
+        db.close()
+
+
+@app.post("/api/bills/{bill_id}/unpay")
+async def unpay_bill(bill_id: int):
+    """Revert a paid bill back to finalized."""
+    from app.database import SessionLocal
+    from app.services.bill_generator import BillGenerator
+
+    db = SessionLocal()
+    try:
+        generator = BillGenerator(db)
+        try:
+            bill = generator.mark_bill_unpaid(bill_id)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e)) from e
+        return {"bill": serialize_bill(bill)}
     finally:
         db.close()
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Review Category"
+  short_description: "Add and backfill self-review blacklist categories for this repo."
+  default_prompt: "Use $expense-add-review-category to add a new self-review blacklist category and backfill matching transactions."
