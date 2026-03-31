@@ -52,6 +52,7 @@ ml_models/
 
 # Logs
 *.log
+*.pid
 
 # OS
 .DS_Store
@@ -64,6 +65,7 @@ Thumbs.db
 .claude/settings.local.json
 .claude/backups/
 .claude/logs/
+backend/.claude/logs/
 
 # Alembic
 alembic/versions/*.pyc
