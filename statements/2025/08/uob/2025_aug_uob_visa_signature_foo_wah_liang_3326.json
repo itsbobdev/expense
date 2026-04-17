@@ -1,0 +1,59 @@
+{
+  "filename": "2025_aug_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "3326",
+  "card_name": "VISA SIGNATURE",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-08-03",
+  "period_start": "2025-07-07",
+  "period_end": "2025-07-19",
+  "total_charges": 2068.89,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-07",
+      "merchant_name": "SWEE HENG BAKERY-CL22",
+      "raw_description": "SWEE HENG BAKERY-CL22 SINGAPORE",
+      "amount": 4.3,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-14",
+      "merchant_name": "GBT (THAILAND) - QP BANGKOK",
+      "raw_description": "GBT (THAILAND) - QP BANGKOK THB 39,928.00",
+      "amount": 1636.77,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "TH",
+      "location": "BANGKOK",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-18",
+      "merchant_name": "AIRBNB * HMMBDNTPPC",
+      "raw_description": "AIRBNB * HMMBDNTPPC 653-163-1004",
+      "amount": 427.82,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

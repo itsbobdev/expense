@@ -1,0 +1,249 @@
+{
+  "filename": "2025_jun_maybank_world_mastercard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-06-25",
+  "period_start": "2025-06-08",
+  "period_end": "2025-06-25",
+  "total_charges": 1364.38,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-10",
+      "merchant_name": "BPDS 25I05I1564897",
+      "raw_description": "BPDS 25I05I1564897",
+      "amount": 89.3,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-06-08",
+      "merchant_name": "SHOPEE SINGAPORE DP",
+      "raw_description": "SHOPEE SINGAPORE DP SINGAPORE",
+      "amount": 1.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-06-11",
+      "merchant_name": "WWW.SOULMACHINES.COM",
+      "raw_description": "WWW.SOULMACHINES.COM SAN FRANCISCO",
+      "amount": 131.76,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD99.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-19",
+      "merchant_name": "OPENAI *CHATGPT SUBSCR",
+      "raw_description": "OPENAI *CHATGPT SUBSCR SAN FRANCISCO",
+      "amount": 28.98,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD21.80",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": [
+        "subscriptions",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-19",
+      "merchant_name": "ALP*TAOBAO",
+      "raw_description": "ALP*TAOBAO SHANGHAI",
+      "amount": 33.13,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY179.10",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-18",
+      "merchant_name": "ALP*TAOBAO",
+      "raw_description": "ALP*TAOBAO SHANGHAI",
+      "amount": 204.03,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY1104.49",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-19",
+      "merchant_name": "ALP*TAOBAO",
+      "raw_description": "ALP*TAOBAO SHANGHAI",
+      "amount": 617.44,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY3337.62",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-22",
+      "merchant_name": "PAYPAL *WEB COURSES 4029357733",
+      "raw_description": "PAYPAL *WEB COURSES 4029357733",
+      "amount": 140.8,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD105.73",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency",
+        "paypal"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "BPDS 25I06I1571433",
+      "raw_description": "BPDS 25I06I1571433",
+      "amount": 68.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.93,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY5.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 6.49,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY35.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.93,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY5.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*SHANGHULIXIAOPING",
+      "raw_description": "ALP*SHANGHULIXIAOPING SHANGHAI",
+      "amount": 11.14,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY60.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*PERSONALSERVICES",
+      "raw_description": "ALP*PERSONALSERVICES SHANGHAI",
+      "amount": 28.59,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY154.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJINGGUBEISHUIZ",
+      "raw_description": "ALP*BEIJINGGUBEISHUIZ BEIJINGSHI",
+      "amount": 1.86,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY10.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJINGSHI",
+      "categories": [
+        "foreign_currency"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "filename": "world_mastercard_0005_25_july_2025.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0104",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-07-25",
+  "period_start": "2025-06-28",
+  "period_end": "2025-07-22",
+  "total_charges": 5859.99,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "PAYPAL *SMARTVISION SM 35314369001",
+      "raw_description": "PAYPAL *SMARTVISION SM 35314369001",
+      "amount": 2486.56,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "paypal"
+      ]
+    },
+    {
+      "transaction_date": "2025-07-22",
+      "merchant_name": "PAYPAL *SMARTVISION SM 35314369001",
+      "raw_description": "PAYPAL *SMARTVISION SM 35314369001",
+      "amount": 3373.43,
+      "ccy_fee": null,
+      "foreign_currency_amount": "GBP1880.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency",
+        "paypal"
+      ]
+    }
+  ]
+}

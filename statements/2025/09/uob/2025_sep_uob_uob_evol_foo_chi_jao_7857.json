@@ -1,0 +1,83 @@
+{
+  "filename": "2025_sep_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7857",
+  "card_name": "UOB EVOL",
+  "statement_date": "2025-09-02",
+  "period_start": "2025-08-06",
+  "period_end": "2025-09-02",
+  "total_charges": 361.78,
+  "transactions": [
+    {
+      "transaction_date": "2025-08-07",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* a5c6c14162693541 Singapore",
+      "amount": 10.4,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-08-08",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* a2bc92a162693541 Singapore",
+      "amount": 48.5,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-08-08",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* 8e9dc84162693541 Singapore",
+      "amount": 192.5,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-08-19",
+      "merchant_name": "HDB Season Par",
+      "raw_description": "HDB Season Par SINGAPORE",
+      "amount": 110.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-02",
+      "merchant_name": "PARK@HDB*",
+      "raw_description": "PARK@HDB* BILLEDUWD9 SINGAPORE",
+      "amount": 0.38,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

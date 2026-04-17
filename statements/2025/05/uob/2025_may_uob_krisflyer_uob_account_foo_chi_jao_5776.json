@@ -1,0 +1,68 @@
+{
+  "filename": "2025_may_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "account_number_last_4": "5776",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-05-31",
+  "period_start": "2025-05-16",
+  "period_end": "2025-05-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-05-16",
+      "raw_description": "Funds Transfer",
+      "amount": 1000.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-05-17",
+      "raw_description": "Misc DR-Debit Card 17 MAY 4030 1811391 AIA PZCW20250517293848 SINGAPORE SG",
+      "amount": -537.5,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "AIA PZCW20250517293848"
+    },
+    {
+      "transaction_date": "2025-05-23",
+      "raw_description": "Funds Transfer",
+      "amount": 1000.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-05-23",
+      "raw_description": "Misc DR-Debit Card 23 MAY 4030 5042071 HL ASSURANCE Singapore SG",
+      "amount": -861.01,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "HL ASSURANCE"
+    },
+    {
+      "transaction_date": "2025-05-31",
+      "raw_description": "Interest Credit",
+      "amount": 0.01,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

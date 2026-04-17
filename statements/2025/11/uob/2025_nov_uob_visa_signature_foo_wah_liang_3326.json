@@ -1,0 +1,29 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "3326",
+  "card_name": "VISA SIGNATURE",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-27",
+  "period_end": "2025-10-27",
+  "total_charges": 3.25,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "MAGAZIN SEMEJNYJ G.BISHKEK",
+      "raw_description": "MAGAZIN SEMEJNYJ G.BISHKEK KGS 212.00",
+      "amount": 3.25,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "KG",
+      "location": "BISHKEK",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_wah_liang"
+}

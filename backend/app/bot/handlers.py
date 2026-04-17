@@ -1,14 +1,23 @@
 import re
 import logging
 from datetime import datetime, date, timedelta
+from decimal import Decimal, InvalidOperation
+from zoneinfo import ZoneInfo
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.models import Person, Statement, Transaction, BlacklistCategory, Bill
+from app.models import Person, Statement, Transaction, BlacklistCategory, Bill, BillLineItem, ManualBill
 from app.models.card_reward import CardReward
 from app.services.bill_generator import BillGenerator
+from app.services.alert_policy import (
+    ACTIVE_ALERT_STATUSES,
+    ALERT_KIND_CARD_FEE,
+    ALERT_STATUS_RESOLVED,
+    ALERT_STATUS_UNRESOLVED,
+    get_alert_kind_label,
+)
 from app.services.categorizer import TransactionCategorizer
 from app.services.refund_handler import RefundHandler
 from app.services.importer import StatementImporter
@@ -16,6 +25,7 @@ from app.bot.keyboards import (
     get_review_keyboard, get_refund_review_keyboard, get_refund_person_keyboard,
     get_alert_keyboard, get_resolved_keyboard, get_bill_keyboard,
     get_review_result_keyboard, get_shared_expense_keyboard,
+    get_add_expense_person_keyboard,
 )
 from app.config import settings
 from app.services.review_assignment import (
@@ -26,9 +36,12 @@ from app.services.review_assignment import (
     undo_review_assignment,
 )
 from app.services.card_owner import get_card_owner_name
+from app.services.linked_refund_sync import ASSIGNMENT_METHOD_REFUND_LINKED_PENDING
 
 logger = logging.getLogger(__name__)
 SHARED_REVIEW_STATES_KEY = "shared_review_states"
+ADD_EXPENSE_STATE_KEY = "add_expense_state"
+SINGAPORE_TIMEZONE = ZoneInfo("Asia/Singapore")
 
 
 def _count_bill_pending_reviews(db: Session, bill: Bill) -> int:
@@ -40,36 +53,98 @@ def _count_bill_pending_reviews(db: Session, bill: Bill) -> int:
     ).count()
 
 
-def _count_orphan_refunds(db: Session, billing_month: str) -> int:
+def _count_pending_refunds(db: Session, billing_month: str) -> int:
     return db.query(Transaction).filter(
         Transaction.billing_month == billing_month,
         Transaction.needs_review == True,
-        Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
+        Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous', ASSIGNMENT_METHOD_REFUND_LINKED_PENDING]),
     ).count()
+
+
+def _build_alert_message(db: Session, txn: Transaction, *, resolved_view: bool) -> str:
+    card_info = ""
+    card_owner = None
+    if txn.statement:
+        card_info = f"{txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
+        card_owner = get_card_owner_name(db, txn.statement)
+
+    gst_total = 0.0
+    if txn.alert_kind == ALERT_KIND_CARD_FEE:
+        gst_children = (
+            db.query(Transaction)
+            .filter(Transaction.parent_transaction_id == txn.id)
+            .all()
+        )
+        gst_total = sum(abs(c.amount) for c in gst_children)
+
+    combined_total = abs(txn.amount) + gst_total
+    amount_prefix = "-" if txn.is_refund else ""
+    kind_label = get_alert_kind_label(txn.alert_kind)
+
+    if resolved_view:
+        method_badge = "AUTO" if txn.resolved_method == "auto" else "MANUAL"
+        header = f"[{kind_label}] [{method_badge}] {txn.merchant_name}"
+    else:
+        status_badge = "NEW" if txn.alert_status == "pending" else "UNRESOLVED"
+        header = f"[{kind_label}] [{status_badge}] {txn.merchant_name}"
+
+    lines = [header]
+    lines.append(f"Amount: {amount_prefix}${combined_total:.2f}")
+    if txn.alert_kind == ALERT_KIND_CARD_FEE and gst_total > 0:
+        lines.append(f"  (Fee: ${abs(txn.amount):.2f} + GST: ${gst_total:.2f})")
+    if card_info:
+        lines.append(f"Card: {card_info}")
+    if card_owner:
+        lines.append(f"Card owner: {card_owner}")
+    lines.append(f"Date: {txn.transaction_date}")
+    if txn.billing_month:
+        lines.append(f"Month: {txn.billing_month}")
+
+    if resolved_view and txn.alert_kind == ALERT_KIND_CARD_FEE and txn.resolved_by_transaction_id:
+        reversal = db.query(Transaction).filter(
+            Transaction.id == txn.resolved_by_transaction_id
+        ).first()
+        if reversal:
+            lines.append(
+                f"Reversed by: {reversal.merchant_name} -${abs(reversal.amount):.2f} ({reversal.transaction_date})"
+            )
+
+    return "\n".join(lines)
 
 
 def _build_bill_response(db: Session, generator: BillGenerator, bill: Bill) -> tuple[str, object]:
     text = generator.format_bill_message(bill.id)
     pending = _count_bill_pending_reviews(db, bill)
+    manually_added_items = [
+        (item.manual_bill.id, item.manual_bill.description)
+        for item in bill.line_items
+        if item.manual_bill
+        and item.manual_bill.manual_type == ManualBill.TYPE_MANUALLY_ADDED
+    ]
 
     if pending > 0:
         text += f"\n\nWarning: {pending} transaction(s) still pending review."
 
     billing_month = f"{bill.period_start.year:04d}-{bill.period_start.month:02d}"
-    orphan_refunds = _count_orphan_refunds(db, billing_month)
-    if orphan_refunds > 0:
+    pending_refunds = _count_pending_refunds(db, billing_month)
+    if pending_refunds > 0:
         text += (
-            f"\n\nWarning: {orphan_refunds} orphan refund(s) in {billing_month} "
-            f"not yet matched. Run /refund {billing_month} to resolve."
+            f"\n\nWarning: {pending_refunds} pending refund(s) in {billing_month} "
+            f"still need attention. Run /refund {billing_month} to review."
         )
 
-    keyboard = get_bill_keyboard(bill.id, bill.status, can_finalize=(pending == 0))
+    keyboard = get_bill_keyboard(
+        bill.id,
+        bill.status,
+        can_finalize=(pending == 0),
+        manually_added_items=manually_added_items,
+    )
     logger.info(
-        "Bill response built: bill_id=%s status=%s pending=%s orphan_refunds=%s keyboard=%s",
+        "Bill response built: bill_id=%s status=%s pending=%s pending_refunds=%s keyboard=%s",
         bill.id,
         bill.status,
         pending,
-        orphan_refunds,
+        pending_refunds,
         keyboard.to_dict() if keyboard else None,
     )
     return text, keyboard
@@ -222,17 +297,84 @@ def _clear_shared_review_selection(
     _get_shared_review_states(context).pop(transaction_id, None)
 
 
+def _get_add_expense_state(context: ContextTypes.DEFAULT_TYPE) -> dict | None:
+    return context.user_data.get(ADD_EXPENSE_STATE_KEY)
+
+
+def _set_add_expense_state(context: ContextTypes.DEFAULT_TYPE, state: dict) -> None:
+    context.user_data[ADD_EXPENSE_STATE_KEY] = state
+
+
+def _clear_add_expense_state(context: ContextTypes.DEFAULT_TYPE) -> None:
+    context.user_data.pop(ADD_EXPENSE_STATE_KEY, None)
+
+
+def _current_singapore_billing_month() -> str:
+    return datetime.now(SINGAPORE_TIMEZONE).strftime("%Y-%m")
+
+
+def _default_add_expense_state() -> dict:
+    return {
+        "step": "amount",
+        "amount": None,
+        "description": None,
+        "billing_month": _current_singapore_billing_month(),
+    }
+
+
+def _add_expense_month_prompt() -> str:
+    default_month = _current_singapore_billing_month()
+    return (
+        "Enter billing month as YYYY-MM.\n"
+        f"Send 'skip' to use the default month ({default_month})."
+    )
+
+
+def _parse_positive_amount(text: str) -> float:
+    normalized = text.strip().replace("$", "").replace(",", "")
+    amount = Decimal(normalized)
+    if amount <= 0:
+        raise ValueError("Amount must be greater than 0.")
+    return float(amount.quantize(Decimal("0.01")))
+
+
+def _parse_billing_month(text: str) -> str:
+    raw = text.strip()
+    if not raw or raw.lower() == "skip":
+        return _current_singapore_billing_month()
+
+    if not re.fullmatch(r"\d{4}-\d{2}", raw):
+        raise ValueError("Billing month must be in YYYY-MM format.")
+
+    year, month = raw.split("-", 1)
+    parsed = date(int(year), int(month), 1)
+    return parsed.strftime("%Y-%m")
+
+
+def _build_add_expense_confirmation(amount: float, description: str, billing_month: str, person: Person) -> str:
+    return (
+        "Manual expense saved\n\n"
+        f"Amount: ${amount:.2f}\n"
+        f"Description: {description}\n"
+        "Category: Manually Added\n"
+        f"Billing month: {billing_month}\n"
+        f"Assigned to: {person.name}"
+    )
+
+
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /start command"""
     welcome_message = (
         "Expense Tracker Bot\n\n"
         "Commands:\n"
         "/review [YYYY-MM] - Review flagged transactions (all months if omitted)\n"
-        "/refund [YYYY-MM] - Review orphan refunds\n"
-        "/alerts - View card fee alerts\n"
+        "/refund [YYYY-MM] - Review pending refunds\n"
+        "/alerts - View pending alerts (card fees and high-value transactions)\n"
         "/resolved - View resolved alerts\n"
         "/rewards [YYYY-MM] - View rewards summary\n"
         "/bill YYYY-MM [person] - Generate bills\n"
+        "/add_expense - Add a manual expense to someone's bill\n"
+        "/cancel - Cancel the current guided entry flow\n"
         "/status - Pipeline status\n"
         "/stats - Spending statistics\n"
         "/blacklist - View trigger categories\n"
@@ -254,17 +396,39 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "4. /bill YYYY-MM to generate monthly bills\n\n"
         "Commands:\n"
         "/review [YYYY-MM] - Review flagged transactions (all months if omitted)\n"
-        "/refund [YYYY-MM] - Review orphan/ambiguous refunds\n"
+        "/refund [YYYY-MM] - Review pending refunds, including linked refunds waiting on original review\n"
         "/rewards [YYYY-MM] - View cashback and points rewards summary\n"
         "/bill YYYY-MM [name] - Generate bills (optionally filter by person)\n"
+        "/add_expense - Add a manual expense to someone's bill\n"
+        "/cancel - Cancel the current guided entry flow\n"
         "/status - Show import/review counts per month\n"
         "/stats - Spending totals by person\n"
         "/blacklist - View category trigger keywords\n"
-        "/alerts - View pending card fee alerts (late charges, finance charges, etc.)\n"
+        "/alerts - View pending alerts (card fees and non-reward transactions/refunds above $111)\n"
         "/resolved - View resolved alerts (with option to unresolve)\n"
         "/add_blacklist - Add new trigger category/keywords"
     )
     await update.message.reply_text(help_message)
+
+
+async def cancel_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Cancel guided add-expense entry if active."""
+    if _get_add_expense_state(context):
+        _clear_add_expense_state(context)
+        await update.message.reply_text("Add expense cancelled.")
+        return
+
+    await update.message.reply_text("Nothing to cancel.")
+
+
+async def add_expense_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Start guided manual expense entry."""
+    _clear_add_expense_state(context)
+    _set_add_expense_state(context, _default_add_expense_state())
+    await update.message.reply_text(
+        "Add manual expense\n\n"
+        "Send the amount as a positive number, for example 12.50."
+    )
 
 
 async def upload_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -294,7 +458,52 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = query.data
     parts = data.split('_')
 
-    if parts[0] == 'assign':
+    if parts[0] == 'addexpense':
+        if parts[1] == 'cancel':
+            _clear_add_expense_state(context)
+            await query.edit_message_text("Add expense cancelled.")
+            return
+
+        if parts[1] != 'person':
+            await query.edit_message_text("Unknown add expense action.")
+            return
+
+        state = _get_add_expense_state(context)
+        if not state or state.get("step") != "person":
+            await query.edit_message_text("No add expense flow is in progress. Run /add_expense.")
+            return
+
+        person_id = int(parts[2])
+        db = SessionLocal()
+        try:
+            person = db.query(Person).filter(Person.id == person_id).first()
+            if not person:
+                await query.edit_message_text("Person not found.")
+                return
+
+            manual_bill = ManualBill(
+                person_id=person.id,
+                amount=state["amount"],
+                description=state["description"],
+                billing_month=state["billing_month"],
+                manual_type=ManualBill.TYPE_MANUALLY_ADDED,
+            )
+            db.add(manual_bill)
+            db.commit()
+
+            _clear_add_expense_state(context)
+            await query.edit_message_text(
+                _build_add_expense_confirmation(
+                    manual_bill.amount,
+                    manual_bill.description,
+                    manual_bill.billing_month,
+                    person,
+                )
+            )
+        finally:
+            db.close()
+
+    elif parts[0] == 'assign':
         # Format: assign_{transaction_id}_{person_id}
         transaction_id = int(parts[1])
         person_id = int(parts[2])
@@ -579,13 +788,13 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.edit_message_text("Transaction not found.")
                 return
 
-            txn.alert_status = 'resolved'
+            txn.alert_status = ALERT_STATUS_RESOLVED
             txn.resolved_method = 'manual'
             db.commit()
 
             await query.edit_message_text(
-                f"Resolved: {txn.merchant_name} ${abs(txn.amount):.2f}\n"
-                f"Date: {txn.transaction_date}"
+                _build_alert_message(db, txn, resolved_view=True),
+                reply_markup=get_resolved_keyboard(txn.id),
             )
         finally:
             db.close()
@@ -601,13 +810,12 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.edit_message_text("Transaction not found.")
                 return
 
-            txn.alert_status = 'unresolved'
+            txn.alert_status = ALERT_STATUS_UNRESOLVED
             db.commit()
 
             await query.edit_message_text(
-                f"Marked unresolved: {txn.merchant_name} ${abs(txn.amount):.2f}\n"
-                f"Date: {txn.transaction_date}\n"
-                "This will continue to show in /alerts."
+                _build_alert_message(db, txn, resolved_view=False),
+                reply_markup=get_alert_keyboard(txn.id),
             )
         finally:
             db.close()
@@ -623,15 +831,14 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await query.edit_message_text("Transaction not found.")
                 return
 
-            txn.alert_status = 'unresolved'
+            txn.alert_status = ALERT_STATUS_UNRESOLVED
             txn.resolved_method = None
             txn.resolved_by_transaction_id = None
             db.commit()
 
             await query.edit_message_text(
-                f"Unresolved: {txn.merchant_name} ${abs(txn.amount):.2f}\n"
-                f"Date: {txn.transaction_date}\n"
-                "Moved back to /alerts."
+                _build_alert_message(db, txn, resolved_view=False),
+                reply_markup=get_alert_keyboard(txn.id),
             )
         finally:
             db.close()
@@ -645,7 +852,7 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     elif parts[0] == 'bill':
-        # Format: bill_{action}_{bill_id}
+        # Format: bill_{action}_{bill_id}[_{manual_bill_id}]
         action = parts[1]
         bill_id = int(parts[2])
 
@@ -653,7 +860,50 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         try:
             generator = BillGenerator(db)
 
-            if action == 'finalize':
+            if action == 'remove':
+                manual_bill_id = int(parts[3])
+                bill = db.query(Bill).filter(Bill.id == bill_id).first()
+                if not bill:
+                    await query.edit_message_text("Bill action failed: Bill not found")
+                    return
+                if bill.status != "draft":
+                    await query.edit_message_text("Bill action failed: Only draft bills can remove manually added expenses")
+                    return
+
+                manual_bill = (
+                    db.query(ManualBill)
+                    .join(BillLineItem, BillLineItem.manual_bill_id == ManualBill.id)
+                    .filter(
+                        BillLineItem.bill_id == bill_id,
+                        ManualBill.id == manual_bill_id,
+                        ManualBill.manual_type == ManualBill.TYPE_MANUALLY_ADDED,
+                    )
+                    .first()
+                )
+                if not manual_bill:
+                    await query.edit_message_text("Bill action failed: Manually added expense not found on this bill")
+                    return
+
+                billing_month = f"{bill.period_start.year:04d}-{bill.period_start.month:02d}"
+                person_id = bill.person_id
+                description = manual_bill.description
+
+                db.delete(bill)
+                db.flush()
+                db.delete(manual_bill)
+                db.commit()
+
+                regenerated_bill = generator.generate_bill(person_id, billing_month)
+                if not regenerated_bill:
+                    await query.edit_message_text(
+                        f"Removed manually added expense: {description}\n\nNo billable items remain for {billing_month}."
+                    )
+                    return
+
+                text, keyboard = _build_bill_response(db, generator, regenerated_bill)
+                await query.edit_message_text(text, reply_markup=keyboard)
+                return
+            elif action == 'finalize':
                 bill = generator.finalize_bill(bill_id)
             elif action == 'pay':
                 bill = generator.mark_bill_paid(bill_id)
@@ -910,16 +1160,16 @@ async def review_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handle /refund(s) command - show orphan/ambiguous refunds.
+    """Handle /refund(s) command - show pending refunds.
 
     Usage: /refund [YYYY-MM]
-    Without a month, shows all pending orphan/ambiguous refunds.
+    Without a month, shows all pending refunds that still need attention.
     """
     db = SessionLocal()
     try:
         filters = [
             Transaction.needs_review == True,
-            Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous']),
+            Transaction.assignment_method.in_(['refund_orphan', 'refund_ambiguous', ASSIGNMENT_METHOD_REFUND_LINKED_PENDING]),
         ]
 
         if context.args:
@@ -937,17 +1187,17 @@ async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         if not pending:
             if billing_month:
-                await update.message.reply_text(f"No orphan refunds for {billing_month}.")
+                await update.message.reply_text(f"No pending refunds for {billing_month}.")
             else:
-                await update.message.reply_text("No orphan refunds pending review.")
+                await update.message.reply_text("No pending refunds.")
             return
 
         if billing_month:
-            header = f"Orphan refunds for {billing_month}: {len(pending)} transactions"
+            header = f"Pending refunds for {billing_month}: {len(pending)} transactions"
         else:
             months = sorted({txn.billing_month for txn in pending}, reverse=True)
             header = (
-                f"All pending orphan refunds: {len(pending)} transactions across "
+                f"All pending refunds: {len(pending)} transactions across "
                 f"{len(months)} month(s)\nMonths: {', '.join(months)}"
             )
 
@@ -962,10 +1212,16 @@ async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
             amount_str = f"-${abs(txn.amount):.2f}"
 
-            lines = [
-                f"Orphan refund {i}/{len(pending)}:",
-                f"{txn.merchant_name} {amount_str}",
-            ]
+            if txn.assignment_method == ASSIGNMENT_METHOD_REFUND_LINKED_PENDING:
+                lines = [
+                    f"Linked refund {i}/{len(pending)}:",
+                    f"{txn.merchant_name} {amount_str}",
+                ]
+            else:
+                lines = [
+                    f"Pending refund {i}/{len(pending)}:",
+                    f"{txn.merchant_name} {amount_str}",
+                ]
             lines.append(f"Billing month: {txn.billing_month}")
             if card_info:
                 lines.append(card_info)
@@ -974,15 +1230,24 @@ async def refunds_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             lines.append(f"Date: {txn.transaction_date}")
             if txn.assignment_method:
                 lines.append(f"Status: {txn.assignment_method}")
+            if txn.assignment_method == ASSIGNMENT_METHOD_REFUND_LINKED_PENDING and txn.original_transaction:
+                lines.append("Linked original still pending review:")
+                lines.append(
+                    f"  {txn.original_transaction.transaction_date} {txn.original_transaction.merchant_name} ${txn.original_transaction.amount:.2f}"
+                )
 
-            # Use broad candidates for better matching
+            text = "\n".join(lines)
+            if txn.assignment_method == ASSIGNMENT_METHOD_REFUND_LINKED_PENDING:
+                await update.message.reply_text(text)
+                continue
+
             refund_handler = RefundHandler(db)
             candidates = refund_handler.get_broad_candidates(txn)
 
             if candidates:
                 lines.append(f"\nPossible matches ({len(candidates)}):")
+                text = "\n".join(lines)
 
-            text = "\n".join(lines)
             keyboard = get_refund_review_keyboard(txn.id, candidates, [])
             await update.message.reply_text(text, reply_markup=keyboard)
 
@@ -1049,17 +1314,14 @@ async def bill_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def alerts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Handle /alerts command - show pending + unresolved card fee alerts across all months."""
+    """Handle /alerts command - show pending + unresolved alerts across all months."""
     db = SessionLocal()
     try:
-        from sqlalchemy import func as sqlfunc
-
-        # Get all pending/unresolved alerts (exclude GST child lines)
         alerts = (
             db.query(Transaction)
             .join(Statement)
             .filter(
-                Transaction.alert_status.in_(['pending', 'unresolved']),
+                Transaction.alert_status.in_(ACTIVE_ALERT_STATUSES),
                 Transaction.parent_transaction_id.is_(None),
             )
             .order_by(Transaction.transaction_date.desc())
@@ -1070,35 +1332,10 @@ async def alerts_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("No pending alerts.")
             return
 
-        await update.message.reply_text(f"Card fee alerts: {len(alerts)} pending\n")
+        await update.message.reply_text(f"Pending alerts: {len(alerts)}\n")
 
-        for i, txn in enumerate(alerts, 1):
-            card_info = ""
-            if txn.statement:
-                card_info = f"{txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
-
-            # Calculate combined total (fee + GST children)
-            gst_children = (
-                db.query(Transaction)
-                .filter(Transaction.parent_transaction_id == txn.id)
-                .all()
-            )
-            gst_total = sum(abs(c.amount) for c in gst_children)
-            combined_total = abs(txn.amount) + gst_total
-
-            status_badge = "NEW" if txn.alert_status == 'pending' else "UNRESOLVED"
-            amount_prefix = "-" if txn.is_refund else ""
-
-            lines = [f"[{status_badge}] {txn.merchant_name}"]
-            lines.append(f"Amount: {amount_prefix}${combined_total:.2f}")
-            if gst_total > 0:
-                lines.append(f"  (Fee: ${abs(txn.amount):.2f} + GST: ${gst_total:.2f})")
-            if card_info:
-                lines.append(f"Card: {card_info}")
-            lines.append(f"Date: {txn.transaction_date}")
-            lines.append(f"Month: {txn.billing_month or 'N/A'}")
-
-            text = "\n".join(lines)
+        for txn in alerts:
+            text = _build_alert_message(db, txn, resolved_view=False)
             keyboard = get_alert_keyboard(txn.id)
             await update.message.reply_text(text, reply_markup=keyboard)
 
@@ -1110,12 +1347,11 @@ async def resolved_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle /resolved command - show resolved alerts with option to unresolve."""
     db = SessionLocal()
     try:
-        # Get resolved alerts (exclude GST child lines), most recent 20
         resolved = (
             db.query(Transaction)
             .join(Statement)
             .filter(
-                Transaction.alert_status == 'resolved',
+                Transaction.alert_status == ALERT_STATUS_RESOLVED,
                 Transaction.parent_transaction_id.is_(None),
             )
             .order_by(Transaction.transaction_date.desc())
@@ -1130,37 +1366,7 @@ async def resolved_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(f"Resolved alerts (most recent 20):\n")
 
         for txn in resolved:
-            card_info = ""
-            if txn.statement:
-                card_info = f"{txn.statement.bank_name or ''} ****{txn.statement.card_last_4}"
-
-            # Combined total
-            gst_children = (
-                db.query(Transaction)
-                .filter(Transaction.parent_transaction_id == txn.id)
-                .all()
-            )
-            gst_total = sum(abs(c.amount) for c in gst_children)
-            combined_total = abs(txn.amount) + gst_total
-
-            method_badge = "AUTO" if txn.resolved_method == 'auto' else "MANUAL"
-            amount_prefix = "-" if txn.is_refund else ""
-
-            lines = [f"[{method_badge}] {txn.merchant_name}"]
-            lines.append(f"Amount: {amount_prefix}${combined_total:.2f}")
-            if card_info:
-                lines.append(f"Card: {card_info}")
-            lines.append(f"Date: {txn.transaction_date}")
-
-            # Show linked reversal info for auto-resolved
-            if txn.resolved_by_transaction_id:
-                reversal = db.query(Transaction).filter(
-                    Transaction.id == txn.resolved_by_transaction_id
-                ).first()
-                if reversal:
-                    lines.append(f"Reversed by: {reversal.merchant_name} -${abs(reversal.amount):.2f} ({reversal.transaction_date})")
-
-            text = "\n".join(lines)
+            text = _build_alert_message(db, txn, resolved_view=True)
             keyboard = get_resolved_keyboard(txn.id)
             await update.message.reply_text(text, reply_markup=keyboard)
 
@@ -1170,6 +1376,66 @@ async def resolved_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def handle_text_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle text messages (for blacklist category input)"""
+    add_expense_state = _get_add_expense_state(context)
+    if add_expense_state:
+        step = add_expense_state.get("step")
+        text = (update.message.text or "").strip()
+
+        if step == "amount":
+            try:
+                add_expense_state["amount"] = _parse_positive_amount(text)
+            except (InvalidOperation, ValueError):
+                await update.message.reply_text(
+                    "Invalid amount. Send a positive number like 12.50."
+                )
+                return
+
+            add_expense_state["step"] = "description"
+            _set_add_expense_state(context, add_expense_state)
+            await update.message.reply_text("Enter a description for this expense.")
+            return
+
+        if step == "description":
+            if not text:
+                await update.message.reply_text("Description cannot be empty. Please try again.")
+                return
+
+            add_expense_state["description"] = text
+            add_expense_state["step"] = "billing_month"
+            _set_add_expense_state(context, add_expense_state)
+            await update.message.reply_text(_add_expense_month_prompt())
+            return
+
+        if step == "billing_month":
+            try:
+                add_expense_state["billing_month"] = _parse_billing_month(text)
+            except ValueError as exc:
+                await update.message.reply_text(f"{exc}\n{_add_expense_month_prompt()}")
+                return
+
+            db = SessionLocal()
+            try:
+                persons = get_review_persons(db)
+            finally:
+                db.close()
+
+            if not persons:
+                _clear_add_expense_state(context)
+                await update.message.reply_text("No people are configured yet.")
+                return
+
+            add_expense_state["step"] = "person"
+            _set_add_expense_state(context, add_expense_state)
+            await update.message.reply_text(
+                "Choose who this expense should be assigned to.",
+                reply_markup=get_add_expense_person_keyboard(persons),
+            )
+            return
+
+        if step == "person":
+            await update.message.reply_text("Choose a person using the buttons above, or send /cancel.")
+            return
+
     # Check if user is adding a blacklist category
     if context.user_data.get('adding_blacklist'):
         category_name = update.message.text.strip().lower()

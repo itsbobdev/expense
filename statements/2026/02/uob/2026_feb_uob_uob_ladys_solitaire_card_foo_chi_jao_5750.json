@@ -1,0 +1,145 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5750",
+  "card_name": "UOB LADY'S SOLITAIRE CARD",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-03",
+  "period_end": "2026-01-28",
+  "total_charges": 1063.29,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-03",
+      "merchant_name": "AIRBNB * HMR33CAR8A",
+      "raw_description": "AIRBNB * HMR33CAR8A LONDON",
+      "amount": 154.66,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "GB",
+      "location": "LONDON",
+      "categories": [
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-03",
+      "merchant_name": "CAI-CA",
+      "raw_description": "CAI-CA SINGAPORE",
+      "amount": 8.5,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-03",
+      "merchant_name": "PELAGO",
+      "raw_description": "PELAGO SINGAPORE",
+      "amount": 21.65,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "tours"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-04",
+      "merchant_name": "SEORAE KOREAN BBQ - C1",
+      "raw_description": "SEORAE KOREAN BBQ - C1 SINGAPORE",
+      "amount": 160.43,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-06",
+      "merchant_name": "GRAINSNCO",
+      "raw_description": "GRAINSNCO SINGAPORE",
+      "amount": 12.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-08",
+      "merchant_name": "FAIRPRICE GROUP HAWKER",
+      "raw_description": "FAIRPRICE GROUP HAWKER SINGAPORE",
+      "amount": 18.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-08",
+      "merchant_name": "TIAN SHE SWEET HOUSE",
+      "raw_description": "TIAN SHE SWEET HOUSE Singapore",
+      "amount": 6.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-08",
+      "merchant_name": "A&W - NORTHSHORE PLAZA",
+      "raw_description": "A&W - NORTHSHORE PLAZA SINGAPORE",
+      "amount": 6.7,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-10",
+      "merchant_name": "PAN PACIFIC SINGAPORE",
+      "raw_description": "PAN PACIFIC SINGAPORE SINGAPORE",
+      "amount": 672.65,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

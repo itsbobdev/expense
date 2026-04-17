@@ -1,0 +1,41 @@
+{
+  "filename": "2026_jan_maybank_world_mastercard_foo_chi_jao_0005.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0104",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-01-25",
+  "period_start": "2026-01-07",
+  "period_end": "2026-01-19",
+  "total_charges": 65.09,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-07",
+      "merchant_name": "SERAYA ENERGY PTE LTD",
+      "raw_description": "SERAYA ENERGY PTE LTD SINGAPORE",
+      "amount": 40.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-19",
+      "merchant_name": "CAMDEN FOOD CO DIPLOMATIC AR",
+      "raw_description": "CAMDEN FOOD CO DIPLOMATIC AR",
+      "amount": 24.35,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    }
+  ]
+}

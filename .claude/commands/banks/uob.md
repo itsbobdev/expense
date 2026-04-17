@@ -29,6 +29,7 @@ UOB marks refunds and credits with a **`CR`** suffix on the amount (e.g. `15.07C
 - Set `amount` to **negative** (e.g. `15.07CR` → `amount: -15.07`)
 - Set `is_refund: true`
 - A refund and its original purchase are **separate lines** in the statement — extract **both** as individual transactions. Do not combine or net them.
+- This includes dispute-credit rows such as `CR CB DISPUTES- ... CR`, which must be preserved as standalone negative refund transactions.
 
 **Only skip** payment/balance lines with `CR` (see skip rules below).
 
@@ -55,6 +56,11 @@ Only `PAYMT`/`PAYMENT` lines are skipped. All other `CR` lines are real transact
 | `SHOPEE SINGAPORE MP ... CR` | **Keep** | Merchant refund (`is_refund: true`) |
 
 **Rule of thumb:** if it says `PAYMT` or `PAYMENT`, skip it. Everything else with `CR` is a real transaction.
+
+### Validation sanity check
+
+- Do not rely on the displayed UOB `SUB TOTAL` as a universal transaction-sum check. In this repo it can include carried balances or payments.
+- Instead, verify row completeness: every non-payment `CR` row in the cardholder section must exist in JSON with the correct sign and reward/refund semantics.
 
 ### UOB Cashback as Rewards
 

@@ -1,0 +1,99 @@
+{
+  "filename": "uob_credit_card_combined_2025_12.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7857",
+  "card_name": "UOB EVOL",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-12-02",
+  "period_start": "2025-11-01",
+  "period_end": "2025-11-22",
+  "total_charges": 216.44,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-01",
+      "merchant_name": "CAROUSELL",
+      "raw_description": "CAROUSELL SINGAPORE",
+      "amount": 1.15,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-03",
+      "merchant_name": "PARK@HDB* BILLFBVYNE",
+      "raw_description": "PARK@HDB* BILLFBVYNE SINGAPORE",
+      "amount": 2.74,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-03",
+      "merchant_name": "CAROUSELL",
+      "raw_description": "CAROUSELL SINGAPORE",
+      "amount": 3.7,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-11",
+      "merchant_name": "PARK@HDB* BILLJX4QY9",
+      "raw_description": "PARK@HDB* BILLJX4QY9 SINGAPORE",
+      "amount": 0.76,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-18",
+      "merchant_name": "HDB Season Parking",
+      "raw_description": "HDB Season Parking SINGAPORE",
+      "amount": 110.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-22",
+      "merchant_name": "ALLIANZ INSURANCE SING",
+      "raw_description": "ALLIANZ INSURANCE SING SINGAPORE",
+      "amount": 98.1,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

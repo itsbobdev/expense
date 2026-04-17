@@ -1,0 +1,63 @@
+{
+  "filename": "2025_nov_maybank_creditcard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0104",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-11-25",
+  "period_start": "2025-10-29",
+  "period_end": "2025-11-14",
+  "total_charges": 2377.28,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-29",
+      "merchant_name": "NOVOTEL BISHKEK CITY",
+      "raw_description": "NOVOTEL BISHKEK CITY BISHKEK",
+      "amount": 70.48,
+      "ccy_fee": null,
+      "foreign_currency_amount": "KGS4600.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "KG",
+      "location": "BISHKEK",
+      "categories": [
+        "travel_accommodation",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-11-02",
+      "merchant_name": "VEYSI DAG",
+      "raw_description": "VEYSI DAG ISTANBUL",
+      "amount": 3.22,
+      "ccy_fee": null,
+      "foreign_currency_amount": "TRY100.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "TR",
+      "location": "ISTANBUL",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-11-14",
+      "merchant_name": "PAYPAL *SMARTVISION SM 35314369001",
+      "raw_description": "PAYPAL *SMARTVISION SM 35314369001",
+      "amount": 2303.58,
+      "ccy_fee": null,
+      "foreign_currency_amount": "GBP1295.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency",
+        "paypal"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "filename": "2025_jul_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6265",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-07-08",
+  "period_start": "2025-06-24",
+  "period_end": "2025-06-25",
+  "total_charges": 2041.34,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "AMAZE* HEMPFLOWERS",
+      "raw_description": "DR-I2505087057-AMAZE* HEMPFLOWERS SG",
+      "amount": 956.03,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 1085.31,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

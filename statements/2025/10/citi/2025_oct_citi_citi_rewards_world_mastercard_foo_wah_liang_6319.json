@@ -1,0 +1,134 @@
+{
+  "filename": "2025_oct_citi_citi_rewards_world_mastercard_foo_wah_liang_6319.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6319",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-10-08",
+  "period_start": "2025-09-08",
+  "period_end": "2025-09-30",
+  "total_charges": 66.38,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 8.09,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 10.1,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 2.96,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 3.99,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 1.43,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 9.58,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 11.99,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 11.86,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-14",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": -7.0,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-16",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 12.2,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-30",
+      "merchant_name": "SHOPEE SG SPAYLATER",
+      "raw_description": "SHOPEE SG SPAYLATER SINGAPORE SG",
+      "amount": 1.18,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "filename": "2025_dec_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6319",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-12-08",
+  "period_start": "2025-11-13",
+  "period_end": "2025-11-16",
+  "total_charges": 387.75,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-13",
+      "merchant_name": "WIX.COM 1208544105",
+      "raw_description": "WIX.COM 1208544105 SAN FRANCISCOUS",
+      "amount": 385.15,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD286.02",
+      "is_refund": false,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": ["subscriptions", "foreign_currency"]
+    },
+    {
+      "transaction_date": "2025-11-15",
+      "merchant_name": "GOURMET PARADISE",
+      "raw_description": "GOURMET PARADISE Singapore SG",
+      "amount": 1.60,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "CR-I2511217043-QE ELEMECH ENGINEERING",
+      "raw_description": "CR-I2511217043-QE ELEMECH ENGINEERING SG",
+      "amount": -2.00,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "CR-I2511217044-QE ELEMECH ENGINEERING",
+      "raw_description": "CR-I2511217044-QE ELEMECH ENGINEERING SG",
+      "amount": -1.00,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "CR-I2511217045-QE ELEMECH ENGINEERING",
+      "raw_description": "CR-I2511217045-QE ELEMECH ENGINEERING SG",
+      "amount": -0.20,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "QE ELEMECH ENGINEERING",
+      "raw_description": "QE ELEMECH ENGINEERING SINGAPORE SG",
+      "amount": 2.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "QE ELEMECH ENGINEERING",
+      "raw_description": "QE ELEMECH ENGINEERING SINGAPORE SG",
+      "amount": 1.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "QE ELEMECH ENGINEERING",
+      "raw_description": "QE ELEMECH ENGINEERING SINGAPORE SG",
+      "amount": 1.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-11-16",
+      "merchant_name": "QE ELEMECH ENGINEERING",
+      "raw_description": "QE ELEMECH ENGINEERING SINGAPORE SG",
+      "amount": 0.20,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

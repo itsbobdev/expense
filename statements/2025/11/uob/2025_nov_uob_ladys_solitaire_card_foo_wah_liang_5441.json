@@ -1,0 +1,116 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-03",
+  "period_end": "2025-10-27",
+  "total_charges": 273.71,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-06",
+      "merchant_name": "BKG*HOTEL AT BOOKING.C",
+      "raw_description": "BKG*HOTEL AT BOOKING.C (888)850-3958 EUR 142.56",
+      "amount": 223.58,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "EU",
+      "location": null,
+      "categories": [
+        "travel_accommodation",
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-08",
+      "merchant_name": "www trip com",
+      "raw_description": "www trip com SINGAPORE",
+      "amount": 1065.41,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-14",
+      "merchant_name": "SEASONS CO PTE LTD",
+      "raw_description": "SEASONS CO PTE LTD Singapore",
+      "amount": 93.52,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-15",
+      "merchant_name": "TIP TOP - BUGIS",
+      "raw_description": "TIP TOP - BUGIS SINGAPORE",
+      "amount": 4.4,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-17",
+      "merchant_name": "KFC POT 532",
+      "raw_description": "KFC POT 532 Singapore",
+      "amount": 25.2,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-22",
+      "merchant_name": "AXS Drive: Paya Lebar",
+      "raw_description": "AXS Drive: Paya Lebar Singapore",
+      "amount": 1.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "PUTIEN - SUNTEC",
+      "raw_description": "PUTIEN - SUNTEC SINGAPORE",
+      "amount": 60.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_wah_liang"
+}

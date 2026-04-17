@@ -1,0 +1,59 @@
+{
+  "filename": "uob_credit_card_combined_2026_01.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-02",
+  "period_start": "2025-12-01",
+  "period_end": "2025-12-31",
+  "total_charges": 279.5,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-01",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER G.CO/HELPPAY#",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-15",
+      "merchant_name": "UNIHEALTH 24-HR CLINIC",
+      "raw_description": "UNIHEALTH 24-HR CLINIC SINGAPORE",
+      "amount": 209.5,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-31",
+      "merchant_name": "Mandai Wildlife Group",
+      "raw_description": "Mandai Wildlife Group MANSingapore",
+      "amount": 40.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [
+        "tours"
+      ],
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

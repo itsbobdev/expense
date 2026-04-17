@@ -1,0 +1,632 @@
+[
+  {
+    "billing_month": "2025-03",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 165.0,
+    "balance": 15551.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-03",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 0.36,
+    "balance": null,
+    "expiry_date": null,
+    "description": "OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2025-04",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 343.0,
+    "balance": 15894.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-04",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 0.15,
+    "balance": null,
+    "expiry_date": null,
+    "description": "OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2025-05",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 0.0,
+    "balance": 15894.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-06",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 0.0,
+    "balance": 0.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-06",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 1850.0,
+    "balance": 17744.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60317.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.53,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "points",
+    "earned_this_period": 11041.0,
+    "balance": 135114.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 1045.0,
+    "balance": 1045.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 19655.0,
+    "balance": 37254.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 12577.0,
+    "balance": 54990.0,
+    "expiry_date": "2025-09-30",
+    "description": "07 JUN 2025 SHOPEE SINGAPORE MP UNI$-60"
+  },
+  {
+    "billing_month": "2025-07",
+    "bank_name": "UOB",
+    "card_last_4": "7857",
+    "reward_type": "cashback",
+    "earned_this_period": 30.0,
+    "balance": null,
+    "expiry_date": null,
+    "description": "UOB EVOL Card Cashback"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "Citibank",
+    "card_last_4": "2065",
+    "reward_type": "points",
+    "earned_this_period": 9840.0,
+    "balance": 144954.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.53,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60317.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 9.0,
+    "balance": 10450.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 23780.0,
+    "balance": 61034.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 64.24,
+    "balance": null,
+    "expiry_date": null,
+    "description": "8% CASHBACK"
+  },
+  {
+    "billing_month": "2025-08",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 15405.0,
+    "balance": 60395.0,
+    "expiry_date": "2025-09-30",
+    "description": "Lady's Savings Account Bonus 10X UNI$2730 | 31 JUL 2025 Card Fee Waiver UNI$10000"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60317.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.53,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "points",
+    "earned_this_period": 6946.0,
+    "balance": 151900.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 0.0,
+    "balance": 10450.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 10120.0,
+    "balance": 71154.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 69.69,
+    "balance": null,
+    "expiry_date": null,
+    "description": "8% CASHBACK + OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2025-09",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 7155.0,
+    "balance": 66877.0,
+    "expiry_date": "2025-09-30",
+    "description": "03 AUG 2025 CR CB DISPUTES- HILTON A UNI$-187 | 03 AUG 2025 CR CB DISPUTES- HILTON A UNI$-391 | 03 AUG 2025 CR CB DISPUTES- HILTON A UNI$-95"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60317.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.53,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "Citibank",
+    "card_last_4": "6319",
+    "reward_type": "points",
+    "earned_this_period": 4178.0,
+    "balance": 156078.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 980.0,
+    "balance": 14355.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 2.12,
+    "balance": null,
+    "expiry_date": null,
+    "description": "OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2025-10",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 5008.0,
+    "balance": 81885.0,
+    "expiry_date": "2025-12-31",
+    "description": "UNI$10000 Adjusted"
+  },
+  {
+    "billing_month": "2025-11",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 70.0,
+    "balance": 60387.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-11",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.07,
+    "balance": 63.6,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-11",
+    "bank_name": "Citibank",
+    "card_last_4": "6319",
+    "reward_type": "points",
+    "earned_this_period": 7462.0,
+    "balance": 163540.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-11",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 736.0,
+    "balance": 23911.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-11",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 4024.0,
+    "balance": 85669.0,
+    "expiry_date": "2025-12-31",
+    "description": "12 JUL 2025 CHAN'S WORLD HOLIDAYS- UNI$-240"
+  },
+  {
+    "billing_month": "2025-12",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 116.0,
+    "balance": 60503.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2025-12",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.6,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2025-12",
+    "bank_name": "Citibank",
+    "card_last_4": "6319",
+    "reward_type": "points",
+    "earned_this_period": 6732.0,
+    "balance": 170272.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2025-12",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 798.0,
+    "balance": 28408.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2025-12",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 20930.0,
+    "balance": 104719.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60503.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.6,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "points",
+    "earned_this_period": 10080.0,
+    "balance": 180352.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 807.0,
+    "balance": 39916.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 725.0,
+    "balance": 105444.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 71.11,
+    "balance": null,
+    "expiry_date": null,
+    "description": "8% CASHBACK + OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2026-01",
+    "bank_name": "UOB",
+    "card_last_4": "5588",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 7057.0,
+    "balance": 100387.0,
+    "expiry_date": "2026-03-31",
+    "description": "22 DEC 2025 ADD UNI$ - MEMBERSHIP FEE REV UNI$6500"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 0.0,
+    "balance": 60503.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.6,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "points",
+    "earned_this_period": 10390.0,
+    "balance": 190742.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "HSBC",
+    "card_last_4": "6207",
+    "reward_type": "points",
+    "earned_this_period": 0.0,
+    "balance": 43651.0,
+    "expiry_date": null,
+    "description": "HSBC Rewards Summary"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "Maybank",
+    "card_last_4": "0005",
+    "reward_type": "points",
+    "earned_this_period": 11495.0,
+    "balance": 116939.0,
+    "expiry_date": null,
+    "description": "TREATS Points Summary"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "Maybank",
+    "card_last_4": "9004",
+    "reward_type": "cashback",
+    "earned_this_period": 0.69,
+    "balance": null,
+    "expiry_date": null,
+    "description": "OTHER CASHBACK"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 6498.0,
+    "balance": 106885.0,
+    "expiry_date": "2026-03-31",
+    "description": "Lady's Savings Account Bonus 5X UNI$1050"
+  },
+  {
+    "billing_month": "2026-02",
+    "bank_name": "UOB",
+    "card_last_4": "5993",
+    "reward_type": "cashback",
+    "earned_this_period": 0.25,
+    "balance": null,
+    "expiry_date": null,
+    "description": "UOB Absolute Cashback"
+  },
+  {
+    "billing_month": "2026-03",
+    "bank_name": "Citibank",
+    "card_last_4": "2696",
+    "reward_type": "miles",
+    "earned_this_period": 320.0,
+    "balance": 60823.0,
+    "expiry_date": null,
+    "description": "Citi Miles"
+  },
+  {
+    "billing_month": "2026-03",
+    "bank_name": "Citibank",
+    "card_last_4": "3955",
+    "reward_type": "cashback",
+    "earned_this_period": 0.0,
+    "balance": 63.6,
+    "expiry_date": null,
+    "description": "Citi Cashback"
+  },
+  {
+    "billing_month": "2026-03",
+    "bank_name": "Citibank",
+    "card_last_4": "6265",
+    "reward_type": "points",
+    "earned_this_period": 5373.0,
+    "balance": 196115.0,
+    "expiry_date": null,
+    "description": "Citi ThankYou Points"
+  },
+  {
+    "billing_month": "2026-03",
+    "bank_name": "UOB",
+    "card_last_4": "5750",
+    "reward_type": "uni_dollars",
+    "earned_this_period": 5261.0,
+    "balance": 105616.0,
+    "expiry_date": "2026-03-31",
+    "description": "Lady's Savings Account Bonus 5X UNI$1015 | 20 FEB 2026 SHEIN.COM UNI$-30 | 28 FEB 2026 Card Fee Waiver UNI$6500"
+  }
+]

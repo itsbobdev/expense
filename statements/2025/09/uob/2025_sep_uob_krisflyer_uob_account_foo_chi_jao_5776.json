@@ -1,0 +1,26 @@
+{
+  "filename": "2025_sep_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-09-30",
+  "period_start": "2025-09-26",
+  "period_end": "2025-09-26",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-26",
+      "raw_description": "Misc DR-Debit Card 23 SEP 4030 2365386 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -74.03,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    }
+  ]
+}

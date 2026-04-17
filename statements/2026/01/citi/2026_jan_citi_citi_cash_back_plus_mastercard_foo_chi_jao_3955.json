@@ -1,0 +1,35 @@
+{
+  "filename": "2026_jan_citi_citi_cash_back_plus_mastercard_foo_chi_jao_3955.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "3955",
+  "card_name": "CITI CASH BACK PLUS MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-08",
+  "period_start": "2026-01-08",
+  "period_end": "2026-01-08",
+  "total_charges": 196.20,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-08",
+      "merchant_name": "ANNUAL MEMBERSHIP FEE",
+      "raw_description": "ANNUAL MEMBERSHIP FEE",
+      "amount": 180.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    },
+    {
+      "transaction_date": "2026-01-08",
+      "merchant_name": "GST ON ANNUAL MEMBERSHIP FEE",
+      "raw_description": "GST ON ANNUAL MEMBERSHIP FEE",
+      "amount": 16.20,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    }
+  ]
+}

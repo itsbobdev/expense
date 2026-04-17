@@ -1,0 +1,12 @@
+{
+  "filename": "2026_mar_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "3955",
+  "card_name": "CITI CASH BACK PLUS MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-08",
+  "period_start": null,
+  "period_end": null,
+  "total_charges": 0.00,
+  "transactions": []
+}

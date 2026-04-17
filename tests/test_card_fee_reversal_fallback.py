@@ -1,5 +1,6 @@
 import json
 import sys
+from datetime import date
 from pathlib import Path
 
 from sqlalchemy import create_engine
@@ -9,7 +10,7 @@ from sqlalchemy.orm import sessionmaker
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 
 from app.database import Base
-from app.models import Transaction
+from app.models import Statement, Transaction
 from app.services.importer import StatementImporter
 
 
@@ -77,6 +78,8 @@ def test_gst_reversal_without_categories_routes_to_alert_resolver(tmp_path):
 
         assert fee.categories == ["card_fees"]
         assert reversal.categories == ["card_fees"]
+        assert fee.alert_kind == "card_fee"
+        assert reversal.alert_kind == "card_fee"
         assert fee.alert_status == "resolved"
         assert fee.resolved_by_transaction_id == reversal.id
         assert reversal.alert_status == "resolved"
@@ -148,8 +151,106 @@ def test_maybank_billed_annual_fee_credit_adjustment_resolves_as_card_fee(tmp_pa
 
         assert fee.categories == ["card_fees"]
         assert reversal.categories == ["card_fees"]
+        assert fee.alert_kind == "card_fee"
+        assert reversal.alert_kind == "card_fee"
         assert fee.alert_status == "resolved"
         assert fee.resolved_by_transaction_id == reversal.id
         assert reversal.alert_status == "resolved"
         assert reversal.needs_review is False
         assert reversal.assignment_method is None
+
+
+def test_fee_auto_resolution_ignores_matching_high_value_alerts(tmp_path):
+    engine = create_engine("sqlite:///:memory:")
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    Base.metadata.create_all(bind=engine)
+
+    fee_json = tmp_path / "fee.json"
+    fee_json.write_text(
+        json.dumps(
+            {
+                "filename": "fee.json",
+                "bank_name": "Maybank",
+                "card_last_4": "0005",
+                "statement_date": "2025-12-31",
+                "transactions": [
+                    {
+                        "transaction_date": "2025-12-24",
+                        "merchant_name": "ANNUAL FEE",
+                        "amount": 240.00,
+                        "is_refund": False,
+                        "categories": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    reversal_json = tmp_path / "reversal.json"
+    reversal_json.write_text(
+        json.dumps(
+            {
+                "filename": "reversal.json",
+                "bank_name": "Maybank",
+                "card_last_4": "0005",
+                "statement_date": "2026-01-31",
+                "transactions": [
+                    {
+                        "transaction_date": "2025-12-24",
+                        "merchant_name": "ANNUAL FEE CREDIT ADJUSTMENT",
+                        "amount": -240.00,
+                        "is_refund": True,
+                        "categories": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with SessionLocal() as db:
+        manual_statement = Statement(
+            filename="manual.json",
+            bank_name="Maybank",
+            card_last_4="0005",
+            statement_date=date(2025, 11, 30),
+            billing_month="2025-11",
+            raw_file_path="manual.json",
+        )
+        db.add(manual_statement)
+        db.flush()
+        db.add(
+            Transaction(
+                statement_id=manual_statement.id,
+                billing_month="2025-11",
+                transaction_date=date(2025, 12, 20),
+                merchant_name="ANNUAL FEE",
+                amount=240.0,
+                categories=[],
+                alert_kind="high_value",
+                alert_status="pending",
+            )
+        )
+        db.commit()
+
+        importer = StatementImporter(db)
+        fee_result = importer.import_file(fee_json, "2025-12")
+        assert fee_result.alerts_created == 1
+
+        reversal_result = importer.import_file(reversal_json, "2026-01")
+        assert reversal_result.alerts_auto_resolved == 1
+
+        high_value = (
+            db.query(Transaction)
+            .filter(Transaction.alert_kind == "high_value")
+            .one()
+        )
+        fee = (
+            db.query(Transaction)
+            .filter(Transaction.alert_kind == "card_fee", Transaction.amount == 240.00)
+            .one()
+        )
+
+        assert high_value.alert_status == "pending"
+        assert fee.alert_status == "resolved"

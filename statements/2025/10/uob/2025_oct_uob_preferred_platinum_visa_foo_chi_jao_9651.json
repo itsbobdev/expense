@@ -1,0 +1,85 @@
+{
+  "filename": "2025_oct_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-10-02",
+  "period_start": "2025-09-01",
+  "period_end": "2025-09-24",
+  "total_charges": 287.65,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-01",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER G.CO/HELPPAY#",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "XXXX",
+      "location": "G.CO/HELPPAY#",
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-03",
+      "merchant_name": "FR NEX - FAN FAN CLAYPOT",
+      "raw_description": "FR NEX - FAN FAN CLAYPOT SINGAPORE",
+      "amount": 9.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-08",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE",
+      "amount": 20.49,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* A-8BKND5HWWJSCAV Singapore",
+      "amount": 26.7,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "KrisPay*Smilepoint",
+      "raw_description": "KrisPay*Smilepoint Singapore",
+      "amount": 200.56,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

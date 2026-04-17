@@ -1,0 +1,27 @@
+{
+  "filename": "2025_jul_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "2990",
+  "card_name": "VISA SIGNATURE",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-07-02",
+  "period_start": "2025-06-15",
+  "period_end": "2025-06-15",
+  "total_charges": 2000.0,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-15",
+      "merchant_name": "TEMPUR SINGAPORE - EVE SINGAPORE 239",
+      "raw_description": "TEMPUR SINGAPORE - EVE SINGAPORE 239",
+      "amount": 2000.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE 239",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

@@ -173,6 +173,9 @@ class BillSheetsExporter:
     @staticmethod
     def _classify_line_item(item: BillLineItem) -> tuple[str, str]:
         if item.manual_bill_id:
+            manual_bill = item.manual_bill
+            if manual_bill and manual_bill.manual_type == manual_bill.TYPE_MANUALLY_ADDED:
+                return "manual_added", "manual_bill"
             return "manual_recurring", "manual_bill"
         if item.transaction and item.transaction.is_refund:
             return "refund", "transaction"

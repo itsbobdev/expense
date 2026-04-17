@@ -1,0 +1,63 @@
+{
+  "filename": "2025_nov_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "2696",
+  "card_name": "CITI PREMIERMILES WORLD MASTER",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-11-09",
+  "period_start": "2025-10-30",
+  "period_end": "2025-10-31",
+  "total_charges": 61.54,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-30",
+      "merchant_name": "McDonalds 930224",
+      "raw_description": "McDonalds 930224 Singapore SG",
+      "amount": 3.95,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "merchant_name": "AMAZE* OSOO ETNOGRA",
+      "raw_description": "AMAZE* OSOO ETNOGRA SINGAPORE SG",
+      "amount": 37.51,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "merchant_name": "AMAZE* OCAK KEBAP T",
+      "raw_description": "AMAZE* OCAK KEBAP T SINGAPORE SG",
+      "amount": 17.72,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "merchant_name": "AMAZE* IP BABADZHAN",
+      "raw_description": "AMAZE* IP BABADZHAN SINGAPORE SG",
+      "amount": 2.36,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    }
+  ]
+}

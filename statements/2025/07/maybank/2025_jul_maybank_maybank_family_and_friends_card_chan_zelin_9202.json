@@ -1,0 +1,41 @@
+{
+  "filename": "2025_jul_maybank_maybank_family_and_friends_card_foo_chi_jao_9004.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9202",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2025-07-25",
+  "period_start": "2025-07-19",
+  "period_end": "2025-07-23",
+  "total_charges": 5.75,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-19",
+      "merchant_name": "LUCKIN COFFEE (SGP) PT",
+      "raw_description": "LUCKIN COFFEE (SGP) PT SINGAPORE",
+      "amount": 3.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-07-23",
+      "merchant_name": "TEOSOON FOOD SUPPLY PT",
+      "raw_description": "TEOSOON FOOD SUPPLY PT SINGAPORE",
+      "amount": 2.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

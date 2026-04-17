@@ -1,0 +1,101 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-01",
+  "period_end": "2025-10-28",
+  "total_charges": 72.87,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-03",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER G.CO/HELPPAY#",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-17",
+      "merchant_name": "DNH*GODADDY#3924115708",
+      "raw_description": "DNH*GODADDY#3924115708 480-5058855",
+      "amount": 88.06,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-24",
+      "merchant_name": "7-ELEVEN - PUNGGOL",
+      "raw_description": "7-ELEVEN - PUNGGOL Singapore",
+      "amount": 15.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "PUNGGOL",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "MYEONGDONG SEMBAWANG",
+      "raw_description": "MYEONGDONG SEMBAWANG SINGAPORE",
+      "amount": 21.8,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SEMBAWANG",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-28",
+      "merchant_name": "MR COCONUT-THE CENTRAL",
+      "raw_description": "MR COCONUT-THE CENTRAL SINGAPORE",
+      "amount": 6.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-28",
+      "merchant_name": "NG AH SIO BKT CQC",
+      "raw_description": "NG AH SIO BKT CQC Singapore",
+      "amount": 12.01,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

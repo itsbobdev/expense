@@ -1,0 +1,55 @@
+{
+  "filename": "2025_aug_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4474",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-08-03",
+  "period_start": "2025-07-16",
+  "period_end": "2025-07-23",
+  "total_charges": 37.26,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-16",
+      "merchant_name": "SCARLETT-AMK",
+      "raw_description": "SCARLETT-AMK Singapore",
+      "amount": 26.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-20",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 9.79,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-23",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 0.87,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

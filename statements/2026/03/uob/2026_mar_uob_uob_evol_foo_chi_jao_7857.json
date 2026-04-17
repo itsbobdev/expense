@@ -1,0 +1,41 @@
+{
+  "filename": "2026_mar_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7857",
+  "card_name": "UOB EVOL",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-02",
+  "period_start": "2026-02-07",
+  "period_end": "2026-02-20",
+  "total_charges": 116.14,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-07",
+      "merchant_name": "P@HDB* BILLRHAVRATA31B",
+      "raw_description": "P@HDB* BILLRHAVRATA31B SINGAPORE",
+      "amount": 6.14,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-02-19",
+      "merchant_name": "HDB Season Parking",
+      "raw_description": "HDB Season Parking SINGAPORE",
+      "amount": 110.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

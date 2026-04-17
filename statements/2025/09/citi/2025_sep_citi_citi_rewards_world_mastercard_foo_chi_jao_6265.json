@@ -1,0 +1,283 @@
+{
+  "filename": "2025_sep_citi_citi_rewards_world_mastercard_foo_chi_jao_6265.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6265",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-09-08",
+  "period_start": "2025-08-10",
+  "period_end": "2025-09-04",
+  "total_charges": 972.16,
+  "transactions": [
+    {
+      "transaction_date": "2025-08-10",
+      "merchant_name": "AMAZE* WWW.SOULMACH",
+      "raw_description": "AMAZE* WWW.SOULMACH SINGAPORE SG",
+      "amount": 129.27,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-10",
+      "merchant_name": "AMAZE* IP NEGODYUK",
+      "raw_description": "AMAZE* IP NEGODYUK SINGAPORE SG",
+      "amount": 14.84,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-10",
+      "merchant_name": "AMAZE* GALMART MEGA",
+      "raw_description": "AMAZE* GALMART MEGA SINGAPORE SG",
+      "amount": 14.03,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-11",
+      "merchant_name": "CLAUDE.AI SUBSCRIPTION",
+      "raw_description": "CLAUDE.AI SUBSCRIPTION SAN FRANCISCOUS",
+      "amount": 143.21,
+      "ccy_fee": 1.43,
+      "is_refund": false,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": [
+        "subscriptions",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-11",
+      "merchant_name": "AMAZE* IP MG",
+      "raw_description": "AMAZE* IP MG SINGAPORE SG",
+      "amount": 14.09,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-11",
+      "merchant_name": "AMAZE* TOO CHAYHANA",
+      "raw_description": "AMAZE* TOO CHAYHANA SINGAPORE SG",
+      "amount": 25.25,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-11",
+      "merchant_name": "AMAZE* GALMART MEGA",
+      "raw_description": "AMAZE* GALMART MEGA SINGAPORE SG",
+      "amount": 2.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-12",
+      "merchant_name": "AMAZE* QAMAR",
+      "raw_description": "AMAZE* QAMAR SINGAPORE SG",
+      "amount": 1.93,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-12",
+      "merchant_name": "AMAZE* MALINA MIX C",
+      "raw_description": "AMAZE* MALINA MIX C SINGAPORE SG",
+      "amount": 28.86,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-13",
+      "merchant_name": "AMAZE* IP MAMBEEVA",
+      "raw_description": "AMAZE* IP MAMBEEVA SINGAPORE SG",
+      "amount": 26.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-13",
+      "merchant_name": "AMAZE* LIME ROZYBAK",
+      "raw_description": "AMAZE* LIME ROZYBAK SINGAPORE SG",
+      "amount": 111.21,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-13",
+      "merchant_name": "AMAZE* PAUL YESSENT",
+      "raw_description": "AMAZE* PAUL YESSENT SINGAPORE SG",
+      "amount": 11.7,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-14",
+      "merchant_name": "AMAZE* LLP GREENX",
+      "raw_description": "AMAZE* LLP GREENX SINGAPORE SG",
+      "amount": 296.46,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-15",
+      "merchant_name": "AMAZE* TOO MEGA PRA",
+      "raw_description": "AMAZE* TOO MEGA PRA SINGAPORE SG",
+      "amount": 58.8,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-15",
+      "merchant_name": "AMAZE* MALINA MIX C",
+      "raw_description": "AMAZE* MALINA MIX C SINGAPORE SG",
+      "amount": 24.26,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-15",
+      "merchant_name": "AMAZE* FRESH MARKET",
+      "raw_description": "AMAZE* FRESH MARKET SINGAPORE SG",
+      "amount": 3.63,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-15",
+      "merchant_name": "AMAZE* MALINA MIX C",
+      "raw_description": "AMAZE* MALINA MIX C SINGAPORE SG",
+      "amount": 9.34,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-16",
+      "merchant_name": "AMAZE* TOO THE CAS",
+      "raw_description": "AMAZE* TOO THE CAS SINGAPORE SG",
+      "amount": 4.61,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-19",
+      "merchant_name": "AMAZE* OPENAI CHATG",
+      "raw_description": "AMAZE* OPENAI CHATG SINGAPORE SG",
+      "amount": 28.44,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-08-25",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* A-89KLI93GWW6FAV Singapore SG",
+      "amount": 12.5,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-04",
+      "merchant_name": "Grab*",
+      "raw_description": "Grab* A-8ATGGN8WX5G9AV Singapore SG",
+      "amount": 9.1,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": []
+    }
+  ]
+}

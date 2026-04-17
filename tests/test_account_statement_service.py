@@ -171,3 +171,83 @@ def test_repair_account_statement_history_inverts_existing_rows_and_deletes_draf
         assert result.deleted_draft_bill_ids == [draft_bill.id]
         assert db.query(Bill).count() == 0
 
+
+def test_repair_account_statement_history_recomputes_credit_vs_debit_high_value_alerts(tmp_path):
+    session_local = make_session_local()
+    json_path = tmp_path / "krisflyer_account.json"
+    json_path.write_text(
+        json.dumps(
+            {
+                "filename": "krisflyer_account.json",
+                "bank_name": "UOB",
+                "account_number_last_4": "5776",
+                "account_name": "KRISFLYER UOB ACCOUNT",
+                "statement_date": "2025-05-31",
+                "transactions": [
+                    {
+                        "transaction_date": "2025-05-16",
+                        "merchant_name": "Funds Transfer",
+                        "amount": 1000.0,
+                        "transaction_type": "credit",
+                        "categories": [],
+                    },
+                    {
+                        "transaction_date": "2025-05-17",
+                        "merchant_name": "AIA PZCW20250517293848",
+                        "amount": -537.5,
+                        "transaction_type": "debit",
+                        "categories": ["insurance"],
+                    },
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with session_local() as db:
+        create_people(db)
+        statement = Statement(
+            filename="krisflyer_account.json",
+            bank_name="UOB",
+            card_last_4="5776",
+            card_name="KRISFLYER UOB ACCOUNT",
+            statement_date=date(2025, 5, 31),
+            billing_month="2025-05",
+            raw_file_path=str(json_path),
+        )
+        db.add(statement)
+        db.flush()
+
+        credit_txn = Transaction(
+            statement_id=statement.id,
+            billing_month="2025-05",
+            transaction_date=date(2025, 5, 16),
+            merchant_name="Funds Transfer",
+            amount=-1000.0,
+            alert_kind="high_value",
+            alert_status="pending",
+        )
+        debit_txn = Transaction(
+            statement_id=statement.id,
+            billing_month="2025-05",
+            transaction_date=date(2025, 5, 17),
+            merchant_name="AIA PZCW20250517293848",
+            amount=537.5,
+            categories=["insurance"],
+            alert_kind=None,
+            alert_status=None,
+        )
+        db.add_all([credit_txn, debit_txn])
+        db.commit()
+
+        result = repair_account_statement_history(db)
+
+        db.refresh(credit_txn)
+        db.refresh(debit_txn)
+        assert result.repaired_statements == 1
+        assert credit_txn.transaction_type == "credit"
+        assert credit_txn.alert_kind is None
+        assert credit_txn.alert_status is None
+        assert debit_txn.transaction_type == "debit"
+        assert debit_txn.alert_kind == "high_value"
+        assert debit_txn.alert_status == "pending"

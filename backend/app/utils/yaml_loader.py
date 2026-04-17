@@ -71,6 +71,8 @@ def load_person_card_mappings(
                         cards.append(last4_str[-4:])
 
         people.append({"name": name, "cards": cards})
+        people[-1]["relationship_type"] = entry.get("relationship_type", "parent")
+        people[-1]["is_auto_created"] = bool(entry.get("is_auto_created", False))
 
     if not people:
         raise ValueError(

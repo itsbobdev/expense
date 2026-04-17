@@ -1,0 +1,25 @@
+{
+  "filename": "hsbc_visa_revolution_6207_2025_09.pdf",
+  "bank_name": "HSBC",
+  "card_last_4": "6207",
+  "card_name": "HSBC VISA REVOLUTION",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-09-28",
+  "period_start": "2025-09-26",
+  "period_end": "2025-09-26",
+  "total_charges": 325.00,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-26",
+      "merchant_name": "ATOME* EVERGREEN CLEAN",
+      "raw_description": "ATOME* EVERGREEN CLEAN SINGAPORE SG",
+      "amount": 325.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["atome"]
+    }
+  ]
+}

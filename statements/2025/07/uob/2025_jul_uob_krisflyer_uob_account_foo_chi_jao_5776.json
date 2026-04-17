@@ -1,0 +1,70 @@
+{
+  "filename": "2025_jul_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-07-31",
+  "period_start": "2025-07-01",
+  "period_end": "2025-07-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-03",
+      "raw_description": "Misc DR-Debit Card 01 JUL 4030 8067376 Prudential 74722891 SINGAPORE SG",
+      "amount": -2102.5,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "Prudential 74722891"
+    },
+    {
+      "transaction_date": "2025-07-03",
+      "raw_description": "Misc DR-Debit Card 01 JUL 4030 6519873 AXS SINGAPORE SG",
+      "amount": -147.15,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "AXS"
+    },
+    {
+      "transaction_date": "2025-07-26",
+      "raw_description": "Misc DR-Debit Card 23 JUL 4030 0300068 PASIR RIS-PUNGGOL TOWN SINGAPORE SG",
+      "amount": -153.02,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PASIR RIS-PUNGGOL TOWN"
+    },
+    {
+      "transaction_date": "2025-07-29",
+      "raw_description": "Misc DR-Debit Card 27 JUL 4030 4582632 GREAT EASTERN LIFE SINGAPORE SG",
+      "amount": -220.56,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "GREAT EASTERN LIFE"
+    },
+    {
+      "transaction_date": "2025-07-31",
+      "raw_description": "Interest Credit",
+      "amount": 0.02,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

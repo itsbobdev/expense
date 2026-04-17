@@ -1,0 +1,12 @@
+{
+  "filename": "2026_mar_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5588",
+  "card_name": "UOB VISA SIGNATURE",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-02",
+  "period_start": null,
+  "period_end": null,
+  "total_charges": 0.0,
+  "transactions": []
+}

@@ -1,0 +1,83 @@
+{
+  "filename": "2026_jan_maybank_family_friends_card_foo_chi_jao_9004.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9202",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2026-01-25",
+  "period_start": "2026-01-02",
+  "period_end": "2026-01-12",
+  "total_charges": 71.42,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-02",
+      "merchant_name": "ICE & TIME",
+      "raw_description": "ICE & TIME SINGAPORE",
+      "amount": 29.5,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-11",
+      "merchant_name": "KOPITIAM INVESTMENT PT",
+      "raw_description": "KOPITIAM INVESTMENT PT SINGAPORE",
+      "amount": 6.12,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-11",
+      "merchant_name": "KOPITIAM INVESTMENT PT",
+      "raw_description": "KOPITIAM INVESTMENT PT SINGAPORE",
+      "amount": 6.84,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-12",
+      "merchant_name": "ASTONS-PUNGGOL-COAST-M",
+      "raw_description": "ASTONS-PUNGGOL-COAST-M SINGAPORE",
+      "amount": 28.4,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-12",
+      "merchant_name": "VANILLA MART",
+      "raw_description": "VANILLA MART SINGAPORE",
+      "amount": 0.56,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "filename": "2026_feb_citi_citi_cash_back_plus_mastercard_foo_chi_jao_3955.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "3955",
+  "card_name": "CITI CASH BACK PLUS MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-02-08",
+  "period_start": "2026-02-02",
+  "period_end": "2026-02-02",
+  "total_charges": 84.0,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-02",
+      "merchant_name": "YOUTRIP",
+      "raw_description": "YOUTRIP SINGAPORE SG XXXX-XXXX-XXXX-2242",
+      "amount": 20.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-02",
+      "merchant_name": "YOUTRIP",
+      "raw_description": "YOUTRIP SINGAPORE SG XXXX-XXXX-XXXX-2242",
+      "amount": 34.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-02",
+      "merchant_name": "YOUTRIP",
+      "raw_description": "YOUTRIP SINGAPORE SG XXXX-XXXX-XXXX-2242",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

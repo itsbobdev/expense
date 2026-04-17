@@ -15,6 +15,7 @@ class Transaction(Base):
     raw_description = Column(String, nullable=True)   # original full description before cleaning
     amount = Column(Float, nullable=False)
     ccy_fee = Column(Float, nullable=True)             # CCY conversion fee merged from fee line
+    transaction_type = Column(String, nullable=True)   # account statements: 'debit' | 'credit'
     is_refund = Column(Boolean, default=False)
     category = Column(String, nullable=True)
     categories = Column(JSON, nullable=True)           # categories array from JSON extraction
@@ -37,11 +38,12 @@ class Transaction(Base):
     # Refund tracking
     original_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)
 
-    # Alert tracking (for card_fees)
+    # Alert tracking
+    alert_kind = Column(String, nullable=True, index=True)  # null, 'card_fee', 'high_value'
     alert_status = Column(String, nullable=True, index=True)  # null, 'pending', 'unresolved', 'resolved'
     parent_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)  # GST → parent fee
     resolved_by_transaction_id = Column(Integer, ForeignKey("transactions.id"), nullable=True)  # fee → reversal
-    resolved_method = Column(String, nullable=True)  # 'manual' or 'auto'
+    resolved_method = Column(String, nullable=True)  # 'manual' or 'auto' (fee alerts only use 'auto')
 
     created_at = Column(DateTime, default=datetime.utcnow)
 

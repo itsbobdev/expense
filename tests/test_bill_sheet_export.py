@@ -166,8 +166,16 @@ def _make_bill_fixture(db):
         amount=92.06,
         description="HDB Season Parking",
         billing_month="2026-02",
+        manual_type=ManualBill.TYPE_RECURRING,
     )
-    db.add_all([split, manual_bill])
+    added_bill = ManualBill(
+        person_id=billed_person.id,
+        amount=0.01,
+        description="TEST",
+        billing_month="2026-02",
+        manual_type=ManualBill.TYPE_MANUALLY_ADDED,
+    )
+    db.add_all([split, manual_bill, added_bill])
     db.flush()
 
     line_items = [
@@ -190,6 +198,12 @@ def _make_bill_fixture(db):
             amount=92.06,
             description="HDB Season Parking",
         ),
+        BillLineItem(
+            bill_id=bill.id,
+            manual_bill_id=added_bill.id,
+            amount=0.01,
+            description="TEST",
+        ),
     ]
     db.add_all(line_items)
     db.commit()
@@ -204,17 +218,19 @@ def test_build_rows_includes_line_types_and_repeated_bill_metadata():
 
         rows = BillSheetsExporter()._build_rows(bill, exported_at="2026-03-30T12:00:00")
 
-        assert len(rows) == 4
+        assert len(rows) == 5
         assert [row[10] for row in rows] == [
             "charge",
             "refund",
             "shared",
             "manual_recurring",
+            "manual_added",
         ]
         assert [row[16] for row in rows] == [
             "transaction",
             "transaction",
             "transaction_split",
+            "manual_bill",
             "manual_bill",
         ]
         assert all(row[1] == str(bill.id) for row in rows)
@@ -225,6 +241,29 @@ def test_build_rows_includes_line_types_and_repeated_bill_metadata():
         assert rows[2][13] == "12.50"
         assert rows[3][11] == ""
         assert rows[3][14] == ""
+        assert rows[4][12] == "TEST"
+
+
+def test_shared_refund_line_items_still_export_as_refunds():
+    SessionLocal = _build_session()
+    with SessionLocal() as db:
+        bill = _make_bill_fixture(db)
+        refund_item = next(item for item in bill.line_items if item.transaction and item.transaction.is_refund)
+        db.add(
+            TransactionSplit(
+                transaction_id=refund_item.transaction_id,
+                person_id=bill.person_id,
+                split_amount=-7.11,
+                sort_order=0,
+            )
+        )
+        db.commit()
+        db.refresh(refund_item)
+
+        line_type, source_kind = BillSheetsExporter()._classify_line_item(refund_item)
+
+        assert line_type == "refund"
+        assert source_kind == "transaction"
 
 
 def test_export_finalized_bill_uses_person_tab_and_bootstraps_missing_worksheet(monkeypatch):
@@ -250,7 +289,7 @@ def test_export_finalized_bill_uses_person_tab_and_bootstraps_missing_worksheet(
     assert "foo_wah_liang" in state["sheet_names"]
     assert state["headers"]["'foo_wah_liang'!A1:Q1"] == [BillSheetsExporter.HEADERS]
     assert state["appended"][0][0] == "'foo_wah_liang'!A:Q"
-    assert len(state["appended"][0][1]) == 4
+    assert len(state["appended"][0][1]) == 5
     assert ("batch_update", "spreadsheet-id", {"requests": [{"addSheet": {"properties": {"title": "foo_wah_liang"}}}]}) in state["calls"]
 
 

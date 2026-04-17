@@ -1,0 +1,27 @@
+{
+  "filename": "2025_oct_maybank_creditcard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-10-25",
+  "period_start": "2025-09-26",
+  "period_end": "2025-09-26",
+  "total_charges": 14.46,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-26",
+      "merchant_name": "BPDS 25I09I1619581",
+      "raw_description": "BPDS 25I09I1619581",
+      "amount": 14.46,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "filename": "uob_credit_card_combined_2026_01.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5993",
+  "card_name": "UOB ABSOLUTE CASHBACK AMEX",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-02",
+  "period_start": "2025-12-04",
+  "period_end": "2026-01-01",
+  "total_charges": 82.85,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-04",
+      "merchant_name": "GRABTAXI PTE LTD",
+      "raw_description": "GRABTAXI PTE LTD SINGAPORE",
+      "amount": 50.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-24",
+      "merchant_name": "GRABTAXI PTE LTD",
+      "raw_description": "GRABTAXI PTE LTD SINGAPORE",
+      "amount": 20.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-01",
+      "merchant_name": "GRABTAXI PTE LTD",
+      "raw_description": "GRABTAXI PTE LTD SINGAPORE",
+      "amount": 13.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

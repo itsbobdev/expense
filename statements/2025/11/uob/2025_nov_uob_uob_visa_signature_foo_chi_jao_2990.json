@@ -1,0 +1,30 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "2990",
+  "card_name": "UOB VISA SIGNATURE",
+  "statement_date": "2025-11-24",
+  "period_start": "2025-11-14",
+  "period_end": "2025-11-20",
+  "total_charges": 2550.09,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-20",
+      "merchant_name": "SKYH TRAVEL BA DINH DISTR",
+      "raw_description": "SKYH TRAVEL BA DINH DISTR VND 49,980,000.00",
+      "amount": 2550.09,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "VN",
+      "location": "BA DINH DISTR",
+      "categories": [
+        "travel_accommodation",
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

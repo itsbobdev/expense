@@ -1,0 +1,90 @@
+{
+  "filename": "2025_aug_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-08-31",
+  "period_start": "2025-08-01",
+  "period_end": "2025-08-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-08-05",
+      "raw_description": "Funds Transfer",
+      "amount": 500.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-08-07",
+      "raw_description": "Misc DR-Debit Card 07 AUG 4030 3790094 EIPL - GI 3DS SINGAPORE SG",
+      "amount": -4.59,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "EIPL - GI 3DS"
+    },
+    {
+      "transaction_date": "2025-08-19",
+      "raw_description": "Misc DR-Debit Card 19 AUG 4030 9159561 AIA SINGAPORE LIMSINGAPORE SG",
+      "amount": -272.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "AIA SINGAPORE LIM"
+    },
+    {
+      "transaction_date": "2025-08-25",
+      "raw_description": "Funds Transfer",
+      "amount": 1200.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-08-24",
+      "raw_description": "Misc DR-Debit Card 24 AUG 4030 3870414 AXS SINGAPORE SG",
+      "amount": -1252.65,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "AXS"
+    },
+    {
+      "transaction_date": "2025-08-25",
+      "raw_description": "Misc DR-Debit Card 25 AUG 4030 5402127 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -76.1,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-08-30",
+      "raw_description": "Interest Credit",
+      "amount": 0.01,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

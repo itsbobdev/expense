@@ -1,0 +1,71 @@
+{
+  "filename": "uob_credit_card_combined_2026_01.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7067",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-02",
+  "period_start": "2025-12-21",
+  "period_end": "2025-12-31",
+  "total_charges": 1025.15,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-21",
+      "merchant_name": "New Star",
+      "raw_description": "New Star Singapore",
+      "amount": 1020.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [
+        "tours"
+      ],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-28",
+      "merchant_name": "SWEE HENG BAKERY-CL30",
+      "raw_description": "SWEE HENG BAKERY-CL30 SINGAPORE",
+      "amount": 0.8,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-31",
+      "merchant_name": "VANILLA MART",
+      "raw_description": "VANILLA MART SINGAPORE",
+      "amount": 0.8,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-31",
+      "merchant_name": "GIANT NORTHSHORE 2",
+      "raw_description": "GIANT NORTHSHORE 2 Singapore",
+      "amount": 3.55,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

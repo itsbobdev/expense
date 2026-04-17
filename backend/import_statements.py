@@ -6,6 +6,8 @@ Usage:
     python import_statements.py 2026-01
     python import_statements.py 2026-01 2026-02 2026-03
     python import_statements.py --refresh 2026-01
+    python import_statements.py --skip-recurring-charges 2026-01
+    python import_statements.py --allow-validation-errors all
 
     # Import all months found in statements/
     python import_statements.py all
@@ -44,14 +46,24 @@ def get_all_months() -> list[str]:
     return months
 
 
-def import_month(billing_month: str, refresh_existing: bool = False):
+def import_month(
+    billing_month: str,
+    refresh_existing: bool = False,
+    skip_recurring_charges: bool = False,
+    allow_validation_errors: bool = False,
+):
     """Import a single billing month and generate recurring charges."""
     year, month = int(billing_month[:4]), int(billing_month[5:7])
 
     db = SessionLocal()
     try:
         importer = StatementImporter(db)
-        result = importer.import_month(year, month, refresh_existing=refresh_existing)
+        result = importer.import_month(
+            year,
+            month,
+            refresh_existing=refresh_existing,
+            allow_validation_errors=allow_validation_errors,
+        )
 
         print(f"\n{'='*50}")
         print(f"  {result.billing_month}")
@@ -71,10 +83,11 @@ def import_month(billing_month: str, refresh_existing: bool = False):
                     print(f"    {fr.filename}: {fr.error}")
 
         # Generate recurring charges for this month
-        recurring = RecurringChargesService(db)
-        created = recurring.generate_recurring_bills(billing_month)
-        if created:
-            print(f"  Recurring charges:   {len(created)}")
+        if not skip_recurring_charges:
+            recurring = RecurringChargesService(db)
+            created = recurring.generate_recurring_bills(billing_month)
+            if created:
+                print(f"  Recurring charges:   {len(created)}")
 
         return result
 
@@ -82,7 +95,11 @@ def import_month(billing_month: str, refresh_existing: bool = False):
         db.close()
 
 
-def import_files(file_paths: list[str], refresh_existing: bool = False):
+def import_files(
+    file_paths: list[str],
+    refresh_existing: bool = False,
+    allow_validation_errors: bool = False,
+):
     """Import specific JSON files (legacy mode)."""
     db = SessionLocal()
     try:
@@ -112,7 +129,12 @@ def import_files(file_paths: list[str], refresh_existing: bool = False):
                 continue
 
             print(f"\nImporting: {json_path}")
-            result = importer.import_file(json_path, billing_month, refresh_existing=refresh_existing)
+            result = importer.import_file(
+                json_path,
+                billing_month,
+                refresh_existing=refresh_existing,
+                allow_validation_errors=allow_validation_errors,
+            )
 
             if result.skipped:
                 total_skipped += 1
@@ -143,14 +165,24 @@ def main():
 
     args = sys.argv[1:]
     refresh_existing = False
-    if args and args[0] == "--refresh":
-        refresh_existing = True
-        args = args[1:]
+    skip_recurring_charges = False
+    allow_validation_errors = False
+    while args and args[0].startswith("--"):
+        flag = args.pop(0)
+        if flag == "--refresh":
+            refresh_existing = True
+        elif flag == "--skip-recurring-charges":
+            skip_recurring_charges = True
+        elif flag == "--allow-validation-errors":
+            allow_validation_errors = True
+        else:
+            print(f"Unknown option: {flag}")
+            sys.exit(1)
     if not args:
         print("Usage:")
-        print("  python import_statements.py [--refresh] YYYY-MM [YYYY-MM ...]")
-        print("  python import_statements.py [--refresh] all")
-        print("  python import_statements.py [--refresh] path/to/file.json [...]")
+        print("  python import_statements.py [--refresh] [--skip-recurring-charges] [--allow-validation-errors] YYYY-MM [YYYY-MM ...]")
+        print("  python import_statements.py [--refresh] [--skip-recurring-charges] [--allow-validation-errors] all")
+        print("  python import_statements.py [--refresh] [--skip-recurring-charges] [--allow-validation-errors] path/to/file.json [...]")
         sys.exit(1)
 
     # Determine mode: month-based or file-based
@@ -163,7 +195,12 @@ def main():
         total_txns = 0
         total_flagged = 0
         for m in months:
-            result = import_month(m, refresh_existing=refresh_existing)
+            result = import_month(
+                m,
+                refresh_existing=refresh_existing,
+                skip_recurring_charges=skip_recurring_charges,
+                allow_validation_errors=allow_validation_errors,
+            )
             total_txns += result.total_transactions
             total_flagged += result.total_flagged
         print(f"\n{'='*50}")
@@ -178,7 +215,12 @@ def main():
         total_txns = 0
         total_flagged = 0
         for m in months:
-            result = import_month(m, refresh_existing=refresh_existing)
+            result = import_month(
+                m,
+                refresh_existing=refresh_existing,
+                skip_recurring_charges=skip_recurring_charges,
+                allow_validation_errors=allow_validation_errors,
+            )
             total_txns += result.total_transactions
             total_flagged += result.total_flagged
         print(f"\n{'='*50}")
@@ -189,7 +231,11 @@ def main():
 
     else:
         # File-based import
-        import_files(args, refresh_existing=refresh_existing)
+        import_files(
+            args,
+            refresh_existing=refresh_existing,
+            allow_validation_errors=allow_validation_errors,
+        )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,17 @@
+people:
+  - name: foo_wah_liang
+    items:
+      hdb_season_parking:
+        description: "HDB Season Parking"
+        card_used: "chocolate 9551"
+        amount: 110.00
+        effective_from: "2024-01"
+        effective_until: null
+  - name: chan_zelin
+    items:
+      hdb_season_parking:
+        description: "HDB Season Parking"
+        card_used: "uob evol 7857"
+        amount: 110.00
+        effective_from: "2024-01"
+        effective_until: null

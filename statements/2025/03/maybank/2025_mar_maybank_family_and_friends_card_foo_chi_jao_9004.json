@@ -1,0 +1,87 @@
+{
+  "filename": "2025_mar_maybank_family_and_friends_card_foo_chi_jao_9004.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9004",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-03-25",
+  "period_start": "2025-02-24",
+  "period_end": "2025-03-03",
+  "total_charges": 53.05,
+  "transactions": [
+    {
+      "transaction_date": "2025-02-24",
+      "merchant_name": "TAOBAO.COM 125 LONDON WA",
+      "raw_description": "TAOBAO.COM 125 LONDON WA",
+      "amount": -0.41,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD0.30",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-02-24",
+      "merchant_name": "TAOBAO.COM 125 LONDON WA",
+      "raw_description": "TAOBAO.COM 125 LONDON WA",
+      "amount": -0.41,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD0.30",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-03-02",
+      "merchant_name": "KRISPAY*ISTEAKS",
+      "raw_description": "KRISPAY*ISTEAKS SINGAPORE",
+      "amount": 49.3,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-03-03",
+      "merchant_name": "OTHER CASHBACK",
+      "raw_description": "OTHER CASHBACK",
+      "amount": 0.36,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": true,
+      "reward_type": "cashback",
+      "country_code": null,
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-02-27",
+      "merchant_name": "BUS/MRT 595585603",
+      "raw_description": "BUS/MRT 595585603 SINGAPORE",
+      "amount": 4.57,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

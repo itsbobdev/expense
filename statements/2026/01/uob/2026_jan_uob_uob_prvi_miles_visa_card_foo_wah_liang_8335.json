@@ -1,0 +1,41 @@
+{
+  "filename": "uob_credit_card_combined_2026_01.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "8335",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-01-02",
+  "period_start": "2025-12-14",
+  "period_end": "2025-12-23",
+  "total_charges": 100.0,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-14",
+      "merchant_name": "FLASHPAY ATU",
+      "raw_description": "FLASHPAY ATU SINGAPORE",
+      "amount": 50.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-23",
+      "merchant_name": "FLASHPAY ATU",
+      "raw_description": "FLASHPAY ATU SINGAPORE",
+      "amount": 50.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

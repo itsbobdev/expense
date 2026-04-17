@@ -1,0 +1,102 @@
+{
+  "filename": "2025_oct_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-10-31",
+  "period_start": "2025-10-06",
+  "period_end": "2025-10-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-06",
+      "raw_description": "Funds Transfer",
+      "amount": 100.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-10-07",
+      "raw_description": "Misc DR-Debit Card 06 OCT 4030 2625594 HDB SEASON PARKING SINGAPORE SG",
+      "amount": -34.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "HDB SEASON PARKING"
+    },
+    {
+      "transaction_date": "2025-10-17",
+      "raw_description": "Funds Transfer",
+      "amount": 2000.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-10-17",
+      "raw_description": "Misc DR-Debit Card 15 OCT 4030 4674145 ETIQA INSURANCE (EC) SINGAPORE SG",
+      "amount": -27.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "ETIQA INSURANCE (EC)"
+    },
+    {
+      "transaction_date": "2025-10-22",
+      "raw_description": "Misc DR-Debit Card 17 OCT 4030 9575543 INCOME INSURANCE eCC SINGAPORE SG",
+      "amount": -201.7,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "INCOME INSURANCE eCC"
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "raw_description": "Misc DR-Debit Card 23 OCT 4030 8375196 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -38.05,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "raw_description": "Misc DR-Debit Card 27 OCT 4030 6884897 FWD SINGAPORE - D2C GI SINGAPORE SG",
+      "amount": -35.96,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "FWD SINGAPORE - D2C GI"
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "raw_description": "Interest Credit",
+      "amount": 0.04,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

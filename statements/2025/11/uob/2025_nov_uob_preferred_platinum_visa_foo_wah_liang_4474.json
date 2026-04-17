@@ -1,0 +1,83 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4474",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-06",
+  "period_end": "2025-10-23",
+  "total_charges": 51.93,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-06",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 5.85,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-06",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 18.24,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-15",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 5.18,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-22",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 6.95,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-23",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 15.71,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_wah_liang"
+}

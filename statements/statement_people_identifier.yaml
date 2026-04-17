@@ -1,0 +1,52 @@
+people:
+  - name: foo_wah_liang
+    relationship_type: parent
+    is_auto_created: false
+    cards:
+      citibank:
+        rewards_world_mastercard: "6319"
+      maybank:
+        family_and_friends: "9103"
+        world_mastercard: "0104"
+      uob:
+        preferred_platinum_visa: "4474"
+        ladys_solitaire_card: "5441"
+        uob_prvi_miles_visa_card: "8335"
+        visa_signature: "3326"
+
+  - name: foo_chi_jao
+    relationship_type: self
+    is_auto_created: true
+    cards:
+      maybank:
+        family_and_friends: "9004"
+        world_mastercard: "0005"
+      citibank:
+        rewards_world_mastercard: "6265"
+        premierMiles_world_mastercard: "2696"
+        cash_back_plus_mastercard: "3955"
+      hsbc:
+        visa_revolution: "6207"
+      uob:
+        visa_signature: "5588"
+        uob_one_account: "5776"
+        uob_evol: "7857"
+        uob_prvi_miles_visa_card: "7067"
+        uob_absolute_cashback_amex: "5993"
+        preferred_platinum_visa: "9651"
+        ladys_solitaire_card: "5750"
+    former_cards:
+      uob:
+        ladys_solitaire_card:
+          last4: "6691"
+          last_active: "2025-08"
+
+  - name: chan_zelin
+    relationship_type: spouse
+    is_auto_created: false
+    cards:
+      citibank:
+        rewards_world_mastercard: "2065"
+      maybank:
+        family_and_friends: "9202"
+        world_mastercard: "0203"

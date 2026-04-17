@@ -6,6 +6,11 @@ from datetime import date, datetime
 from sqlalchemy.orm import Session
 
 from app.models import Bill, BillLineItem, Person, Transaction, TransactionSplit
+from app.services.linked_refund_sync import (
+    collect_transaction_person_ids as collect_linked_transaction_person_ids,
+    delete_draft_bills_for_month,
+    sync_linked_refunds_for_original,
+)
 
 
 @dataclass
@@ -43,7 +48,9 @@ def assign_transaction_to_person(
     transaction.reviewed_at = _utcnow()
     db.flush()
 
-    deleted_bill_ids = _delete_draft_bills_for_month(db, transaction.billing_month, affected_person_ids)
+    affected_by_month = {transaction.billing_month: set(affected_person_ids)} if transaction.billing_month else {}
+    _merge_affected_by_month(affected_by_month, sync_linked_refunds_for_original(db, transaction))
+    deleted_bill_ids = _delete_draft_bills_for_months(db, affected_by_month)
     db.commit()
     db.refresh(transaction)
     return AssignmentOutcome(transaction=transaction, affected_draft_bill_ids=deleted_bill_ids)
@@ -84,7 +91,9 @@ def assign_transaction_equal_split(
         )
 
     db.flush()
-    deleted_bill_ids = _delete_draft_bills_for_month(db, transaction.billing_month, affected_person_ids)
+    affected_by_month = {transaction.billing_month: set(affected_person_ids)} if transaction.billing_month else {}
+    _merge_affected_by_month(affected_by_month, sync_linked_refunds_for_original(db, transaction))
+    deleted_bill_ids = _delete_draft_bills_for_months(db, affected_by_month)
     db.commit()
     db.refresh(transaction)
     return AssignmentOutcome(transaction=transaction, affected_draft_bill_ids=deleted_bill_ids)
@@ -102,7 +111,9 @@ def undo_review_assignment(db: Session, transaction: Transaction) -> AssignmentO
     transaction.transaction_splits.clear()
     db.flush()
 
-    deleted_bill_ids = _delete_draft_bills_for_month(db, transaction.billing_month, affected_person_ids)
+    affected_by_month = {transaction.billing_month: set(affected_person_ids)} if transaction.billing_month else {}
+    _merge_affected_by_month(affected_by_month, sync_linked_refunds_for_original(db, transaction))
+    deleted_bill_ids = _delete_draft_bills_for_months(db, affected_by_month)
     db.commit()
     db.refresh(transaction)
     return AssignmentOutcome(transaction=transaction, affected_draft_bill_ids=deleted_bill_ids)
@@ -159,31 +170,22 @@ def _ensure_review_origin_method(transaction: Transaction) -> None:
 
 
 def _collect_transaction_person_ids(transaction: Transaction) -> set[int]:
-    person_ids = {split.person_id for split in transaction.transaction_splits}
-    if transaction.assigned_to_person_id:
-        person_ids.add(transaction.assigned_to_person_id)
-    return person_ids
+    return collect_linked_transaction_person_ids(transaction)
 
 
-def _delete_draft_bills_for_month(db: Session, billing_month: str | None, person_ids: set[int]) -> list[int]:
-    if not billing_month or not person_ids:
-        return []
+def _delete_draft_bills_for_months(db: Session, affected_by_month: dict[str | None, set[int]]) -> list[int]:
+    deleted_bill_ids: set[int] = set()
+    for billing_month, person_ids in affected_by_month.items():
+        deleted_bill_ids.update(delete_draft_bills_for_month(db, billing_month, person_ids))
+    return sorted(deleted_bill_ids)
 
-    month_start = _month_start(billing_month)
-    bills = (
-        db.query(Bill)
-        .filter(
-            Bill.period_start == month_start,
-            Bill.person_id.in_(person_ids),
-            Bill.status == "draft",
-        )
-        .all()
-    )
-    deleted_bill_ids = [bill.id for bill in bills]
-    for bill in bills:
-        db.delete(bill)
-    db.flush()
-    return deleted_bill_ids
+
+def _merge_affected_by_month(
+    target: dict[str | None, set[int]],
+    source: dict[str, set[int]],
+) -> None:
+    for billing_month, person_ids in source.items():
+        target.setdefault(billing_month, set()).update(person_ids)
 
 
 def _ensure_transaction_not_locked(db: Session, transaction_id: int) -> None:

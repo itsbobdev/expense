@@ -1,0 +1,49 @@
+{
+  "filename": "hsbc_visa_revolution_6207_2026_02.pdf",
+  "bank_name": "HSBC",
+  "card_last_4": "6207",
+  "card_name": "HSBC VISA REVOLUTION",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-02-28",
+  "period_start": "2026-02-11",
+  "period_end": "2026-02-26",
+  "total_charges": 326.67,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-11",
+      "merchant_name": "LATE FEE CREDIT ADJUSTMENT",
+      "raw_description": "LATE FEE CREDIT ADJUSTMENT",
+      "amount": -100.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": true,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    },
+    {
+      "transaction_date": "2026-02-11",
+      "merchant_name": "FINANCE CHARGE",
+      "raw_description": "FINANCE CHARGE",
+      "amount": -36.40,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": true,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    },
+    {
+      "transaction_date": "2026-02-26",
+      "merchant_name": "ATOME* EVERGREEN CLEAN",
+      "raw_description": "ATOME* EVERGREEN CLEAN SINGAPORE SG",
+      "amount": 326.67,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["atome"]
+    }
+  ]
+}

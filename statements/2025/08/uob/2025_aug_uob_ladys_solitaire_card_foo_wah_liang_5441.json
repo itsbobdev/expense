@@ -1,0 +1,71 @@
+{
+  "filename": "2025_aug_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-08-03",
+  "period_start": "2025-07-11",
+  "period_end": "2025-07-24",
+  "total_charges": 1566.42,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-11",
+      "merchant_name": "BAI YIN HARMONYQI",
+      "raw_description": "BAI YIN HARMONYQI SINGAPORE",
+      "amount": 350.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-12",
+      "merchant_name": "CHAN'S WORLD HOLIDAYS-",
+      "raw_description": "CHAN'S WORLD HOLIDAYS- SINGAPORE",
+      "amount": 1200.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "tours"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-12",
+      "merchant_name": "FAR EAST FLORA P L",
+      "raw_description": "FAR EAST FLORA P L Singapore",
+      "amount": 12.42,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-24",
+      "merchant_name": "TOAST BOX - PDD",
+      "raw_description": "TOAST BOX - PDD SINGAPORE",
+      "amount": 4.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

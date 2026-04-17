@@ -1,0 +1,41 @@
+{
+  "filename": "uob_credit_card_combined_2026_01.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-01-02",
+  "period_start": "2025-12-22",
+  "period_end": "2025-12-28",
+  "total_charges": 44.3,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-22",
+      "merchant_name": "AXS Drive: Paya Lebar",
+      "raw_description": "AXS Drive: Paya Lebar Singapore",
+      "amount": 2.45,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-12-28",
+      "merchant_name": "RED-GINGER-PUNGGOL",
+      "raw_description": "RED-GINGER-PUNGGOL SINGAPORE",
+      "amount": 41.85,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

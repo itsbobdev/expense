@@ -34,11 +34,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Configure environment
-cp ../.env.example ../.env
+cp .env.example .env
 
 # Edit .env and paste your bot token
 # TELEGRAM_BOT_TOKEN=your_token_here
 ```
+
+`backend/.env` is the only supported local runtime env file. Do not create a repo-root `.env`.
 
 ## Step 3: Set Up Database (1 minute)
 
@@ -90,6 +92,8 @@ Port: 8000
 3. Send `/start`
 4. You should see a welcome message!
 5. Try `/help` to see all commands
+6. Try `/add_expense` to add an ad hoc bill item
+7. Try `/alerts` to review pending card-fee or high-value alerts, including the configured card owner name when available
 
 ## Next Steps
 
@@ -100,7 +104,10 @@ Port: 8000
    - Claude Code: run `/extract-statement`
    - Codex/manual: follow the shared extraction rules in `REPOSITORY_GUIDE.md` and the parsing references under `.claude/commands/`
 3. Import the extracted JSON data into the database
-4. Review any uncertain transactions using the Telegram bot buttons
+4. If you corrected an existing JSON file, refresh it from the repo root with `python .codex/skills/expense-refresh-statement-db/scripts/refresh_statement_db.py <json-path>`
+5. Review any uncertain transactions using the Telegram bot buttons
+6. Review pending alerts with `/alerts`
+7. Before committing DB-only review or billing state, run `cd backend && python export_live_state.py`
 
 ### View Statistics
 
@@ -109,6 +116,13 @@ Send `/stats` to see spending breakdown by person
 ### Generate Bills (Coming in Phase 4)
 
 Send `/bill march parent` to generate a bill for March
+
+### Add or Remove Manual Bill Items
+
+- Use `/add_expense` to create an ad hoc expense for a person and billing month.
+- Telegram-added items show up under `Manually Added:` in `/bill`.
+- Draft bills include inline remove buttons for those manually added items.
+- Seeded recurring charges still show up under `Monthly Recurring:` and are not removable from the bill message.
 
 ## Troubleshooting
 
@@ -119,12 +133,21 @@ Just run `python setup_database.py` - it handles database creation automatically
 Make sure you're in the `backend` directory and your virtual environment is activated.
 
 ### Bot not responding
-1. Check your bot token in `.env`
+1. Check your bot token in `backend/.env`
 2. Make sure `run.py` is running
 3. Check the console for error messages
 
 ### PDF extraction
 Use the shared statement-extraction workflow to extract transactions from PDF statements. Claude Code can use `/extract-statement`; Codex and manual workflows should follow `REPOSITORY_GUIDE.md` and the parsing references under `.claude/commands/`.
+
+### UOB credit-card credits
+Do not skip non-payment UOB `... CR` rows. Merchant refunds, dispute credits, and fee waivers must be extracted as transactions; only payment lines are skipped, and cashback reward lines stay rewards instead of refunds.
+
+### Account high-value alerts
+For account-style statements, only `transaction_type = debit` rows should create `high_value` alerts. Credits such as funds transfers or interest should never appear in `/alerts` just because they exceed `$111`.
+
+### Linked refunds
+Matched refunds follow the current assignment on their original charge. If you reassign the original later, the linked refund moves with it automatically, including shared splits. If you undo the original back into review, the linked refund becomes non-billable and shows up in `/refund` until the original is reviewed again.
 
 ## Advanced: Docker Deployment
 

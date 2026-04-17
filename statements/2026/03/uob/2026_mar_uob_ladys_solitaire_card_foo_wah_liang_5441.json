@@ -1,0 +1,41 @@
+{
+  "filename": "2026_mar_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-03-02",
+  "period_start": "2026-02-23",
+  "period_end": "2026-02-25",
+  "total_charges": 4.45,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-23",
+      "merchant_name": "AXS Drive: UB One",
+      "raw_description": "AXS Drive: UB One Singapore",
+      "amount": 1.85,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-02-25",
+      "merchant_name": "HAPPY HAWKER@671EDGEFI",
+      "raw_description": "HAPPY HAWKER@671EDGEFI Singapore",
+      "amount": 2.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

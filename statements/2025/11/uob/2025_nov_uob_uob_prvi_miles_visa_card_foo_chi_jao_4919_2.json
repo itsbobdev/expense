@@ -1,0 +1,27 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4919",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-31",
+  "period_end": "2025-10-31",
+  "total_charges": 0.9,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-31",
+      "merchant_name": "VANILLA MART",
+      "raw_description": "VANILLA MART SINGAPORE",
+      "amount": 0.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

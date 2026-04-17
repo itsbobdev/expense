@@ -1,0 +1,12 @@
+{
+  "filename": "2025_sep_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "2990",
+  "card_name": "VISA SIGNATURE",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-09-02",
+  "period_start": null,
+  "period_end": null,
+  "total_charges": 0.0,
+  "transactions": []
+}

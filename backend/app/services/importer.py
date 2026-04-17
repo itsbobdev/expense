@@ -20,9 +20,11 @@ from app.services.account_statement_service import (
     is_account_statement_data,
     normalize_statement_amount,
 )
+from app.services.alert_policy import finalize_alert_state, seed_import_alert_state
 from app.services.categorizer import TransactionCategorizer
 from app.services.refund_handler import RefundHandler
 from app.services.alert_resolver import AlertResolver, looks_like_card_fee
+from app.services.statement_validator import StatementValidationError, validate_statement_json
 from app.config import settings
 
 # Patterns that identify cashback reward transactions (not merchant refunds)
@@ -107,7 +109,13 @@ class StatementImporter:
         self.refund_handler = RefundHandler(db)
         self.alert_resolver = AlertResolver(db)
 
-    def import_month(self, year: int, month: int, refresh_existing: bool = False) -> MonthImportResult:
+    def import_month(
+        self,
+        year: int,
+        month: int,
+        refresh_existing: bool = False,
+        allow_validation_errors: bool = False,
+    ) -> MonthImportResult:
         """
         Import all JSON statement files for a given billing month.
 
@@ -139,7 +147,12 @@ class StatementImporter:
 
         file_results = []
         for json_path in json_files:
-            result = self.import_file(json_path, billing_month, refresh_existing=refresh_existing)
+            result = self.import_file(
+                json_path,
+                billing_month,
+                refresh_existing=refresh_existing,
+                allow_validation_errors=allow_validation_errors,
+            )
             file_results.append(result)
 
         imported = [r for r in file_results if not r.skipped and not r.error]
@@ -159,7 +172,13 @@ class StatementImporter:
             file_results=file_results,
         )
 
-    def import_file(self, json_path: Path, billing_month: str, refresh_existing: bool = False) -> ImportResult:
+    def import_file(
+        self,
+        json_path: Path,
+        billing_month: str,
+        refresh_existing: bool = False,
+        allow_validation_errors: bool = False,
+    ) -> ImportResult:
         """
         Import a single JSON statement file.
 
@@ -186,6 +205,19 @@ class StatementImporter:
                 alerts_created=0, alerts_auto_resolved=0,
                 skipped=False, error=str(e),
             )
+
+        try:
+            validate_statement_json(data, json_path)
+        except StatementValidationError as e:
+            if not allow_validation_errors:
+                return ImportResult(
+                    filename=filename, billing_month=billing_month,
+                    statement_id=None, transactions_imported=0,
+                    transactions_flagged=0, refunds_auto_matched=0,
+                    alerts_created=0, alerts_auto_resolved=0,
+                    skipped=False, error=str(e),
+                )
+            logger.warning("Proceeding with validation warning for %s: %s", json_path, e)
 
         # Compute hash for dedup (hash the JSON content itself)
         json_content = json.dumps(data, sort_keys=True)
@@ -258,6 +290,7 @@ class StatementImporter:
                 raw_description=txn_data.get("raw_description"),
                 amount=amount,
                 ccy_fee=txn_data.get("ccy_fee"),
+                transaction_type=(txn_data.get("transaction_type") or None),
                 is_refund=is_refund,
                 is_reward=is_reward,
                 reward_type=txn_data.get("reward_type", "cashback") if is_reward else None,
@@ -274,7 +307,6 @@ class StatementImporter:
         # Reward transactions still go through categorizer (for person assignment)
         # but always have needs_review=False overridden.
         flagged_count = 0
-        alerts_created = 0
         for txn in transactions:
             if not txn.is_refund:
                 result = self.categorizer.categorize(txn)
@@ -289,11 +321,11 @@ class StatementImporter:
                 else:
                     txn.needs_review = result.needs_review
                     txn.blacklist_category_id = result.blacklist_category_id
-                    txn.alert_status = result.alert_status
                     if result.needs_review:
                         flagged_count += 1
-                    if result.alert_status == 'pending':
-                        alerts_created += 1
+
+        for txn in transactions:
+            seed_import_alert_state(txn)
 
         self.db.flush()  # Ensure IDs available for alert_resolver
 
@@ -322,6 +354,12 @@ class StatementImporter:
             if txn.is_refund or txn.is_reward:
                 continue
             refunds_matched += self.refund_handler.reconcile_refunds_for_original(txn)
+
+        alerts_created = 0
+        for txn in transactions:
+            finalize_alert_state(txn)
+            if txn.alert_status == 'pending':
+                alerts_created += 1
 
         statement.status = "processed"
         statement.processed_at = datetime.utcnow()

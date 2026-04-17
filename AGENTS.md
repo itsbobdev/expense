@@ -32,8 +32,16 @@ This file is the Codex/OpenAI agent entrypoint for this repository.
   - `$expense-organise-statements`
   - `$expense-run-telegram-bot`
   - `$expense-add-review-category`
+  - `$expense-feature-completion`
 - For Codex sessions, follow the same business rules and output contracts, but execute them using Codex-appropriate tools and explicit task instructions instead of Claude slash commands.
 - Whenever an existing statement JSON is corrected, re-extracted, or replaced, Codex must use `$expense-refresh-statement-db` to update the database. This is the default workflow and should not require the user to ask for `--refresh`.
 - Use `$expense-run-telegram-bot` when the task is to launch, relaunch, or verify the local Telegram bot quickly.
+- Use `$expense-feature-completion` near the end of any feature change that affects Telegram commands, workflows, bill rendering, persisted user-facing concepts, exported classifications, or intentional business-rule exceptions.
 - For image-based HSBC statements, render PDF pages locally first with `backend/render_statement_pages.py`, then read the page images visually for transactions or rewards summary extraction.
-- If shared workflow behavior changes, update `REPOSITORY_GUIDE.md` first, then mirror any necessary Claude-specific wording in `.claude/commands/` or `CLAUDE.md`.
+- If a feature changes shared workflow behavior, update `REPOSITORY_GUIDE.md` first.
+- If a feature introduces or changes an unintuitive, intentional, durable rule or exception, review and update `BUSINESS_RULES.md` too.
+- If setup, commands, or user-visible usage changed, review `README.md` and `QUICKSTART.md`.
+- Do not treat docs as optional follow-up work. For applicable feature changes, docs and business-rules review are part of done.
+- Regular working-state commits should prefer git-tracked statement JSON/YAML plus `state/live_state.json`; do not treat local SQLite files as the primary handoff format.
+- Raw statement PDFs, secrets, and credentials remain private handoff-package material unless the task explicitly says otherwise.
+- Mirror Claude-specific wording in `.claude/commands/` or `CLAUDE.md` only when the shared behavior change also affects the Claude reference workflow.

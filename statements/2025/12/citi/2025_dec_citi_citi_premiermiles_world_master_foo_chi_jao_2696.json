@@ -1,0 +1,24 @@
+{
+  "filename": "2025_dec_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "2696",
+  "card_name": "CITI PREMIERMILES WORLD MASTER",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-12-08",
+  "period_start": "2025-11-30",
+  "period_end": "2025-11-30",
+  "total_charges": 98.51,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-30",
+      "merchant_name": "AGODA.COM BREEZBAY L",
+      "raw_description": "AGODA.COM BREEZBAY L INTERNET HK",
+      "amount": 97.54,
+      "ccy_fee": 0.97,
+      "is_refund": false,
+      "country_code": "HK",
+      "location": "INTERNET",
+      "categories": ["travel_accommodation", "foreign_currency"]
+    }
+  ]
+}

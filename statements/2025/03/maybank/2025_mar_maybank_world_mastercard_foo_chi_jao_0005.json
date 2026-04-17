@@ -1,0 +1,27 @@
+{
+  "filename": "2025_mar_maybank_world_mastercard_foo_chi_jao_0005.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-03-25",
+  "period_start": "2025-02-27",
+  "period_end": "2025-02-27",
+  "total_charges": 2.4,
+  "transactions": [
+    {
+      "transaction_date": "2025-02-27",
+      "merchant_name": "BUS/MRT 595589975",
+      "raw_description": "BUS/MRT 595589975 SINGAPORE",
+      "amount": 2.4,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

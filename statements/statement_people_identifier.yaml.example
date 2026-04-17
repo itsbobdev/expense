@@ -1,0 +1,24 @@
+people:
+  - name: parent_name
+    relationship_type: parent
+    is_auto_created: false
+    cards:
+      maybank:
+        family_and_friends: "1234"
+        world_mastercard: "5678"
+      uob:
+        preferred_platinum_visa: "9012"
+
+  - name: self_name
+    relationship_type: self
+    is_auto_created: true
+    cards:
+      hsbc:
+        visa_revolution: "3456"
+      citibank:
+        rewards_world_mastercard: "7890"
+    former_cards:
+      uob:
+        ladys_solitaire_card:
+          last4: "1122"
+          last_active: "2025-08"

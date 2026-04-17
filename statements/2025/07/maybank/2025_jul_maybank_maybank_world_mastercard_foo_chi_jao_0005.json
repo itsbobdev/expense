@@ -1,0 +1,1370 @@
+{
+  "filename": "world_mastercard_0005_25_july_2025.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-07-25",
+  "period_start": "2025-06-23",
+  "period_end": "2025-07-25",
+  "total_charges": 1010.03,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "WEIXIN*BEIJING GUBEI",
+      "raw_description": "WEIXIN*BEIJING GUBEI SHENZHEN",
+      "amount": 24.01,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY129.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 16.39,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY88.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "WEIXIN*CYTS TRAVEL SER",
+      "raw_description": "WEIXIN*CYTS TRAVEL SER BEIJING",
+      "amount": 17.87,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY96.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "tours",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*GERONGHUA",
+      "raw_description": "ALP*GERONGHUA JIAXINGSHI",
+      "amount": 10.24,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY55.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "JIAXINGSHI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*PERSONALSERVICES",
+      "raw_description": "ALP*PERSONALSERVICES SHANGHAI",
+      "amount": 1.48,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY8.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*PERSONALSERVICES",
+      "raw_description": "ALP*PERSONALSERVICES SHANGHAI",
+      "amount": 11.92,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY64.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO SHANGHAI",
+      "amount": 6.49,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY35.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 29.71,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY160.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-23",
+      "merchant_name": "ALP*BEIJINGGUBEISHUIZH",
+      "raw_description": "ALP*BEIJINGGUBEISHUIZH SHANGHAI",
+      "amount": 45.12,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY243.08",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*BEIJINGGUBEISHUIZH",
+      "raw_description": "ALP*BEIJINGGUBEISHUIZH SHANGHAI",
+      "amount": -7.13,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY39.14",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 12.35,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY66.50",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 2.79,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY15.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "WEIXIN*BEIJING GUBEI W",
+      "raw_description": "WEIXIN*BEIJING GUBEI W SHENZHEN",
+      "amount": 8.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY47.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "WEIXIN*BEIJING GUBEI W",
+      "raw_description": "WEIXIN*BEIJING GUBEI W SHENZHEN",
+      "amount": 5.21,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY28.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-24",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 3.35,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY18.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE",
+      "amount": 6.58,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI BEIJING",
+      "amount": -5.63,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY31.10",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI BEIJING",
+      "amount": 5.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY31.10",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI BEIJING",
+      "amount": 8.81,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY47.73",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*BEIJING CITY SU",
+      "raw_description": "WEIXIN*BEIJING CITY SU BEIJING",
+      "amount": 11.08,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY60.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*BEIJING CITY SU",
+      "raw_description": "WEIXIN*BEIJING CITY SU BEIJING",
+      "amount": 14.76,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY80.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*BEIJING FUYIN M",
+      "raw_description": "WEIXIN*BEIJING FUYIN M BEIJING",
+      "amount": 90.45,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY490.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*MEITUAN PLATFOR",
+      "raw_description": "WEIXIN*MEITUAN PLATFOR BEIJING",
+      "amount": 8.27,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY44.80",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*MEITUAN PLATFOR",
+      "raw_description": "WEIXIN*MEITUAN PLATFOR BEIJING",
+      "amount": 7.73,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY41.87",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*ZHANGQICHANG",
+      "raw_description": "ALP*ZHANGQICHANG BEIJINGSHI",
+      "amount": 6.09,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY33.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJINGSHI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI SHANGHAI",
+      "amount": 5.66,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY30.53",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "ALP*CENGXIA",
+      "raw_description": "ALP*CENGXIA SHANGHAI",
+      "amount": 13.37,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY72.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "WEIXIN*GRANDPA DOESN'T",
+      "raw_description": "WEIXIN*GRANDPA DOESN'T SHENZHEN",
+      "amount": 3.72,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY20.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "WEIXIN*GUBEI WATER TOW",
+      "raw_description": "WEIXIN*GUBEI WATER TOW SHENZHEN",
+      "amount": 12.63,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY68.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "WEIXIN*OLD BEIJING FRI",
+      "raw_description": "WEIXIN*OLD BEIJING FRI SHENZHEN",
+      "amount": 39.73,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY214.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-25",
+      "merchant_name": "ALP*PERSONALSERVICES",
+      "raw_description": "ALP*PERSONALSERVICES SHANGHAI",
+      "amount": 10.4,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY56.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.75,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*CHOCK PLAYER (B",
+      "raw_description": "WEIXIN*CHOCK PLAYER (B BEIJING",
+      "amount": 7.94,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY43.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*MEITUAN PLATFOR",
+      "raw_description": "WEIXIN*MEITUAN PLATFOR BEIJING",
+      "amount": 6.16,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY33.39",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO SHANGHAI",
+      "amount": 0.92,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY5.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO SHANGHAI",
+      "amount": 0.92,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY5.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*MEITUAN PLATFOR",
+      "raw_description": "WEIXIN*MEITUAN PLATFOR SHENZHEN",
+      "amount": 17.42,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY94.39",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "ALP*BEIJINGSANYUANMEIY",
+      "raw_description": "ALP*BEIJINGSANYUANMEIY SHANGHAI",
+      "amount": 0.92,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY5.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*LUCKINCCOFFEE R",
+      "raw_description": "WEIXIN*LUCKINCCOFFEE R SHENZHEN",
+      "amount": 1.83,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY9.90",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*CAFE++MEAL+MUJI",
+      "raw_description": "WEIXIN*CAFE++MEAL+MUJI SHENZHEN",
+      "amount": 5.35,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY29.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*CHALET BARBECUE",
+      "raw_description": "WEIXIN*CHALET BARBECUE SHENZHEN",
+      "amount": 34.09,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY184.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-26",
+      "merchant_name": "WEIXIN*XI TEA-BEIJING",
+      "raw_description": "WEIXIN*XI TEA-BEIJING SHENZHEN",
+      "amount": 3.51,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY19.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*XI TEA-BEIJING",
+      "raw_description": "WEIXIN*XI TEA-BEIJING SHENZHEN",
+      "amount": -3.43,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY19.00",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*HAIDILAO HOTP",
+      "raw_description": "WEIXIN*HAIDILAO HOTP SHENZHEN",
+      "amount": 47.18,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY256.48",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*CONVENIENCE M",
+      "raw_description": "WEIXIN*CONVENIENCE M SHENZHEN",
+      "amount": 4.59,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY25.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI BEIJING",
+      "amount": 7.27,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY39.50",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "ALP*OTHERRETAIL",
+      "raw_description": "ALP*OTHERRETAIL SHANGHAI",
+      "amount": 2.64,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY14.32",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*CHERRY ORCHID H",
+      "raw_description": "WEIXIN*CHERRY ORCHID H BEIJING",
+      "amount": 139.79,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY760.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI SHANGHAI",
+      "amount": 1.71,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY9.20",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*BEIJING-STYLE T",
+      "raw_description": "WEIXIN*BEIJING-STYLE T SHENZHEN",
+      "amount": 12.55,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY68.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*BERRY+BEANS (XI",
+      "raw_description": "WEIXIN*BERRY+BEANS (XI SHENZHEN",
+      "amount": 15.88,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY86.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*JINGCHENG JIUME",
+      "raw_description": "WEIXIN*JINGCHENG JIUME SHENZHEN",
+      "amount": 46.53,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY252.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*ZHANG YIYUAN DA",
+      "raw_description": "WEIXIN*ZHANG YIYUAN DA SHENZHEN",
+      "amount": 4.06,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY22.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*BEIJINGPOSTCARD",
+      "raw_description": "WEIXIN*BEIJINGPOSTCARD SHENZHEN",
+      "amount": 14.77,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY80.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*HU SHANG A YI",
+      "raw_description": "WEIXIN*HU SHANG A YI SHENZHEN",
+      "amount": 3.51,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY19.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*SCAN QR CODE FO",
+      "raw_description": "WEIXIN*SCAN QR CODE FO SHENZHEN",
+      "amount": 2.77,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY15.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-27",
+      "merchant_name": "WEIXIN*WHAT TO DRINK?",
+      "raw_description": "WEIXIN*WHAT TO DRINK? SHENZHEN",
+      "amount": 7.21,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY39.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO BEIJING",
+      "amount": 0.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*BEIJING CITY TI",
+      "raw_description": "WEIXIN*BEIJING CITY TI BEIJING",
+      "amount": 7.36,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY40.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*BEIJING CITY TI",
+      "raw_description": "WEIXIN*BEIJING CITY TI BEIJING",
+      "amount": 5.51,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY30.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "ALP*BEIJINGXIPUXIPUCA",
+      "raw_description": "ALP*BEIJINGXIPUXIPUCA SHANGHAI",
+      "amount": 6.99,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY38.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*ROSEN (BEIJING)",
+      "raw_description": "WEIXIN*ROSEN (BEIJING) BEIJING",
+      "amount": 2.54,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY13.80",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI SHANGHAI",
+      "amount": 3.81,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY20.69",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*BEIJING YIHUA C",
+      "raw_description": "WEIXIN*BEIJING YIHUA C SHENZHEN",
+      "amount": 3.86,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY21.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*KAI+FINE DINNER",
+      "raw_description": "WEIXIN*KAI+FINE DINNER SHENZHEN",
+      "amount": 18.88,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY102.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "travel_accommodation",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "WEIXIN*SCAN QR CODE FO",
+      "raw_description": "WEIXIN*SCAN QR CODE FO SHENZHEN",
+      "amount": 12.54,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY68.23",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-28",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE",
+      "amount": 7.12,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-06-30",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI BEIJING",
+      "amount": 18.88,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY102.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "BEIJING",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "ALP*BEIJING METRO",
+      "raw_description": "ALP*BEIJING METRO SHANGHAI",
+      "amount": 0.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI SHANGHAI",
+      "amount": 2.67,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY14.50",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "ALP*RESTAURANTS",
+      "raw_description": "ALP*RESTAURANTS SHANGHAI",
+      "amount": 25.87,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY140.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*BEIJING GUIYUEF",
+      "raw_description": "WEIXIN*BEIJING GUIYUEF SHENZHEN",
+      "amount": 7.18,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY39.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*CHALET BARBECUE",
+      "raw_description": "WEIXIN*CHALET BARBECUE SHENZHEN",
+      "amount": 38.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY206.60",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*QIAO SHUNIANG P",
+      "raw_description": "WEIXIN*QIAO SHUNIANG P SHENZHEN",
+      "amount": 11.96,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY65.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*QIAO SHUNIANG P",
+      "raw_description": "WEIXIN*QIAO SHUNIANG P SHENZHEN",
+      "amount": 0.74,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY4.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-29",
+      "merchant_name": "WEIXIN*XI TEA",
+      "raw_description": "WEIXIN*XI TEA SHENZHEN",
+      "amount": 6.99,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY38.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHENZHEN",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-06-30",
+      "merchant_name": "ALP*DIDI TAXI",
+      "raw_description": "ALP*DIDI TAXI SHANGHAI",
+      "amount": 3.07,
+      "ccy_fee": null,
+      "foreign_currency_amount": "CNY16.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "CN",
+      "location": "SHANGHAI",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-07-10",
+      "merchant_name": "WWW.SOULMACHINES.COM",
+      "raw_description": "WWW.SOULMACHINES.COM SAN FRANCISCO",
+      "amount": 131.12,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD99.00",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-07-17",
+      "merchant_name": "PAYPAL *WEB COURSES 4029357733",
+      "raw_description": "PAYPAL *WEB COURSES 4029357733",
+      "amount": -137.95,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD105.73",
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency",
+        "paypal"
+      ]
+    },
+    {
+      "transaction_date": "2025-07-25",
+      "merchant_name": "BPDS 25I07I1586179",
+      "raw_description": "BPDS 25I07I1586179",
+      "amount": 12.9,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    }
+  ]
+}

@@ -7,8 +7,10 @@ A Telegram bot-based expense tracker that automatically categorizes credit card 
 - **PDF Statement Extraction**: Extract transactions from credit card statements (Citi, Maybank, UOB) using the shared statement-extraction workflow; Claude users can use `/extract-statement`, while Codex and manual workflows should follow the same output contract
 - **Smart Categorization**: Rule-based and ML-powered transaction assignment
 - **Interactive Review**: Review uncertain transactions directly in Telegram
+- **Alert Queue**: Review card-fee alerts plus high-value non-reward transactions above `$111` in Telegram `/alerts`, with card owner names shown when configured
 - **Refund Matching**: Automatically match refunds to original transactions
 - **Bill Generation**: Create detailed bills for family members
+- **Manual Bill Adjustments**: Add ad hoc expenses in Telegram and remove manually added draft bill items inline
 - **Learning System**: ML model improves over time based on your assignments
 
 ## Quick Start
@@ -43,12 +45,14 @@ pip install -r requirements.txt
 ### 3. Configuration
 
 ```bash
-# Copy environment template
+# Copy environment template into backend/.env
 cp .env.example .env
 
 # Edit .env and add your Telegram bot token
 # TELEGRAM_BOT_TOKEN=your_token_here
 ```
+
+`backend/.env` is the only supported local runtime env file. Repo-root `.env` is intentionally unsupported.
 
 ### 4. Database Setup
 
@@ -150,13 +154,25 @@ The bot will start and begin polling for messages. You can now interact with it 
 - `/upload` - Upload a credit card statement PDF
 - `/stats` - View spending statistics
 - `/bill [month] [person]` - Generate a bill (e.g., `/bill march parent`)
+- `/add_expense` - Add an ad hoc manual expense to someone's bill
+- `/alerts` - Review pending card-fee and high-value alerts
+- `/resolved` - Review resolved alerts and optionally unresolve them
+- `/cancel` - Cancel the current guided add-expense flow
+
+Manual bill behavior:
+- `/add_expense` stores ad hoc items as `manually_added`
+- seeded recurring charges remain `recurring`
+- `/bill` shows those sections separately as `Manually Added` and `Monthly Recurring`
+- draft bills expose inline remove buttons for manually added items only
 
 ### Workflow
 
 1. **Upload Statement**: Send `/upload` command and attach your PDF statement
 2. **Automatic Processing**: Bot extracts and categorizes transactions
 3. **Review Uncertain Transactions**: Use inline buttons to assign transactions
-4. **Generate Bills**: Use `/bill` command to create monthly bills
+4. **Review Alerts**: Use `/alerts` for card fees and non-reward transactions above `$111`
+5. **Generate Bills**: Use `/bill` command to create monthly bills
+6. **Commit Working State**: Run `cd backend && python export_live_state.py` before git commits that should preserve review decisions, manual bill items, shared splits, or bill records
 
 ## Architecture
 
@@ -224,6 +240,24 @@ All configuration is done via environment variables (see `.env.example`):
 - `ML_CONFIDENCE_THRESHOLD_SUGGEST` - Suggestion threshold (default: 0.50)
 - `ML_MIN_TRAINING_SAMPLES` - Minimum samples to train ML (default: 50)
 
+## Git-Tracked Working State
+
+- Commit extracted statement JSON under `statements/YYYY/MM/bank/`.
+- Commit `statements/statement_people_identifier.yaml`, `statements/monthly_payment_to_me.yaml`, and `statements/rewards_history.json`.
+- Commit `state/live_state.json` after DB-only state changes by running `cd backend && python export_live_state.py`.
+- Do not commit raw statement PDFs, SQLite databases, `.env` files, or credential JSONs.
+
+Fresh-machine restore from git-backed state:
+
+```bash
+cd backend
+alembic upgrade head
+python setup_database.py
+python import_statements.py --skip-recurring-charges --allow-validation-errors all
+python import_rewards_history.py
+python import_live_state.py
+```
+
 ## Business Logic Scenarios
 
 ### Scenario 1: Supplementary Cards (Direct Assignment)
@@ -236,7 +270,10 @@ Spouse's card transactions are assigned based on category (e.g., bus/MRT to spou
 For the main card, ML predicts who should pay based on merchant patterns learned from manual assignments.
 
 ### Scenario 4: Refund Matching
-Refunds are automatically matched to original transactions and assigned to the same person.
+Refunds are automatically matched to original transactions and keep following the original charge's latest assignment or shared split, so the order of review and refund matching does not matter. Matched refunds leave `/refund` unless the original charge is later moved back into review, in which case the linked refund reappears there as pending.
+
+### Scenario 5: Alerts
+Card fees create `card_fee` alerts, and any non-reward imported charge or refund with `abs(amount) > 111` creates a `high_value` alert in Telegram. For account-style statements, only `transaction_type = debit` rows qualify; credits such as transfers or interest do not.
 
 ## Development
 
@@ -271,6 +308,9 @@ alembic downgrade -1
 - Run migrations: `alembic upgrade head`
 - Check database file permissions
 - Verify DATABASE_URL is correct
+
+### Corrected statement JSON
+If you fix an existing extracted JSON file, refresh it through `python .codex/skills/expense-refresh-statement-db/scripts/refresh_statement_db.py <json-path>` from the repo root instead of rerunning a broad normal import.
 
 ## Roadmap
 

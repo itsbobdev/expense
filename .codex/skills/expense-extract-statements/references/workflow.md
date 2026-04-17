@@ -184,6 +184,7 @@ You are a bank statement PDF analyzer. Extract transaction data from ALL PDF fil
 - If `ccy_fee` is not applicable, set it to `null`
 - If `foreign_currency_amount` is not applicable, set it to `null`
 - Output valid JSON for each PDF/card section processed
+- For UOB credit-card PDFs, verify row completeness before finishing: every non-payment `... CR` row in the cardholder section must exist in JSON as a real transaction; only payment lines may be skipped, and cashback credits stay rewards rather than refunds.
 - After outputting the JSON, also save each JSON object to a `.json` file alongside the PDF using format: `{YYYY_MMM}_{bank_name_lowercase}_{card_name_lowercase_with_underscores}_{cardholder_name_lowercase}_{last4digits}.json`
   - Example: `2026_feb_citi_citi_rewards_world_mastercard_foo_chi_jao_6265.json`
   - Example: `2026_feb_uob_preferred_platinum_visa_foo_wah_liang_4474.json`

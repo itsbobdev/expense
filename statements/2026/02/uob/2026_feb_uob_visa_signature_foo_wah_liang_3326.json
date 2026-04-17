@@ -1,0 +1,27 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "3326",
+  "card_name": "UOB VISA SIGNATURE",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-06",
+  "period_end": "2026-01-06",
+  "total_charges": 23.3,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-06",
+      "merchant_name": "Gopay-Gojek",
+      "raw_description": "Gopay-Gojek SINGAPORE",
+      "amount": 23.3,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

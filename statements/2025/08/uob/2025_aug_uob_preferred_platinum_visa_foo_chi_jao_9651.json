@@ -1,0 +1,101 @@
+{
+  "filename": "2025_aug_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-08-03",
+  "period_start": "2025-07-01",
+  "period_end": "2025-07-30",
+  "total_charges": 188.84,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-01",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER G.CO/HELPPAY#",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-12",
+      "merchant_name": "CHAN'S WORLD HOLIDAYS-RS",
+      "raw_description": "CHAN'S WORLD HOLIDAYS-RS SINGAPORE",
+      "amount": 100.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "tours"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-25",
+      "merchant_name": "Grab* A-85KHI2QGX86PAV",
+      "raw_description": "Grab* A-85KHI2QGX86PAV Singapore",
+      "amount": 1.7,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-25",
+      "merchant_name": "Grab* A-85KHI2QGX86PAV",
+      "raw_description": "Grab* A-85KHI2QGX86PAV Singapore",
+      "amount": 8.2,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-27",
+      "merchant_name": "KOUFU PTE LTD",
+      "raw_description": "KOUFU PTE LTD Singapore",
+      "amount": 5.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-30",
+      "merchant_name": "MONSTER CURRY @ WATERWAY",
+      "raw_description": "MONSTER CURRY @ WATERWAY SINGAPORE",
+      "amount": 43.04,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

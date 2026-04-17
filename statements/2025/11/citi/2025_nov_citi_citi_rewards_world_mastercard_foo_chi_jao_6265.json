@@ -1,0 +1,182 @@
+{
+  "filename": "2025_nov_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6265",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-11-09",
+  "period_start": "2025-10-11",
+  "period_end": "2025-10-31",
+  "total_charges": 906.70,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-11",
+      "merchant_name": "CLAUDE.AI SUBSCRIPTION",
+      "raw_description": "CLAUDE.AI SUBSCRIPTION SAN FRANCISCOUS",
+      "amount": 149.99,
+      "ccy_fee": 1.49,
+      "is_refund": false,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": [
+        "subscriptions",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-18",
+      "merchant_name": "Surfshark BV",
+      "raw_description": "Surfshark BV Amsterdam NL FOREIGN AMOUNT U.S. DOLLAR 66.79",
+      "amount": 89.43,
+      "ccy_fee": null,
+      "foreign_currency_amount": "USD66.79",
+      "is_refund": false,
+      "country_code": "NL",
+      "location": "AMSTERDAM",
+      "categories": [
+        "subscriptions",
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-18",
+      "merchant_name": "LITTLE PAWCIOUS SG",
+      "raw_description": "LITTLE PAWCIOUS SG SINGAPORE SG",
+      "amount": 295.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-19",
+      "merchant_name": "AMAZE* OPENAI CHATG",
+      "raw_description": "AMAZE* OPENAI CHATG SINGAPORE SG",
+      "amount": 28.86,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-26",
+      "merchant_name": "AMAZE* IST NEW GARD",
+      "raw_description": "AMAZE* IST NEW GARD SINGAPORE SG",
+      "amount": 65.28,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "AMAZE* NOVOTEL BISH",
+      "raw_description": "AMAZE* NOVOTEL BISH SINGAPORE SG",
+      "amount": 119.51,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze",
+        "travel_accommodation"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "AMAZE* RESTAURANT Z",
+      "raw_description": "AMAZE* RESTAURANT Z SINGAPORE SG",
+      "amount": 46.01,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "AMAZE* IP BABADZHAN",
+      "raw_description": "AMAZE* IP BABADZHAN SINGAPORE SG",
+      "amount": 3.34,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "AMAZE* DOKTOR MED",
+      "raw_description": "AMAZE* DOKTOR MED SINGAPORE SG",
+      "amount": 10.63,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "AMAZE* NAVAT",
+      "raw_description": "AMAZE* NAVAT SINGAPORE SG",
+      "amount": 57.01,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-27",
+      "merchant_name": "JUMBO GROUP",
+      "raw_description": "JUMBO GROUP SINGAPORE SG",
+      "amount": 20.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-28",
+      "merchant_name": "AMAZE* TURAN-AI",
+      "raw_description": "AMAZE* TURAN-AI SINGAPORE SG",
+      "amount": 6.82,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    },
+    {
+      "transaction_date": "2025-10-29",
+      "merchant_name": "AMAZE* DOKTOR MED",
+      "raw_description": "AMAZE* DOKTOR MED SINGAPORE SG",
+      "amount": 13.33,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "amaze"
+      ]
+    }
+  ]
+}

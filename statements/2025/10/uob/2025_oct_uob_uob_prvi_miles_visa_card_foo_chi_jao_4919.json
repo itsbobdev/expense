@@ -1,0 +1,174 @@
+{
+  "filename": "2025_oct_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4919",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "statement_date": "2025-10-02",
+  "period_start": "2025-09-09",
+  "period_end": "2025-09-15",
+  "total_charges": 712.1,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-09",
+      "merchant_name": "DOKU - JOKUL - REG",
+      "raw_description": "DOKU - JOKUL - REG Jakarta Selat Ref No. : 74239785252008417307206 IDR 6,653,519.00",
+      "amount": 541.26,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "JAKARTA",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "PT DUFRINDO MBL BADUNG",
+      "raw_description": "PT DUFRINDO MBL BADUNG - BALI Ref No. : 74105045253208592130097 IDR 1,017,000.00",
+      "amount": 82.19,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "BALI",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "IDM TLA7 ANDONG GIANYAR",
+      "raw_description": "IDM TLA7 ANDONG GIANYAR Ref No. : 74556325253005345740028 IDR 70,000.00",
+      "amount": 5.66,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "GIANYAR",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "IDM TLA7 ANDONG GIANYAR",
+      "raw_description": "IDM TLA7 ANDONG GIANYAR Ref No. : 74556325253005345740036 IDR 80,000.00",
+      "amount": 6.46,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "GIANYAR",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "FOCI BAKERY UBUD HO",
+      "raw_description": "FOCI BAKERY UBUD HO GIANYAR Ref No. : 74556325253005797090260 IDR 71,000.00",
+      "amount": 5.74,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "GIANYAR",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-12",
+      "merchant_name": "SENSATIA MONKEY F1",
+      "raw_description": "SENSATIA MONKEY F1 GIANYAR Ref No. : 74556325255005771670150 IDR 165,000.00",
+      "amount": 13.32,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "GIANYAR",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-13",
+      "merchant_name": "JUNGLEGOLD CANGGU MBL",
+      "raw_description": "JUNGLEGOLD CANGGU MBL BADUNG - BALI Ref No. : 74105045258208747400150 IDR 199,000.00",
+      "amount": 16.11,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "BALI",
+      "categories": [
+        "foreign_currency",
+        "tours"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-14",
+      "merchant_name": "COCO SUPERMARKET SEMINYAK",
+      "raw_description": "COCO SUPERMARKET SEMINYAKBadung (Kab) Ref No. : 74239785257008443907883 IDR 160,900.00",
+      "amount": 13.03,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "SEMINYAK",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-14",
+      "merchant_name": "DENYUH SPA",
+      "raw_description": "DENYUH SPA Badung (Kab) Ref No. : 74239785257008446274000 IDR 300,000.00",
+      "amount": 24.28,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "BADUNG",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-14",
+      "merchant_name": "DONUT KING BADUNG",
+      "raw_description": "DONUT KING BADUNG Ref No. : 74556325257005723840966 IDR 50,000.00",
+      "amount": 4.05,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "ID",
+      "location": "BADUNG",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

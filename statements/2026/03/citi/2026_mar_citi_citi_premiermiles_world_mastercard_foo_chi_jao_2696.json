@@ -1,0 +1,24 @@
+{
+  "filename": "2026_mar_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "2696",
+  "card_name": "CITI PREMIERMILES WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-08",
+  "period_start": "2026-02-20",
+  "period_end": "2026-02-20",
+  "total_charges": 270.58,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-20",
+      "merchant_name": "AGODA.COM ASAI BANGK",
+      "raw_description": "AGODA.COM ASAI BANGK  INTERNET  HK",
+      "amount": 267.91,
+      "ccy_fee": 2.67,
+      "is_refund": false,
+      "country_code": "HK",
+      "location": "INTERNET",
+      "categories": ["travel_accommodation", "foreign_currency"]
+    }
+  ]
+}

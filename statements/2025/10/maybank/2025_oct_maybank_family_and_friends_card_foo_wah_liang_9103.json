@@ -1,0 +1,341 @@
+{
+  "filename": "2025_oct_maybank_family_and_friends_card_foo_chi_jao_9004.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9103",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-10-25",
+  "period_start": "2025-09-24",
+  "period_end": "2025-10-19",
+  "total_charges": 242.23,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 1.95,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR6.18",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 2.28,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR7.21",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 1.95,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR6.18",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 2.93,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR9.27",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "SAM'S GROCERIA-TG TOKO TG TOKONG",
+      "raw_description": "SAM'S GROCERIA-TG TOKO TG TOKONG",
+      "amount": 12.28,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR38.80",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-24",
+      "merchant_name": "AMERICAN IZAKAYA SDN. PULAU PINANG",
+      "raw_description": "AMERICAN IZAKAYA SDN. PULAU PINANG",
+      "amount": 9.7,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR30.70",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-25",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 11.44,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR36.05",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-25",
+      "merchant_name": "GRAB RIDES-EC",
+      "raw_description": "GRAB RIDES-EC PETALING JAYA",
+      "amount": 1.31,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR4.12",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "MY",
+      "location": "PETALING JAYA",
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-25",
+      "merchant_name": "BAN HEANG -PIA PC BAYAN LEPAS",
+      "raw_description": "BAN HEANG -PIA PC BAYAN LEPAS",
+      "amount": 13.11,
+      "ccy_fee": null,
+      "foreign_currency_amount": "MYR41.30",
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "foreign_currency"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-25",
+      "merchant_name": "SHEIN.COM",
+      "raw_description": "SHEIN.COM SINGAPORE",
+      "amount": 31.38,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-27",
+      "merchant_name": "SHOPBACK PICNIC GREE",
+      "raw_description": "SHOPBACK PICNIC GREE SINGAPORE",
+      "amount": 3.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-27",
+      "merchant_name": "SHOPBACK TANJONG RHU",
+      "raw_description": "SHOPBACK TANJONG RHU SINGAPORE",
+      "amount": 5.5,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-02",
+      "merchant_name": "0%IPP - INNER HAMONY PL 002/012 INSTL",
+      "raw_description": "0%IPP - INNER HAMONY PL 002/012 INSTL",
+      "amount": 88.1,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "travel_accommodation"
+      ]
+    },
+    {
+      "transaction_date": "2025-09-30",
+      "merchant_name": "SHOPBACK KING OF FRI",
+      "raw_description": "SHOPBACK KING OF FRI SINGAPORE",
+      "amount": 7.3,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-02",
+      "merchant_name": "Y Y HOUSEHOLD 612",
+      "raw_description": "Y Y HOUSEHOLD 612 SINGAPORE",
+      "amount": 5.2,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-03",
+      "merchant_name": "SWEE HENG BAKERY-CL17",
+      "raw_description": "SWEE HENG BAKERY-CL17 SINGAPORE",
+      "amount": 4.5,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-03",
+      "merchant_name": "SUSHI GOGO-OASIS TERR",
+      "raw_description": "SUSHI GOGO-OASIS TERR SINGAPORE",
+      "amount": 7.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-10",
+      "merchant_name": "MALAYSIA BOLEH - BUGIS",
+      "raw_description": "MALAYSIA BOLEH - BUGIS SINGAPORE",
+      "amount": 6.9,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-10",
+      "merchant_name": "MALAYSIA BOLEH - BUGIS",
+      "raw_description": "MALAYSIA BOLEH - BUGIS SINGAPORE",
+      "amount": 9.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-10",
+      "merchant_name": "MALAYSIA BOLEH - BUGIS",
+      "raw_description": "MALAYSIA BOLEH - BUGIS SINGAPORE",
+      "amount": 6.9,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-17",
+      "merchant_name": "SHOPBACK STARBUCKS GAR",
+      "raw_description": "SHOPBACK STARBUCKS GAR SINGAPORE",
+      "amount": 7.6,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-19",
+      "merchant_name": "SHOPBACK NINE FRESH",
+      "raw_description": "SHOPBACK NINE FRESH SINGAPORE",
+      "amount": 2.9,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

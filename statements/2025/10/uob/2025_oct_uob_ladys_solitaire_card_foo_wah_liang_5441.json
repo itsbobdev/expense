@@ -1,0 +1,106 @@
+{
+  "filename": "2025_oct_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-10-02",
+  "period_start": "2025-09-03",
+  "period_end": "2025-09-20",
+  "total_charges": 3258.59,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-03",
+      "merchant_name": "EDREAMS BCN",
+      "raw_description": "EDREAMS BCN",
+      "amount": 2093.61,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "XXXX",
+      "location": "",
+      "categories": [
+        "flights",
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-04",
+      "merchant_name": "FLYSCOOT.0000000A78ZGC",
+      "raw_description": "FLYSCOOT.0000000A78ZGC SINGAPORE",
+      "amount": 83.12,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "flights"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-05",
+      "merchant_name": "AGODA.COM ICON DELUX",
+      "raw_description": "AGODA.COM ICON DELUX INTERNET",
+      "amount": 904.78,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "XXXX",
+      "location": "",
+      "categories": [
+        "travel_accommodation"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-17",
+      "merchant_name": "DIAN XIAO ER",
+      "raw_description": "DIAN XIAO ER Singapore",
+      "amount": 68.34,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-19",
+      "merchant_name": "GREEN OLIVE GROUP PT..",
+      "raw_description": "GREEN OLIVE GROUP PT.. Singapore",
+      "amount": 12.8,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-09-20",
+      "merchant_name": "EDREAMS PRIME ANNUAL",
+      "raw_description": "EDREAMS PRIME ANNUAL BCN",
+      "amount": 95.94,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "XXXX",
+      "location": "",
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

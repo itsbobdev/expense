@@ -81,6 +81,7 @@ class RecurringChargesService:
                     ManualBill.person_id == person.id,
                     ManualBill.description == description,
                     ManualBill.billing_month == billing_month,
+                    ManualBill.manual_type == ManualBill.TYPE_RECURRING,
                 ).first()
 
                 if existing:
@@ -91,6 +92,7 @@ class RecurringChargesService:
                     amount=amount,
                     description=description,
                     billing_month=billing_month,
+                    manual_type=ManualBill.TYPE_RECURRING,
                 )
                 self.db.add(manual_bill)
                 created.append(manual_bill)

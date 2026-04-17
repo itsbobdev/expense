@@ -1,0 +1,100 @@
+{
+  "filename": "2026_jan_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-31",
+  "period_start": "2026-01-07",
+  "period_end": "2026-01-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-07",
+      "raw_description": "Misc DR-Debit Card 05 JAN 4030 4652906 INCOME 92924089 Singapore SG",
+      "amount": -1380.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "merchant_name": "INCOME 92924089"
+    },
+    {
+      "transaction_date": "2026-01-08",
+      "raw_description": "Funds Transfer mBK-7693021913",
+      "amount": -20000.0,
+      "transaction_type": "debit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer mBK-7693021913"
+    },
+    {
+      "transaction_date": "2026-01-13",
+      "raw_description": "Misc DR-Debit Card 09 JAN 4030 7553461 NEE SOON TOWN COUNCIL SINGAPORE SG",
+      "amount": -35.3,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "NEE SOON TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2026-01-20",
+      "raw_description": "Funds Transfer",
+      "amount": 18000.0,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2026-01-22",
+      "raw_description": "PAYNOW-FAST PIB2601229000133111 INCOME INSURANCE LIM OTHR DICNP2260122115245023",
+      "amount": -20000.0,
+      "transaction_type": "debit",
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "INCOME INSURANCE LIM"
+    },
+    {
+      "transaction_date": "2026-01-23",
+      "raw_description": "Misc DR-Debit Card 21 JAN 4030 2748868 INCOME 92054648 Singapore SG",
+      "amount": -1795.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "merchant_name": "INCOME 92054648"
+    },
+    {
+      "transaction_date": "2026-01-27",
+      "raw_description": "Misc DR-Debit Card 23 JAN 4030 8273627 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -38.05,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2026-01-31",
+      "raw_description": "Interest Credit",
+      "amount": 0.41,
+      "transaction_type": "credit",
+      "country_code": null,
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

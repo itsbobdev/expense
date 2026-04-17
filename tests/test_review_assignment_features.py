@@ -12,8 +12,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 
 from app.bot import handlers
 from app.database import Base
-from app.models import AssignmentRule, Bill, BillLineItem, Person, Statement, Transaction
+from app.models import AssignmentRule, Bill, BillLineItem, Person, Statement, Transaction, TransactionSplit
 from app.services.bill_generator import BillGenerator
+from app.services.linked_refund_sync import ASSIGNMENT_METHOD_REFUND_LINKED_PENDING
 from app.services.review_assignment import (
     assign_transaction_equal_split,
     assign_transaction_to_person,
@@ -91,6 +92,37 @@ def create_transaction(
     db.add(txn)
     db.commit()
     return txn
+
+
+def create_linked_refund(
+    db,
+    statement: Statement,
+    original_transaction: Transaction,
+    amount: float,
+    *,
+    billing_month: str = "2026-03",
+    assignment_method: str = "refund_auto_match",
+    review_origin_method: str | None = None,
+    needs_review: bool = False,
+    assigned_to_person_id: int | None = None,
+) -> Transaction:
+    refund = Transaction(
+        statement_id=statement.id,
+        billing_month=billing_month,
+        transaction_date=date(2026, 3, 16),
+        merchant_name=original_transaction.merchant_name,
+        amount=amount,
+        is_refund=True,
+        original_transaction_id=original_transaction.id,
+        assignment_method=assignment_method,
+        review_origin_method=review_origin_method,
+        needs_review=needs_review,
+        assigned_to_person_id=assigned_to_person_id,
+        categories=["travel"],
+    )
+    db.add(refund)
+    db.commit()
+    return refund
 
 
 class FakeQuery:
@@ -268,6 +300,123 @@ def test_equal_split_remainder_goes_to_last_selected_person():
         assert [split.split_amount for split in txn.transaction_splits] == [3.33, 3.33, 3.34]
 
 
+def test_assigning_original_syncs_linked_refund_to_same_person():
+    session_local = make_session_local()
+    with session_local() as db:
+        dad, _, _ = create_people(db)
+        statement = create_statement(db)
+        original = create_transaction(db, statement, "SYNC TARGET", 24.0)
+        refund = create_linked_refund(
+            db,
+            statement,
+            original,
+            -24.0,
+            assignment_method=ASSIGNMENT_METHOD_REFUND_LINKED_PENDING,
+            review_origin_method="refund_auto_match",
+            needs_review=True,
+        )
+
+        assign_transaction_to_person(db, original, dad.id)
+
+        db.refresh(refund)
+        assert refund.assigned_to_person_id == dad.id
+        assert refund.assignment_method == "refund_auto_match"
+        assert refund.needs_review is False
+        assert refund.transaction_splits == []
+
+
+def test_reassigning_original_resyncs_linked_refund_to_new_person():
+    session_local = make_session_local()
+    with session_local() as db:
+        dad, wife, _ = create_people(db)
+        statement = create_statement(db)
+        original = create_transaction(
+            db,
+            statement,
+            "RESYNC TARGET",
+            32.0,
+            needs_review=False,
+            assignment_method="manual",
+            review_origin_method="category_review",
+            assigned_to_person_id=dad.id,
+        )
+        refund = create_linked_refund(
+            db,
+            statement,
+            original,
+            -32.0,
+            assignment_method="refund_auto_match",
+            assigned_to_person_id=dad.id,
+        )
+
+        assign_transaction_to_person(db, original, wife.id)
+
+        db.refresh(refund)
+        assert refund.assigned_to_person_id == wife.id
+        assert refund.assignment_method == "refund_auto_match"
+        assert refund.needs_review is False
+
+
+def test_shared_assignment_syncs_linked_refund_splits():
+    session_local = make_session_local()
+    with session_local() as db:
+        dad, wife, _ = create_people(db)
+        statement = create_statement(db)
+        original = create_transaction(db, statement, "SHARED REFUND TARGET", 40.0)
+        refund = create_linked_refund(
+            db,
+            statement,
+            original,
+            -40.0,
+            assignment_method=ASSIGNMENT_METHOD_REFUND_LINKED_PENDING,
+            review_origin_method="refund_auto_match",
+            needs_review=True,
+        )
+
+        assign_transaction_equal_split(db, original, [dad.id, wife.id])
+
+        db.refresh(refund)
+        assert refund.assigned_to_person_id is None
+        assert refund.assignment_method == "refund_auto_match"
+        assert refund.needs_review is False
+        assert [split.person_id for split in refund.transaction_splits] == [dad.id, wife.id]
+        assert [split.split_amount for split in refund.transaction_splits] == [-20.0, -20.0]
+
+
+def test_undo_assignment_sends_linked_refund_back_to_pending_review():
+    session_local = make_session_local()
+    with session_local() as db:
+        dad, _, _ = create_people(db)
+        statement = create_statement(db)
+        original = create_transaction(
+            db,
+            statement,
+            "UNDO REFUND TARGET",
+            18.0,
+            needs_review=False,
+            assignment_method="manual",
+            review_origin_method="category_review",
+            assigned_to_person_id=dad.id,
+        )
+        refund = create_linked_refund(
+            db,
+            statement,
+            original,
+            -18.0,
+            assignment_method="refund_auto_match",
+            assigned_to_person_id=dad.id,
+        )
+
+        undo_review_assignment(db, original)
+
+        db.refresh(refund)
+        assert refund.assigned_to_person_id is None
+        assert refund.assignment_method == ASSIGNMENT_METHOD_REFUND_LINKED_PENDING
+        assert refund.review_origin_method == "refund_auto_match"
+        assert refund.needs_review is True
+        assert refund.transaction_splits == []
+
+
 def test_shared_transactions_render_in_separate_bill_section():
     session_local = make_session_local()
     with session_local() as db:
@@ -296,6 +445,49 @@ def test_shared_transactions_render_in_separate_bill_section():
         assert message.index("DIRECT CHARGE") < message.index("Shared Expenses:")
         assert message.index("SHARED DINNER") > message.index("Shared Expenses:")
         assert "(UOB ****1234, Self card)" in message
+
+
+def test_shared_linked_refund_renders_in_refunds_section():
+    session_local = make_session_local()
+    with session_local() as db:
+        dad, _, self_person = create_people(db)
+        statement = create_statement(db)
+        create_card_direct_rule(db, self_person, statement.card_last_4)
+        original = create_transaction(db, statement, "HOTEL DISPUTE", 20.0)
+        assign_transaction_equal_split(db, original, [dad.id, self_person.id])
+
+        refund = create_linked_refund(
+            db,
+            statement,
+            original,
+            -20.0,
+            assignment_method="refund_auto_match",
+            needs_review=False,
+        )
+        refund.transaction_splits = [
+            TransactionSplit(
+                person_id=dad.id,
+                split_amount=-10.0,
+                split_percent=50.0,
+                sort_order=0,
+            ),
+            TransactionSplit(
+                person_id=self_person.id,
+                split_amount=-10.0,
+                split_percent=50.0,
+                sort_order=1,
+            ),
+        ]
+        db.commit()
+
+        generator = BillGenerator(db)
+        bill = generator.generate_bill(dad.id, "2026-03")
+        message = generator.format_bill_message(bill.id)
+
+        assert "Refunds:" in message
+        assert "REFUND: HOTEL DISPUTE" in message
+        assert "Shared Expenses:" in message
+        assert message.index("Refunds:") < message.index("Shared Expenses:")
 
 
 def test_bill_message_appends_card_owner_to_direct_and_shared_lines():

@@ -14,6 +14,11 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.models import Transaction
 from app.models.statement import Statement
+from app.services.alert_policy import (
+    ACTIVE_ALERT_STATUSES,
+    ALERT_KIND_CARD_FEE,
+    ALERT_STATUS_PENDING,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -122,7 +127,8 @@ class AlertResolver:
         Matching: same card, fee type match, amount match (fee+GST), within +2 months.
         """
         if not reversal_txn.statement:
-            reversal_txn.alert_status = 'pending'
+            reversal_txn.alert_kind = ALERT_KIND_CARD_FEE
+            reversal_txn.alert_status = ALERT_STATUS_PENDING
             return False
 
         card_last_4 = reversal_txn.statement.card_last_4
@@ -140,7 +146,8 @@ class AlertResolver:
             .filter(
                 Statement.card_last_4 == card_last_4,
                 Transaction.is_refund == False,
-                Transaction.alert_status.in_(['pending', 'unresolved']),
+                Transaction.alert_kind == ALERT_KIND_CARD_FEE,
+                Transaction.alert_status.in_(ACTIVE_ALERT_STATUSES),
                 Transaction.parent_transaction_id.is_(None),  # not GST children
                 Statement.statement_date >= earliest_stmt_date,
                 Statement.statement_date <= reversal_stmt_date,
@@ -174,7 +181,8 @@ class AlertResolver:
 
         elif len(matches) > 1:
             # Ambiguous — let user resolve manually
-            reversal_txn.alert_status = 'pending'
+            reversal_txn.alert_kind = ALERT_KIND_CARD_FEE
+            reversal_txn.alert_status = ALERT_STATUS_PENDING
             logger.info(
                 "Ambiguous auto-resolve for reversal txn %s: %d candidates",
                 reversal_txn.id, len(matches),
@@ -183,7 +191,8 @@ class AlertResolver:
 
         else:
             # No match — still show to user for visibility
-            reversal_txn.alert_status = 'pending'
+            reversal_txn.alert_kind = ALERT_KIND_CARD_FEE
+            reversal_txn.alert_status = ALERT_STATUS_PENDING
             logger.info(
                 "No matching fee found for reversal txn %s ($%.2f)",
                 reversal_txn.id, reversal_txn.amount,

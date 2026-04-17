@@ -1,0 +1,79 @@
+{
+  "filename": "2025_nov_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6319",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-11-09",
+  "period_start": "2025-10-17",
+  "period_end": "2025-10-31",
+  "total_charges": 118.68,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-17",
+      "merchant_name": "GARDENS BY THE BAY-RET",
+      "raw_description": "GARDENS BY THE BAY-RET SINGAPORE SG",
+      "amount": 11.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-18",
+      "merchant_name": "WATSONS - WATERWAY POI",
+      "raw_description": "WATSONS - WATERWAY POI SINGAPORE SG",
+      "amount": 26.07,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-18",
+      "merchant_name": "TIMHOWAN - WATERWAY PO",
+      "raw_description": "TIMHOWAN - WATERWAY PO Singapore SG",
+      "amount": 38.25,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-19",
+      "merchant_name": "BUDDY HOAGIES PL-WWP",
+      "raw_description": "BUDDY HOAGIES PL-WWP SINGAPORE SG",
+      "amount": 33.21,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-21",
+      "merchant_name": "SCARLETT @ PLS",
+      "raw_description": "SCARLETT @ PLS SINGAPORE SG",
+      "amount": 9.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-10-31",
+      "merchant_name": "SHOPEE SG SPAYLATER",
+      "raw_description": "SHOPEE SG SPAYLATER SINGAPORE SG",
+      "amount": 1.15,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

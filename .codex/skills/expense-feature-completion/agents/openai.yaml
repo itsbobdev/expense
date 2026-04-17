@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature Completion"
+  short_description: "Check docs and business-rules updates."
+  default_prompt: "Use $expense-feature-completion to finish a repo feature change with the right docs and business-rules checks."

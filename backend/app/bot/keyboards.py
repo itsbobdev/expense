@@ -129,19 +129,38 @@ def get_refund_person_keyboard(refund_id: int, persons: List[Person]) -> InlineK
     return InlineKeyboardMarkup(keyboard)
 
 
+def get_add_expense_person_keyboard(persons: List[Person]) -> InlineKeyboardMarkup:
+    """Person picker for guided manual expense entry."""
+    keyboard = []
+    person_buttons = [
+        InlineKeyboardButton(
+            person.name,
+            callback_data=f"addexpense_person_{person.id}",
+        )
+        for person in persons
+    ]
+
+    for i in range(0, len(person_buttons), 2):
+        keyboard.append(person_buttons[i:i+2])
+
+    keyboard.append([
+        InlineKeyboardButton("Cancel", callback_data="addexpense_cancel"),
+    ])
+    return InlineKeyboardMarkup(keyboard)
+
+
 def get_alert_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
-    """Keyboard for alert items: Resolve + Mark Unresolved."""
+    """Keyboard for active alert items shown in /alerts."""
     keyboard = [[
         InlineKeyboardButton("Resolve", callback_data=f"resolve_{transaction_id}"),
-        InlineKeyboardButton("Mark Unresolved", callback_data=f"unresolved_{transaction_id}"),
     ]]
     return InlineKeyboardMarkup(keyboard)
 
 
 def get_resolved_keyboard(transaction_id: int) -> InlineKeyboardMarkup:
-    """Keyboard for resolved items: Unresolve."""
+    """Keyboard for resolved items: move back into /alerts."""
     keyboard = [[
-        InlineKeyboardButton("Unresolve", callback_data=f"unresolve_{transaction_id}"),
+        InlineKeyboardButton("Mark Unresolved", callback_data=f"unresolve_{transaction_id}"),
     ]]
     return InlineKeyboardMarkup(keyboard)
 
@@ -166,14 +185,28 @@ def get_confirmation_keyboard(action: str, item_id: int) -> InlineKeyboardMarkup
     return InlineKeyboardMarkup(keyboard)
 
 
-def get_bill_keyboard(bill_id: int, status: str, can_finalize: bool) -> InlineKeyboardMarkup | None:
-    """Keyboard for bill state transitions."""
+def get_bill_keyboard(
+    bill_id: int,
+    status: str,
+    can_finalize: bool,
+    manually_added_items: List[tuple[int, str]] | None = None,
+) -> InlineKeyboardMarkup | None:
+    """Keyboard for bill state transitions and manual item removal."""
     keyboard = []
 
-    if status == "draft" and can_finalize:
-        keyboard.append([
-            InlineKeyboardButton("Finalize", callback_data=f"bill_finalize_{bill_id}"),
-        ])
+    if status == "draft":
+        if can_finalize:
+            keyboard.append([
+                InlineKeyboardButton("Finalize", callback_data=f"bill_finalize_{bill_id}"),
+            ])
+
+        for manual_bill_id, description in manually_added_items or []:
+            label = f"Remove: {description}"
+            if len(label) > 30:
+                label = label[:27] + "..."
+            keyboard.append([
+                InlineKeyboardButton(label, callback_data=f"bill_remove_{bill_id}_{manual_bill_id}"),
+            ])
     elif status == "finalized":
         keyboard.append([
             InlineKeyboardButton("Mark paid", callback_data=f"bill_pay_{bill_id}"),

@@ -1,0 +1,121 @@
+{
+  "filename": "hsbc_visa_revolution_6207_2026_01.pdf",
+  "bank_name": "HSBC",
+  "card_last_4": "6207",
+  "card_name": "HSBC VISA REVOLUTION",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-28",
+  "period_start": "2025-12-08",
+  "period_end": "2026-01-28",
+  "total_charges": 965.28,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-08",
+      "merchant_name": "TAOBAO",
+      "raw_description": "TAOBAO Singapore SG",
+      "amount": -21.60,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-12-26",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 33.30,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-12-27",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 32.25,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-12-30",
+      "merchant_name": "ATOME* EVERGREEN CLEAN",
+      "raw_description": "ATOME* EVERGREEN CLEAN SINGAPORE SG",
+      "amount": 326.67,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["atome"]
+    },
+    {
+      "transaction_date": "2026-01-17",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 24.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-01-19",
+      "merchant_name": "LATE CHARGE ASSESSMENT",
+      "raw_description": "LATE CHARGE ASSESSMENT",
+      "amount": 100.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    },
+    {
+      "transaction_date": "2026-01-22",
+      "merchant_name": "ATOME* EVERGREEN CLEAN",
+      "raw_description": "ATOME* EVERGREEN CLEAN SINGAPORE SG",
+      "amount": 326.66,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["atome"]
+    },
+    {
+      "transaction_date": "2026-01-22",
+      "merchant_name": "ATOME* HEAVENLUXE",
+      "raw_description": "ATOME* HEAVENLUXE SINGAPORE SG",
+      "amount": 86.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["atome"]
+    },
+    {
+      "transaction_date": "2026-01-28",
+      "merchant_name": "FINANCE CHARGE",
+      "raw_description": "FINANCE CHARGE",
+      "amount": 36.40,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": null,
+      "location": null,
+      "categories": ["card_fees"]
+    }
+  ]
+}

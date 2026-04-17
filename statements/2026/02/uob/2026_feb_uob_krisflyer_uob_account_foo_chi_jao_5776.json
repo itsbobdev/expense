@@ -1,0 +1,48 @@
+{
+  "filename": "2026_feb_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-02-28",
+  "period_start": "2026-02-01",
+  "period_end": "2026-02-28",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-10",
+      "raw_description": "Misc DR-Debit Card 10 FEB 4030 5087812 NEE SOON TOWN COUNCIL SINGAPORE SG",
+      "amount": -70.6,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "NEE SOON TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2026-02-23",
+      "raw_description": "Misc DR-Debit Card 23 FEB 4030 8854268 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -76.1,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2026-02-28",
+      "raw_description": "Interest Credit",
+      "amount": 0.03,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

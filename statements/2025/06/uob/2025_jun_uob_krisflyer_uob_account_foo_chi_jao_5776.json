@@ -1,0 +1,68 @@
+{
+  "filename": "2025_jun_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "account_number_last_4": "5776",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-06-30",
+  "period_start": "2025-06-03",
+  "period_end": "2025-06-30",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-03",
+      "raw_description": "Misc DR-Debit Card 01 JUN 4030 6646522 URA3 SINGAPORE SG",
+      "amount": -40.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "URA3"
+    },
+    {
+      "transaction_date": "2025-06-13",
+      "raw_description": "Misc DR-Debit Card 09 JUN 4030 6667560 FWD SINGAPORE - D2C GI SINGAPORE SG",
+      "amount": -137.74,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "FWD SINGAPORE - D2C GI"
+    },
+    {
+      "transaction_date": "2025-06-13",
+      "raw_description": "Misc DR-Debit Card 11 JUN 4030 7893289 SINGLIFE SINGAPORE SG",
+      "amount": -26.55,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "SINGLIFE"
+    },
+    {
+      "transaction_date": "2025-06-20",
+      "raw_description": "Funds Transfer",
+      "amount": 2323.06,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-06-30",
+      "raw_description": "Interest Credit",
+      "amount": 0.05,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

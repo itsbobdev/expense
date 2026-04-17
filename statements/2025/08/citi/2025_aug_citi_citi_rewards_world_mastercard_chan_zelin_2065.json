@@ -1,0 +1,35 @@
+{
+  "filename": "2025_aug_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "2065",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2025-08-10",
+  "period_start": "2025-07-14",
+  "period_end": "2025-07-14",
+  "total_charges": -98.1,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-14",
+      "merchant_name": "ANNUAL MEMBER FEE REV",
+      "raw_description": "ANNUAL MEMBER FEE REV",
+      "amount": -90.0,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": null,
+      "categories": ["card_fees"]
+    },
+    {
+      "transaction_date": "2025-07-14",
+      "merchant_name": "GST ON MEMBERSHIP FEE REVERSAL",
+      "raw_description": "GST ON MEMBERSHIP FEE REVERSAL",
+      "amount": -8.1,
+      "ccy_fee": null,
+      "is_refund": true,
+      "country_code": "SG",
+      "location": null,
+      "categories": ["card_fees"]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "filename": "uob_credit_card_combined_2025_12.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-12-02",
+  "period_start": "2025-11-10",
+  "period_end": "2025-11-24",
+  "total_charges": 1429.91,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-10",
+      "merchant_name": "SA",
+      "raw_description": "SA SINGAPORE",
+      "amount": 898.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-11",
+      "merchant_name": "LTA E-SERVICE VRLS",
+      "raw_description": "LTA E-SERVICE VRLS SINGAPORE",
+      "amount": 341.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-22",
+      "merchant_name": "8 CRABS",
+      "raw_description": "8 CRABS SINGAPORE",
+      "amount": 153.71,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-23",
+      "merchant_name": "TENDERBEST MACIK TUCKS",
+      "raw_description": "TENDERBEST MACIK TUCKS Singapore",
+      "amount": 9.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-24",
+      "merchant_name": "TENDERBEST MACIK TUCKS",
+      "raw_description": "TENDERBEST MACIK TUCKS Singapore",
+      "amount": 27.3,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

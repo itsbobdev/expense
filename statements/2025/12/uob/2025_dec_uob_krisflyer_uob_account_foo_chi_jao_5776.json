@@ -1,0 +1,168 @@
+{
+  "filename": "2025_dec_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-12-31",
+  "period_start": "2025-12-01",
+  "period_end": "2025-12-31",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Inward Credit-FAST OTHR Other CHAN ZELIN Z parents pru 2025",
+      "amount": 15508.0,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Inward Credit-FAST CHAN ZELIN Z parents pru 2025"
+    },
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Misc DR-Debit Card 01 DEC 4030 8850001 SEASON PARKING SINGAPORE SG",
+      "amount": -17.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "SEASON PARKING"
+    },
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Misc DR-Debit Card 01 DEC 4030 7613739 Prudential 44508592 SINGAPORE SG",
+      "amount": -2137.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "Prudential 44508592"
+    },
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Misc DR-Debit Card 01 DEC 4030 7620049 Prudential 44508609 SINGAPORE SG",
+      "amount": -1464.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "Prudential 44508609"
+    },
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Misc DR-Debit Card 01 DEC 4030 8120718 Prudential 49495873 SINGAPORE SG",
+      "amount": -6378.4,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "Prudential 49495873"
+    },
+    {
+      "transaction_date": "2025-12-01",
+      "raw_description": "Misc DR-Debit Card 01 DEC 4030 8100645 Prudential 49495882 SINGAPORE SG",
+      "amount": -5519.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "Prudential 49495882"
+    },
+    {
+      "transaction_date": "2025-12-09",
+      "raw_description": "Misc DR-Debit Card 09 DEC 4030 5338679 NEE SOON TOWN COUNCIL SINGAPORE SG",
+      "amount": -70.6,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "NEE SOON TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-12-13",
+      "raw_description": "Misc DR-Debit Card 13 DEC 4030 2032631 GREAT EASTERN LIFE SINGAPORE SG",
+      "amount": -218.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "GREAT EASTERN LIFE"
+    },
+    {
+      "transaction_date": "2025-12-26",
+      "raw_description": "Funds Transfer",
+      "amount": 20000.0,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-12-26",
+      "raw_description": "Funds Transfer",
+      "amount": 55000.0,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-12-23",
+      "raw_description": "Misc DR-Debit Card 23 DEC 4030 7834574 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -76.1,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-12-29",
+      "raw_description": "Funds Trf - FAST PIB2512298720089933 CJ SCB OTHR Transfer",
+      "amount": -55000.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Trf - FAST CJ SCB"
+    },
+    {
+      "transaction_date": "2025-12-26",
+      "raw_description": "Misc DR-Debit Card 26 DEC 4030 4770044 SEASON PARKING SINGAPORE SG",
+      "amount": -17.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "merchant_name": "SEASON PARKING"
+    },
+    {
+      "transaction_date": "2025-12-31",
+      "raw_description": "Interest Credit",
+      "amount": 0.7,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

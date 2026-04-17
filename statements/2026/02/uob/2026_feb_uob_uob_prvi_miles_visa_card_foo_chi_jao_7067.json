@@ -1,0 +1,27 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7067",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-02",
+  "period_end": "2026-01-02",
+  "total_charges": 1.2,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-02",
+      "merchant_name": "7 ELEVEN-ONE NORTH MRT",
+      "raw_description": "7 ELEVEN-ONE NORTH MRT Singapore",
+      "amount": 1.2,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

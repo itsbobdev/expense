@@ -2,6 +2,8 @@ from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQu
 from app.bot.handlers import (
     start_command,
     help_command,
+    cancel_command,
+    add_expense_command,
     upload_command,
     handle_document,
     handle_callback,
@@ -42,6 +44,8 @@ def create_bot_application() -> Application:
     # Register command handlers
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
+    application.add_handler(CommandHandler("cancel", cancel_command))
+    application.add_handler(CommandHandler("add_expense", add_expense_command))
     application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(CommandHandler("stats", stats_command))
     application.add_handler(CommandHandler("blacklist", blacklist_command))

@@ -1,0 +1,71 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "UOB PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-01",
+  "period_end": "2026-01-19",
+  "total_charges": 494.62,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-01",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER SINGAPORE",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-07",
+      "merchant_name": "MYEONGDONG HAIR - PDD",
+      "raw_description": "MYEONGDONG HAIR - PDD SINGAPORE 829",
+      "amount": 21.8,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE 829",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-09",
+      "merchant_name": "NTUC FairPrice Online",
+      "raw_description": "NTUC FairPrice Online SINGAPORE",
+      "amount": 336.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-19",
+      "merchant_name": "FURIENDS VETERINARY CLINI",
+      "raw_description": "FURIENDS VETERINARY CLINISINGAPORE 545",
+      "amount": 106.82,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE 545",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

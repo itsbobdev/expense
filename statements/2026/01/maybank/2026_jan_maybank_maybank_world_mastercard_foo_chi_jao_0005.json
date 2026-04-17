@@ -1,0 +1,59 @@
+{
+  "filename": "2026_jan_maybank_world_mastercard_foo_chi_jao_0005.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-01-25",
+  "period_start": "2025-12-24",
+  "period_end": "2026-01-13",
+  "total_charges": -249.44,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-09",
+      "merchant_name": "BPDS 25I12I1676231",
+      "raw_description": "BPDS 25I12I1676231",
+      "amount": 12.16,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-12-24",
+      "merchant_name": "BILLED ANNUAL FEE CREDIT ADJUSTMENT",
+      "raw_description": "BILLED ANNUAL FEE CREDIT ADJUSTMENT",
+      "amount": -240.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "card_fees"
+      ]
+    },
+    {
+      "transaction_date": "2026-01-13",
+      "merchant_name": "GST @ 9 % REVERSAL",
+      "raw_description": "GST @ 9 % REVERSAL",
+      "amount": -21.6,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": true,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "card_fees"
+      ]
+    }
+  ]
+}

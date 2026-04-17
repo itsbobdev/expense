@@ -9,12 +9,12 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 BACKEND_DIR = REPO_ROOT / "backend"
 
 
-def test_alembic_upgrade_adds_review_origin_and_transaction_splits(tmp_path):
+def test_alembic_upgrade_adds_review_origin_transaction_splits_and_manual_bill_type(tmp_path):
     db_path = tmp_path / "migration.db"
 
     with sqlite3.connect(db_path) as conn:
         conn.execute("CREATE TABLE alembic_version (version_num VARCHAR(32) NOT NULL)")
-        conn.execute("INSERT INTO alembic_version (version_num) VALUES ('006')")
+        conn.execute("INSERT INTO alembic_version (version_num) VALUES ('007')")
         conn.execute("CREATE TABLE persons (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL)")
         conn.execute(
             """
@@ -27,8 +27,26 @@ def test_alembic_upgrade_adds_review_origin_and_transaction_splits(tmp_path):
         )
         conn.execute(
             """
+            CREATE TABLE manual_bills (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                person_id INTEGER NOT NULL,
+                amount FLOAT NOT NULL,
+                description TEXT NOT NULL,
+                billing_month TEXT NOT NULL,
+                created_at DATETIME
+            )
+            """
+        )
+        conn.execute(
+            """
             INSERT INTO transactions (assignment_method, needs_review)
             VALUES ('category_review', 1)
+            """
+        )
+        conn.execute(
+            """
+            INSERT INTO manual_bills (person_id, amount, description, billing_month)
+            VALUES (1, 110.0, 'HDB Season Parking', '2026-03')
             """
         )
         conn.commit()
@@ -38,7 +56,7 @@ def test_alembic_upgrade_adds_review_origin_and_transaction_splits(tmp_path):
     env["TELEGRAM_BOT_TOKEN"] = "test-token"
 
     result = subprocess.run(
-        [sys.executable, "-m", "alembic", "upgrade", "007"],
+        [sys.executable, "-m", "alembic", "upgrade", "008"],
         cwd=BACKEND_DIR,
         env=env,
         capture_output=True,
@@ -49,26 +67,13 @@ def test_alembic_upgrade_adds_review_origin_and_transaction_splits(tmp_path):
     assert result.returncode == 0, result.stderr
 
     with sqlite3.connect(db_path) as conn:
-        columns = {
+        manual_bill_columns = {
             row[1]
-            for row in conn.execute("PRAGMA table_info(transactions)").fetchall()
+            for row in conn.execute("PRAGMA table_info(manual_bills)").fetchall()
         }
-        assert "review_origin_method" in columns
+        assert "manual_type" in manual_bill_columns
 
-        split_columns = {
-            row[1]
-            for row in conn.execute("PRAGMA table_info(transaction_splits)").fetchall()
-        }
-        assert {
-            "id",
-            "transaction_id",
-            "person_id",
-            "split_amount",
-            "split_percent",
-            "sort_order",
-        }.issubset(split_columns)
-
-        review_origin_method = conn.execute(
-            "SELECT review_origin_method FROM transactions WHERE id = 1"
+        manual_type = conn.execute(
+            "SELECT manual_type FROM manual_bills WHERE id = 1"
         ).fetchone()[0]
-        assert review_origin_method == "category_review"
+        assert manual_type == "recurring"

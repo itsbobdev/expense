@@ -1,0 +1,41 @@
+{
+  "filename": "2025_aug_maybank_world_mastercard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0104",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-08-25",
+  "period_start": "2025-07-31",
+  "period_end": "2025-08-22",
+  "total_charges": 97.21,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-31",
+      "merchant_name": "SMILE MARTABAK",
+      "raw_description": "SMILE MARTABAK SINGAPORE",
+      "amount": 23.8,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-08-22",
+      "merchant_name": "SP DIGITAL PL- E",
+      "raw_description": "SP DIGITAL PL- E SINGAPORE",
+      "amount": 73.41,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

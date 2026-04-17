@@ -1,0 +1,70 @@
+{
+  "filename": "2025_nov_uob_krisflyer_uob_account_foo_chi_jao_5776.pdf",
+  "bank_name": "UOB",
+  "account_type": "savings",
+  "account_number_last_4": "5776",
+  "account_name": "KRISFLYER UOB ACCOUNT",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-11-30",
+  "period_start": "2025-11-01",
+  "period_end": "2025-11-30",
+  "total_charges": null,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-31",
+      "raw_description": "Misc DR-Debit Card 31 OCT 4030 2481258 FWD SINGAPORE - D2C GI SINGAPORE SG",
+      "amount": -5.0,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "insurance"
+      ],
+      "merchant_name": "FWD SINGAPORE - D2C GI"
+    },
+    {
+      "transaction_date": "2025-11-10",
+      "raw_description": "Misc DR-Debit Card 10 NOV 4030 3445443 NEE SOON TOWN COUNCIL SINGAPORE SG",
+      "amount": -105.9,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "NEE SOON TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-11-24",
+      "raw_description": "Funds Transfer",
+      "amount": 5000.0,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Funds Transfer"
+    },
+    {
+      "transaction_date": "2025-11-24",
+      "raw_description": "Misc DR-Debit Card 24 NOV 4030 9446039 PUNGGOL TOWN COUNCIL SINGAPORE SG",
+      "amount": -76.1,
+      "transaction_type": "debit",
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "town_council"
+      ],
+      "merchant_name": "PUNGGOL TOWN COUNCIL"
+    },
+    {
+      "transaction_date": "2025-11-29",
+      "raw_description": "Interest Credit",
+      "amount": 0.12,
+      "transaction_type": "credit",
+      "country_code": "SG",
+      "location": null,
+      "categories": [],
+      "merchant_name": "Interest Credit"
+    }
+  ]
+}

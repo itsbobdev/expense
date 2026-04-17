@@ -45,9 +45,9 @@ def setup_database():
         for person_data in people_data:
             person = Person(
                 name=person_data["name"],
-                relationship_type="parent",  # Default to parent, can be updated manually
+                relationship_type=person_data.get("relationship_type", "parent"),
                 card_last_4_digits=person_data["cards"],
-                is_auto_created=False
+                is_auto_created=person_data.get("is_auto_created", False),
             )
             persons.append(person)
             db.add(person)
@@ -102,7 +102,7 @@ def setup_database():
         print(f"  - {len(rules)} assignment rules")
         print(f"  - {len(blacklist_categories)} blacklist categories")
         print("\nNext steps:")
-        print("1. Make sure your .env file has TELEGRAM_BOT_TOKEN set")
+        print("1. Make sure backend/.env has TELEGRAM_BOT_TOKEN set")
         print("2. Run the bot: python run.py")
         print("3. Open Telegram and start chatting with your bot")
         print("4. Use /start to see available commands")

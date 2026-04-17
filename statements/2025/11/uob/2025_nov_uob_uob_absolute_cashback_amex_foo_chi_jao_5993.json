@@ -1,0 +1,27 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5993",
+  "card_name": "UOB ABSOLUTE CASHBACK AMEX",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-08",
+  "period_end": "2025-10-08",
+  "total_charges": 49.33,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-08",
+      "merchant_name": "GRABTAXI PTE LTD",
+      "raw_description": "GRABTAXI PTE LTD SINGAPORE",
+      "amount": 50.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

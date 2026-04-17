@@ -35,9 +35,22 @@ agent-*.json
 *.sqlite
 *.sqlite3
 
-# Statements - ignore all except the example config
-statements/
+# Statements - keep extracted JSON/config/history, keep PDFs private
+statements/**
+!statements/
+!statements/**/
+!statements/**/*.json
+!statements/statement_people_identifier.yaml
 !statements/statement_people_identifier.yaml.example
+!statements/monthly_payment_to_me.yaml
+!statements/rewards_history.json
+statements/**/*.pdf
+statements/**/.claude/
+statements/.claude/
+
+# Handoff output
+.handoff/
+handoff_out/
 
 # Uploads and ML models
 uploads/

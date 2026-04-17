@@ -1,0 +1,83 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "5441",
+  "card_name": "UOB LADY'S SOLITAIRE CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-22",
+  "period_end": "2026-01-28",
+  "total_charges": 858.75,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-22",
+      "merchant_name": "WWW.RES.CO* KURIYAJAPA",
+      "raw_description": "WWW.RES.CO* KURIYAJAPA SINGAPORE",
+      "amount": 35.9,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-23",
+      "merchant_name": "SONG MARKET PLACE",
+      "raw_description": "SONG MARKET PLACE SINGAPORE",
+      "amount": 14.45,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-27",
+      "merchant_name": "SINGAPORE2472877775",
+      "raw_description": "SINGAPORE2472877775 SINGAPORE",
+      "amount": 559.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-27",
+      "merchant_name": "SINGAPOR6182472875865",
+      "raw_description": "SINGAPOR6182472875865 SINGAPORE",
+      "amount": 85.6,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-28",
+      "merchant_name": "AXS PTE LTD",
+      "raw_description": "AXS PTE LTD Singapore",
+      "amount": 163.2,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

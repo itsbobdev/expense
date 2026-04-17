@@ -1,0 +1,45 @@
+{
+  "filename": "2025_dec_maybank_world_mastercard_foo_chi_jao_0005.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0005",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-12-25",
+  "period_start": "2025-12-24",
+  "period_end": "2025-12-24",
+  "total_charges": 261.6,
+  "transactions": [
+    {
+      "transaction_date": "2025-12-24",
+      "merchant_name": "ANNUAL FEE",
+      "raw_description": "ANNUAL FEE",
+      "amount": 240.0,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "card_fees"
+      ]
+    },
+    {
+      "transaction_date": "2025-12-24",
+      "merchant_name": "GST @ 9 %",
+      "raw_description": "GST @ 9 %",
+      "amount": 21.6,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": [
+        "card_fees"
+      ]
+    }
+  ]
+}

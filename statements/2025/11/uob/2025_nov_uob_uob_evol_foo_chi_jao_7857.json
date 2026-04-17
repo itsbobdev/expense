@@ -1,0 +1,57 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7857",
+  "card_name": "UOB EVOL",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-11",
+  "period_end": "2025-10-27",
+  "total_charges": 112.92,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-13",
+      "merchant_name": "PARK@HDB* BILL1KBUWG",
+      "raw_description": "PARK@HDB* BILL1KBUWG SINGAPORE",
+      "amount": 1.5,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-22",
+      "merchant_name": "HDB Season Parking",
+      "raw_description": "HDB Season Parking SINGAPORE",
+      "amount": 110.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-10-28",
+      "merchant_name": "STARHUB RECUR POSTPAID",
+      "raw_description": "STARHUB RECUR POSTPAID SINGAPORE",
+      "amount": 1.69,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ],
+  "cardholder_name": "foo_chi_jao"
+}

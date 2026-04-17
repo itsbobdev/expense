@@ -1,0 +1,73 @@
+{
+  "filename": "2026_feb_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4474",
+  "card_name": "UOB PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2026-02-02",
+  "period_start": "2026-01-29",
+  "period_end": "2026-01-30",
+  "total_charges": 70.89,
+  "transactions": [
+    {
+      "transaction_date": "2026-01-29",
+      "merchant_name": "MYIQ.COM/AU",
+      "raw_description": "MYIQ.COM/AU SYDNEY",
+      "amount": 0.65,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "AU",
+      "location": "SYDNEY",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-29",
+      "merchant_name": "MYIQ.COM/AU",
+      "raw_description": "MYIQ.COM/AU SYDNEY",
+      "amount": 0.65,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "AU",
+      "location": "SYDNEY",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-30",
+      "merchant_name": "FAR EAST FLORA P L",
+      "raw_description": "FAR EAST FLORA P L Singapore",
+      "amount": 24.51,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2026-01-30",
+      "merchant_name": "IPOH TOWN KOPITIAM",
+      "raw_description": "IPOH TOWN KOPITIAM Singapore",
+      "amount": 45.08,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "filename": "2025_sep_maybank_creditcard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9202",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2025-09-25",
+  "period_start": "2025-09-07",
+  "period_end": "2025-09-10",
+  "total_charges": 25.82,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-07",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE",
+      "amount": 14.16,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-09-10",
+      "merchant_name": "KUAN ZHAI@RAFFLES PLAC",
+      "raw_description": "KUAN ZHAI@RAFFLES PLAC SINGAPORE",
+      "amount": 11.66,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

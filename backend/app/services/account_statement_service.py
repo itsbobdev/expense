@@ -8,6 +8,7 @@ from pathlib import Path
 from sqlalchemy.orm import Session
 
 from app.models import Bill, Statement, Transaction
+from app.services.alert_policy import finalize_alert_state
 from app.services.categorizer import TransactionCategorizer
 
 
@@ -73,6 +74,11 @@ def repair_account_statement_history(db: Session) -> AccountStatementRepairResul
                 txn.amount = normalized_amount
                 repaired_transactions += 1
 
+            source_transaction_type = source_txn.get("transaction_type") or None
+            if txn.transaction_type != source_transaction_type:
+                txn.transaction_type = source_transaction_type
+                repaired_transactions += 1
+
             txn.is_refund = False
             txn.original_transaction_id = None
             txn.review_origin_method = txn.review_origin_method if txn.assignment_method in {"manual", "shared_manual"} else None
@@ -84,11 +90,12 @@ def repair_account_statement_history(db: Session) -> AccountStatementRepairResul
             if txn.is_reward:
                 txn.needs_review = False
                 txn.blacklist_category_id = None
-                txn.alert_status = None
+                finalize_alert_state(txn)
                 continue
 
             if txn.assignment_method in {"manual", "shared_manual"}:
                 txn.needs_review = False
+                finalize_alert_state(txn)
                 continue
 
             result = categorizer.categorize(txn)
@@ -98,7 +105,7 @@ def repair_account_statement_history(db: Session) -> AccountStatementRepairResul
             txn.review_origin_method = result.method if result.needs_review else None
             txn.needs_review = result.needs_review
             txn.blacklist_category_id = result.blacklist_category_id
-            txn.alert_status = result.alert_status
+            finalize_alert_state(txn)
 
             affected_person_ids.update(_collect_affected_person_ids(txn))
 

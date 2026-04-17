@@ -1,0 +1,45 @@
+{
+  "filename": "2025_jul_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "8335",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-07-02",
+  "period_start": "2025-06-16",
+  "period_end": "2025-07-01",
+  "total_charges": 6215.67,
+  "transactions": [
+    {
+      "transaction_date": "2025-06-16",
+      "merchant_name": "MVCIAPPTELTD SUNTEC",
+      "raw_description": "MVCIAPPTELTD SUNTEC USD 2,349.00",
+      "amount": 3117.78,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SUNTEC",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-07-01",
+      "merchant_name": "MVCIAPPTELTD SUNTEC",
+      "raw_description": "MVCIAPPTELTD SUNTEC USD 2,349.00",
+      "amount": 3097.89,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SUNTEC",
+      "categories": [
+        "foreign_currency"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

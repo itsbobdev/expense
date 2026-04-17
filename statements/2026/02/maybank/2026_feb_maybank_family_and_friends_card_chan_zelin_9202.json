@@ -1,0 +1,83 @@
+{
+  "filename": "2026_feb_maybank_family_and_friends_card_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "9202",
+  "card_name": "MAYBANK FAMILY & FRIENDS CARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2026-02-25",
+  "period_start": "2026-02-16",
+  "period_end": "2026-02-22",
+  "total_charges": 436.7,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-16",
+      "merchant_name": "PARKWAY MEDICENTRE",
+      "raw_description": "PARKWAY MEDICENTRE SINGAPORE",
+      "amount": 398.6,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-18",
+      "merchant_name": "BURGER KING SG",
+      "raw_description": "BURGER KING SG",
+      "amount": 23.45,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": null,
+      "location": null,
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-20",
+      "merchant_name": "BINGXUE TEA ICE CREAM",
+      "raw_description": "BINGXUE TEA ICE CREAM SINGAPORE",
+      "amount": 6.5,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-21",
+      "merchant_name": "7-ELEVEN-NEWTON MRT",
+      "raw_description": "7-ELEVEN-NEWTON MRT SINGAPORE",
+      "amount": 4.2,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-22",
+      "merchant_name": "SHENG SIONG SUPERMARKE",
+      "raw_description": "SHENG SIONG SUPERMARKE SINGAPORE",
+      "amount": 3.95,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

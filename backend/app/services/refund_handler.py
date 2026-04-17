@@ -10,6 +10,11 @@ from sqlalchemy.orm import Session
 
 from app.models import Transaction
 from app.models.statement import Statement
+from app.services.linked_refund_sync import (
+    delete_draft_bills_for_month,
+    collect_transaction_person_ids,
+    sync_linked_refund_to_original,
+)
 
 
 class RefundHandler:
@@ -40,7 +45,9 @@ class RefundHandler:
         candidates = self._find_exact_candidates(refund_transaction)
 
         if len(candidates) == 1:
+            previous_person_ids = collect_transaction_person_ids(refund_transaction)
             self._apply_auto_match(refund_transaction, candidates[0])
+            self._refresh_draft_bills_for_refund(refund_transaction, previous_person_ids)
             self.db.commit()
             return True
 
@@ -86,7 +93,9 @@ class RefundHandler:
         for refund_transaction in candidate_refunds:
             exact_matches = self._find_exact_candidates(refund_transaction)
             if len(exact_matches) == 1 and exact_matches[0].id == original_transaction.id:
+                previous_person_ids = collect_transaction_person_ids(refund_transaction)
                 self._apply_auto_match(refund_transaction, original_transaction)
+                self._refresh_draft_bills_for_refund(refund_transaction, previous_person_ids)
                 resolved += 1
 
         if resolved:
@@ -232,12 +241,11 @@ class RefundHandler:
         if refund.amount >= 0:
             raise ValueError("Not a refund transaction (amount must be negative)")
 
-        refund.assigned_to_person_id = original.assigned_to_person_id
-        refund.original_transaction_id = original.id
-        refund.is_refund = True
-        refund.assignment_confidence = 1.0
+        previous_person_ids = collect_transaction_person_ids(refund)
         refund.assignment_method = "refund_manual_match"
-        refund.needs_review = False
+        refund.assignment_confidence = 1.0
+        sync_linked_refund_to_original(refund, original)
+        self._refresh_draft_bills_for_refund(refund, previous_person_ids)
 
         self.db.commit()
         self.db.refresh(refund)
@@ -273,9 +281,15 @@ class RefundHandler:
     @staticmethod
     def _apply_auto_match(refund_transaction: Transaction, original_transaction: Transaction) -> None:
         """Apply the canonical auto-match fields to a refund transaction."""
-        refund_transaction.assigned_to_person_id = original_transaction.assigned_to_person_id
-        refund_transaction.original_transaction_id = original_transaction.id
-        refund_transaction.is_refund = True
-        refund_transaction.assignment_confidence = 0.95
         refund_transaction.assignment_method = "refund_auto_match"
-        refund_transaction.needs_review = False
+        refund_transaction.assignment_confidence = 0.95
+        sync_linked_refund_to_original(refund_transaction, original_transaction)
+
+    def _refresh_draft_bills_for_refund(
+        self,
+        refund_transaction: Transaction,
+        previous_person_ids: set[int] | None = None,
+    ) -> None:
+        affected_person_ids = set(previous_person_ids or set())
+        affected_person_ids.update(collect_transaction_person_ids(refund_transaction))
+        delete_draft_bills_for_month(self.db, refund_transaction.billing_month, affected_person_ids)

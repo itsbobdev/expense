@@ -1,0 +1,12 @@
+{
+  "filename": "2026_mar_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "7067",
+  "card_name": "UOB PRVI MILES VISA CARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-02",
+  "period_start": "2026-02-10",
+  "period_end": "2026-02-28",
+  "total_charges": 0.0,
+  "transactions": []
+}

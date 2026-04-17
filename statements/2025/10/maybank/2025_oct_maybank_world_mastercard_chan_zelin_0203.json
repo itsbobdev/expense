@@ -1,0 +1,27 @@
+{
+  "filename": "2025_oct_maybank_creditcard_combined.pdf",
+  "bank_name": "Maybank",
+  "card_last_4": "0203",
+  "card_name": "MAYBANK WORLD MASTERCARD",
+  "cardholder_name": "chan_zelin",
+  "statement_date": "2025-10-25",
+  "period_start": "2025-09-30",
+  "period_end": "2025-09-30",
+  "total_charges": 15.9,
+  "transactions": [
+    {
+      "transaction_date": "2025-09-30",
+      "merchant_name": "POP MART",
+      "raw_description": "POP MART SINGAPORE",
+      "amount": 15.9,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "is_reward": false,
+      "reward_type": null,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    }
+  ]
+}

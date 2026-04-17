@@ -84,7 +84,7 @@ class BillGenerator:
             .all()
         )
 
-        # Gather manual bills (recurring charges) for this person and month
+        # Gather manual bills for this person and month
         manual_bills = (
             self.db.query(ManualBill)
             .filter(
@@ -129,6 +129,8 @@ class BillGenerator:
 
         for split in shared_splits:
             desc = split.transaction.merchant_name if split.transaction else "Shared expense"
+            if split.transaction and split.transaction.is_refund:
+                desc = f"REFUND: {desc}"
             line = BillLineItem(
                 bill_id=bill.id,
                 transaction_id=split.transaction_id,
@@ -151,7 +153,7 @@ class BillGenerator:
         self.db.refresh(bill)
 
         logger.info(
-            "Generated bill for %s %s: $%.2f (%d txns, %d shared, %d recurring)",
+            "Generated bill for %s %s: $%.2f (%d txns, %d shared, %d manual)",
             person.name, billing_month, total, len(transactions), len(shared_splits), len(manual_bills),
         )
 
@@ -252,14 +254,20 @@ class BillGenerator:
         refund_items = []
         shared_items = []
         recurring_items = []
+        manually_added_items = []
 
         for item in bill.line_items:
             if item.manual_bill_id:
-                recurring_items.append(item)
-            elif item.transaction and item.transaction.transaction_splits:
-                shared_items.append(item)
+                manual_bill = item.manual_bill
+                manual_type = manual_bill.manual_type if manual_bill else ManualBill.TYPE_RECURRING
+                if manual_type == ManualBill.TYPE_MANUALLY_ADDED:
+                    manually_added_items.append(item)
+                else:
+                    recurring_items.append(item)
             elif item.transaction and item.transaction.is_refund:
                 refund_items.append(item)
+            elif item.transaction and item.transaction.transaction_splits:
+                shared_items.append(item)
             else:
                 txn_items.append(item)
 
@@ -294,6 +302,12 @@ class BillGenerator:
         if recurring_items:
             lines.append("Monthly Recurring:")
             for item in recurring_items:
+                lines.append(f"  {item.description:<36s} ${item.amount:>8.2f}")
+            lines.append("")
+
+        if manually_added_items:
+            lines.append("Manually Added:")
+            for item in manually_added_items:
                 lines.append(f"  {item.description:<36s} ${item.amount:>8.2f}")
             lines.append("")
 

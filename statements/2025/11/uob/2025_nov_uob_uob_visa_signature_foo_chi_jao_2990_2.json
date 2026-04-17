@@ -1,0 +1,29 @@
+{
+  "filename": "2025_nov_uob_creditcard_combined_2.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "2990",
+  "card_name": "UOB VISA SIGNATURE",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-11-02",
+  "period_start": "2025-10-04",
+  "period_end": "2025-10-04",
+  "total_charges": 1200.0,
+  "transactions": [
+    {
+      "transaction_date": "2025-10-04",
+      "merchant_name": "L.G.E TRAVEL PTE LTD",
+      "raw_description": "L.G.E TRAVEL PTE LTD SINGAPORE",
+      "amount": 1200.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [
+        "tours"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "filename": "uob_credit_card_combined_2025_12.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "9651",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-12-02",
+  "period_start": "2025-11-01",
+  "period_end": "2025-11-24",
+  "total_charges": 947.04,
+  "transactions": [
+    {
+      "transaction_date": "2025-11-01",
+      "merchant_name": "GOOGLE*YOUTUBE MEMBER",
+      "raw_description": "GOOGLE*YOUTUBE MEMBER G.CO/HELPPAY#",
+      "amount": 30.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "US",
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-06",
+      "merchant_name": "DNH*GODADDY#3940494530",
+      "raw_description": "DNH*GODADDY#3940494530 480-5058855",
+      "amount": 79.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "US",
+      "location": null,
+      "categories": [
+        "subscriptions"
+      ],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-09",
+      "merchant_name": "REDMAN BY PHOON HUAT A",
+      "raw_description": "REDMAN BY PHOON HUAT A SINGAPORE",
+      "amount": 35.1,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-09",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE",
+      "amount": 33.94,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    },
+    {
+      "transaction_date": "2025-11-24",
+      "merchant_name": "GAIN CITY-WATERWAY POINT",
+      "raw_description": "GAIN CITY-WATERWAY POINT Singapore",
+      "amount": 769.0,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}

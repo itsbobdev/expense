@@ -1,0 +1,112 @@
+{
+  "filename": "2026_mar_citi_creditcard_combined.pdf",
+  "bank_name": "Citibank",
+  "card_last_4": "6265",
+  "card_name": "CITI REWARDS WORLD MASTERCARD",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2026-03-08",
+  "period_start": "2026-02-11",
+  "period_end": "2026-03-06",
+  "total_charges": 889.87,
+  "transactions": [
+    {
+      "transaction_date": "2026-02-11",
+      "merchant_name": "CLAUDE.AI SUBSCRIPTION",
+      "raw_description": "CLAUDE.AI SUBSCRIPTION  SAN FRANCISCOUS",
+      "amount": 30.00,
+      "ccy_fee": 0.30,
+      "is_refund": false,
+      "country_code": "US",
+      "location": "SAN FRANCISCO",
+      "categories": ["subscriptions", "foreign_currency"]
+    },
+    {
+      "transaction_date": "2026-02-22",
+      "merchant_name": "AMAZE* CENTARA HOTE",
+      "raw_description": "AMAZE* CENTARA HOTE  SINGAPORE  SG",
+      "amount": 333.73,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze", "travel_accommodation"]
+    },
+    {
+      "transaction_date": "2026-02-22",
+      "merchant_name": "AMAZE* TRADINGVIEWM",
+      "raw_description": "AMAZE* TRADINGVIEWM  SINGAPORE  SG",
+      "amount": 345.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze", "subscriptions"]
+    },
+    {
+      "transaction_date": "2026-02-23",
+      "merchant_name": "NPARKS* GBL",
+      "raw_description": "NPARKS* GBL  SINGAPORE  SG",
+      "amount": 50.00,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2026-02-25",
+      "merchant_name": "AMAZE* NOATUM LOGIS",
+      "raw_description": "AMAZE* NOATUM LOGIS  SINGAPORE  SG",
+      "amount": 91.72,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze"]
+    },
+    {
+      "transaction_date": "2026-02-25",
+      "merchant_name": "AMAZE* CMK-056 CENT",
+      "raw_description": "AMAZE* CMK-056 CENT  SINGAPORE  SG",
+      "amount": 16.68,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze"]
+    },
+    {
+      "transaction_date": "2026-02-25",
+      "merchant_name": "AMAZE* TOPS-UDON",
+      "raw_description": "AMAZE* TOPS-UDON  SINGAPORE  SG",
+      "amount": 4.15,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze"]
+    },
+    {
+      "transaction_date": "2026-03-03",
+      "merchant_name": "X CORP. PAID FEATURES",
+      "raw_description": "X CORP. PAID FEATURES  BASTROP  US",
+      "amount": 12.00,
+      "ccy_fee": 0.12,
+      "is_refund": false,
+      "country_code": "US",
+      "location": "BASTROP",
+      "categories": ["subscriptions", "foreign_currency"]
+    },
+    {
+      "transaction_date": "2026-03-06",
+      "merchant_name": "AMAZE* BAHAO TIAN M",
+      "raw_description": "AMAZE* BAHAO TIAN M  SINGAPORE  SG",
+      "amount": 6.17,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": ["amaze"]
+    }
+  ]
+}

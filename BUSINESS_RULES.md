@@ -112,7 +112,35 @@ For each rule:
 - Trigger to revisit: the downstream model should only retain statement-level rewards summaries and no longer wants reward credits in transaction data.
 - Sources: `.claude/commands/banks/maybank.md`, `.claude/commands/banks/uob.md`, `backend/app/services/importer.py`
 
+### Non-payment UOB `... CR` credit-card rows must never be skipped
+
+- Current rule: UOB credit-card rows with an amount ending in `CR` are mandatory transactions unless they are payment lines; dispute credits, merchant refunds, and fee waivers must be extracted as standalone rows, while cashback credits stay reward transactions instead of refunds.
+- Why: the statement prints the original charge and the reversing credit as separate ledger events, and skipping the credit silently corrupts totals and refund matching.
+- Trigger to revisit: UOB changes the statement format so non-payment credits are no longer represented as ordinary transaction rows, or the repo adopts a different canonical model for dispute handling.
+- Sources: `.claude/commands/banks/uob.md`, `.codex/skills/expense-extract-statements/references/banks/uob.md`, `backend/app/services/statement_validator.py`
+
 ## Import And Dedup
+
+### Git-backed working state uses JSON snapshots, not SQLite files
+
+- Current rule: repo-backed working state is carried by extracted statement JSON/YAML plus `state/live_state.json`; SQLite files are intentionally excluded from git.
+- Why: the repo wants machine-reproducible working state in mergeable text files instead of binary local databases.
+- Trigger to revisit: the project adopts a different canonical persistence layer with first-class export/import semantics, or the git snapshot becomes too large or too lossy to maintain comfortably.
+- Sources: `backend/export_live_state.py`, `backend/import_live_state.py`, `state/live_state.json`, `.gitignore`
+
+### Raw statement PDFs remain private even though extracted JSON is committed
+
+- Current rule: extracted statement JSON, rewards history, and statement config YAML are git-tracked, but raw statement PDFs remain out of git and travel only through private handoff packages or other private transfer channels.
+- Why: the extracted JSON is needed as regular working state, while the original PDFs are considered more sensitive and significantly heavier.
+- Trigger to revisit: the repo policy changes to allow encrypted large-file storage for statement PDFs, or the JSON artifacts are no longer sufficient as the git-backed source of truth.
+- Sources: `.gitignore`, `REPOSITORY_GUIDE.md`, `backend/build_handoff_package.py`
+
+### Fresh-machine restores may import historical statement JSON with validation warnings
+
+- Current rule: normal statement imports stay strict, but the restore workflow is allowed to import already-committed historical statement JSON with `--allow-validation-errors` so an old working DB can be rebuilt faithfully from git-backed artifacts.
+- Why: some historical statement JSON in the repo predates newer subtotal and UOB credit-row validation rules; refusing to import those files would make the git snapshot non-restorable even though the JSON itself is still the committed source of truth.
+- Trigger to revisit: all historical statement JSON is refreshed to satisfy the current validator, or the validator grows a backward-compatible historical mode that removes the need for an explicit restore flag.
+- Sources: `backend/import_statements.py`, `backend/app/services/importer.py`, `REPOSITORY_GUIDE.md`
 
 ### Statement import dedupes by JSON content hash, not PDF hash
 
@@ -151,6 +179,20 @@ For each rule:
 - Trigger to revisit: bank fee layouts change and GST lines can no longer be reliably linked to the parent fee.
 - Sources: `backend/app/services/categorizer.py`, `backend/app/services/alert_resolver.py`
 
+### `/alerts` is the shared queue for card fees and high-value non-reward transactions
+
+- Current rule: `/alerts` shows pending or unresolved alerts across both `alert_kind = card_fee` and `alert_kind = high_value`, where high-value means any non-reward imported charge or refund with `abs(amount) > 111`. This applies across configured card owners such as `foo_chi_jao`, `foo_wah_liang`, and `chan_zelin`, and alert messages show `Card owner:` when the mapping exists.
+- Why: the user wants one Telegram place to review fee exceptions and any unusually large non-reward movement without mixing them into the normal category-review queue.
+- Trigger to revisit: alert fatigue becomes too high, or the high-value threshold needs to become configurable by person, merchant, or statement type.
+- Sources: `backend/app/services/alert_policy.py`, `backend/app/bot/handlers.py`, `backend/alembic/versions/009_add_alert_kind.py`
+
+### Account-style `high_value` alerts are debit-only
+
+- Current rule: account-style statement rows only qualify for `high_value` alerts when the persisted source direction is `transaction_type = debit`; account credits such as `Funds Transfer` or `Interest Credit` are excluded even if their normalized DB amount exceeds `$111`.
+- Why: large account inflows are not the same kind of exception signal as large outgoing debits, and sign normalization alone loses that distinction without persisting the source direction.
+- Trigger to revisit: the alert policy intentionally expands to watch large account inflows as a separate alert type, or account extractors stop emitting reliable debit/credit direction.
+- Sources: `backend/app/services/alert_policy.py`, `backend/app/services/importer.py`, `backend/app/services/account_statement_service.py`, `backend/alembic/versions/010_add_transaction_type.py`
+
 ### Fee reversals auto-resolve against fee plus GST, within a 2-month lookback
 
 - Current rule: card-fee reversals are matched to earlier fee alerts on the same card using normalized fee type and total amount including GST child lines, within a 2-month statement-date window.
@@ -159,12 +201,40 @@ For each rule:
 - Trigger to revisit: fee reversals start happening outside the 2-month window, or banks change the wording enough that normalized fee-type matching is no longer stable.
 - Sources: `backend/app/services/alert_resolver.py`
 
+### UOB credit-card import validation uses source-PDF credit checks, not `SUB TOTAL` equality
+
+- Current rule: import validation for UOB credit-card statements checks the source PDF for missing non-payment `CR` rows when the sidecar PDF is available, but it does not require JSON transaction sums to equal `total_charges`.
+- Why: UOB `SUB TOTAL` values in this repo can include carried balances or payments, so a strict subtotal-equality rule would reject valid extracted JSON.
+- Trigger to revisit: UOB statement layout changes and `SUB TOTAL` becomes a pure sum of the transaction block for each cardholder section.
+- Sources: `backend/app/services/statement_validator.py`, `statements/2025/09/uob/2025_sep_uob_creditcard_combined.pdf`
+
 ### Refund matching ignores rewards and uses exact merchant plus amount first
 
 - Current rule: rewards are excluded from refund matching, and real refunds first try to match an earlier transaction with the exact same merchant name and exact opposite amount inside a 180-day window.
 - Why: reward credits and merchant refunds are different concepts, and an exact first pass keeps false positives low.
 - Trigger to revisit: merchants frequently rename themselves between purchase and refund, or more fuzzy matching should become the default rather than the manual-review fallback.
 - Sources: `backend/app/services/refund_handler.py`
+
+### Auto-matched refunds do not automatically remove the original charge from `/review`
+
+- Current rule: a refund can auto-match successfully and disappear from `/refund`, while the original charge still remains in `/review` if that original charge independently triggered category review.
+- Why: refund matching answers "which charge does this refund belong to?" for the refund row; it does not currently decide whether the original charge should stop being reviewed for billing ownership.
+- Trigger to revisit: fully offset disputes or refunds should automatically clear the original charge from the normal review queue once the refund covers it exactly.
+- Sources: `backend/app/services/refund_handler.py`, `backend/app/services/categorizer.py`, `backend/app/bot/handlers.py`
+
+### Bills show matched refunds as separate negative lines, not netted into the original charge
+
+- Current rule: if a refund transaction is assigned to a person, bill generation shows the original charge under `Credit Card Charges:` and the refund as its own negative line under `Refunds:`. Cross-month refunds are annotated with the original billing month, and shared linked refunds still stay in the `Refunds:` section instead of moving to `Shared Expenses:`.
+- Why: the repo keeps statement-faithful ledger events visible instead of collapsing them into one net amount.
+- Trigger to revisit: bill output should present netted merchant totals instead of separate ledger rows, or linked refunds should always travel with the original charge as one display unit.
+- Sources: `backend/app/services/refund_handler.py`, `backend/app/services/bill_generator.py`
+
+### Linked refunds always follow the original charge's latest assignment
+
+- Current rule: any refund with `original_transaction_id` mirrors the current ownership state of its original charge. Direct assignments, shared splits, reassignment, and undo back into review all propagate to the linked refund automatically, so the order of review and refund matching does not matter.
+- Why: the original charge is the billing source of truth, and keeping linked refunds in sync prevents charges and their reversals from landing on different people's bills.
+- Trigger to revisit: linked refunds need an explicit manual override path independent from the original charge, or refund ownership should stop being derived from the original transaction.
+- Sources: `backend/app/services/linked_refund_sync.py`, `backend/app/services/refund_handler.py`, `backend/app/services/review_assignment.py`
 
 ## Recurring Bills
 

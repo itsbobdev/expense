@@ -1,0 +1,49 @@
+{
+  "filename": "hsbc_visa_revolution_6207_2025_07.pdf",
+  "bank_name": "HSBC",
+  "card_last_4": "6207",
+  "card_name": "HSBC VISA REVOLUTION",
+  "cardholder_name": "foo_chi_jao",
+  "statement_date": "2025-07-28",
+  "period_start": "2025-07-06",
+  "period_end": "2025-07-26",
+  "total_charges": 1054.18,
+  "transactions": [
+    {
+      "transaction_date": "2025-07-06",
+      "merchant_name": "SHOPEE SINGAPORE MP",
+      "raw_description": "SHOPEE SINGAPORE MP SINGAPORE SG",
+      "amount": 1044.93,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-07-25",
+      "merchant_name": "LUCKIN COFFEE SGP PT",
+      "raw_description": "LUCKIN COFFEE SGP PT SINGAPORE SG",
+      "amount": 4.25,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": []
+    },
+    {
+      "transaction_date": "2025-07-26",
+      "merchant_name": "McDonalds 930224",
+      "raw_description": "McDonalds 930224 Singapore SG",
+      "amount": 5.00,
+      "ccy_fee": null,
+      "foreign_currency_amount": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "Singapore",
+      "categories": []
+    }
+  ]
+}

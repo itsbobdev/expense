@@ -1,0 +1,27 @@
+{
+  "filename": "2025_sep_uob_creditcard_combined.pdf",
+  "bank_name": "UOB",
+  "card_last_4": "4474",
+  "card_name": "PREFERRED PLATINUM VISA",
+  "cardholder_name": "foo_wah_liang",
+  "statement_date": "2025-09-02",
+  "period_start": "2025-08-03",
+  "period_end": "2025-08-03",
+  "total_charges": 2.48,
+  "transactions": [
+    {
+      "transaction_date": "2025-08-03",
+      "merchant_name": "NTUC FairPrice App Paymen",
+      "raw_description": "NTUC FairPrice App PaymenSINGAPORE",
+      "amount": 2.48,
+      "ccy_fee": null,
+      "is_refund": false,
+      "country_code": "SG",
+      "location": "SINGAPORE",
+      "categories": [],
+      "foreign_currency_amount": null,
+      "is_reward": false,
+      "reward_type": null
+    }
+  ]
+}
