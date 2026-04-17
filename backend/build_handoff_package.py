@@ -21,6 +21,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import time
 import urllib.request
 import zipfile
 from datetime import datetime
@@ -32,13 +33,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 from app.config import BACKEND_DIR, REPO_ROOT, settings
 
 
-PYTHON_BUILD_STANDALONE_RELEASES_API = "https://api.github.com/repos/indygreg/python-build-standalone/releases"
+PYTHON_BUILD_STANDALONE_RELEASE_API = "https://api.github.com/repos/indygreg/python-build-standalone/releases/latest"
 ADOPTIUM_JDK_API = (
     "https://api.adoptium.net/v3/assets/latest/11/hotspot"
     "?architecture=aarch64&image_type=jdk&os=mac"
 )
 PYTHON_ASSET_HINT = "aarch64-apple-darwin-install_only.tar.gz"
 PYTHON_VERSION_HINT = "cpython-3.11"
+WHEELHOUSE_PLATFORM = "macosx_12_0_arm64"
 
 
 def build_handoff_package(output_root: Path) -> Path:
@@ -127,15 +129,12 @@ def _write_pdf_archive(output_path: Path) -> None:
 
 
 def _download_python_runtime(destination: Path) -> str:
-    releases = _fetch_json(PYTHON_BUILD_STANDALONE_RELEASES_API)
+    release = _fetch_json(PYTHON_BUILD_STANDALONE_RELEASE_API)
     asset_url = None
-    for release in releases:
-        for asset in release.get("assets", []):
-            name = asset.get("name", "")
-            if PYTHON_VERSION_HINT in name and PYTHON_ASSET_HINT in name:
-                asset_url = asset.get("browser_download_url")
-                break
-        if asset_url:
+    for asset in release.get("assets", []):
+        name = asset.get("name", "")
+        if PYTHON_VERSION_HINT in name and PYTHON_ASSET_HINT in name:
+            asset_url = asset.get("browser_download_url")
             break
     if not asset_url:
         raise RuntimeError("Could not find a macOS arm64 Python 3.11 standalone runtime asset.")
@@ -163,7 +162,7 @@ def _download_wheelhouse(destination: Path) -> None:
         "--dest",
         str(destination),
         "--platform",
-        "macosx_11_0_arm64",
+        WHEELHOUSE_PLATFORM,
         "--python-version",
         "311",
         "--implementation",
@@ -380,16 +379,46 @@ def _read_env_value(raw_env: str, key: str) -> str:
 
 
 def _fetch_json(url: str) -> Any:
-    request = urllib.request.Request(url, headers={"User-Agent": "expense-handoff-builder"})
-    with urllib.request.urlopen(request) as response:
-        return json.load(response)
+    headers = {"User-Agent": "expense-handoff-builder"}
+    if "api.github.com" in url:
+        headers["Accept"] = "application/vnd.github+json"
+    request = urllib.request.Request(url, headers=headers)
+    last_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                return json.load(response)
+        except Exception as exc:  # pragma: no cover - exercised via integration use
+            last_error = exc
+            if attempt == 2:
+                break
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"Failed to fetch JSON from {url}: {last_error}") from last_error
 
 
 def _download_file(url: str, destination: Path) -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
-    request = urllib.request.Request(url, headers={"User-Agent": "expense-handoff-builder"})
-    with urllib.request.urlopen(request) as response, destination.open("wb") as handle:
-        shutil.copyfileobj(response, handle)
+    request = urllib.request.Request(
+        url,
+        headers={
+            "User-Agent": "expense-handoff-builder",
+            "Accept": "application/octet-stream",
+        },
+    )
+    last_error: Exception | None = None
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=300) as response, destination.open("wb") as handle:
+                shutil.copyfileobj(response, handle)
+            return
+        except Exception as exc:  # pragma: no cover - exercised via integration use
+            last_error = exc
+            if destination.exists():
+                destination.unlink()
+            if attempt == 2:
+                break
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"Failed to download {url}: {last_error}") from last_error
 
 
 def _sha256_file(path: Path) -> str:
